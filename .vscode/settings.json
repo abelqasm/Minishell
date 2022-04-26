@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "fcntl.h": "c",
+        "history.h": "c",
+        "token.h": "c",
+        "libft.h": "c",
+        "lexer.h": "c"
+    }
+}

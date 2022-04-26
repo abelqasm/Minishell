@@ -1,8 +1,6 @@
 SRCS = minishell.c \
-	ft_check_argmt.c \
-	ft_pipe_mngmt.c \
-	ft_check_cmd.c
-
+	./lexer/lexer_1.c \
+	./lexer/token.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
@@ -27,4 +25,3 @@ fclean : clean
 	cd ./libft && make fclean
 
 re : fclean all
-	cd ./libft && make re

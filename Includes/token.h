@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/20 19:56:30 by abelqasm          #+#    #+#             */
-/*   Updated: 2021/11/21 00:19:03 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/04/22 18:57:57 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/04/25 08:30:51 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef TOKEN_H
+# define TOKEN_H
 
-t_list	*ft_lstlast(t_list *lst)
+typedef struct s_token
 {
-	t_list	*ptr;
-
-	ptr = lst;
-	if (!ptr)
-		return (NULL);
-	while (ptr->next != NULL)
-		ptr = ptr->next;
-	return (ptr);
-}
+	char	*value;
+	enum
+	{
+		TOKEN_ID,
+		TOKEN_SLQUOTE,
+		TOKEN_SRQUOTE,
+		TOKEN_DLQUOTE,
+		TOKEN_DRQUOTE,
+		TOKEN_DOLLAR,
+		TOKEN_RDIN,
+		TOKEN_RDOUT,
+		TOKEN_APPEND,
+		TOKEN_DELIM,
+		TOKEN_PIPE,
+		TOKEN_OR,
+		TOKEN_AND,
+		TOKEN_EOF,
+	} e_type;
+}	t_token;
+t_token	*init_token(char *str, int type);
+void	ft_tokenize(char *str);
+#endif
