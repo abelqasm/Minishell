@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/04/24 00:54:29 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/08 01:09:46 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,29 @@
 # include "./Includes/token.h"
 # include "./Includes/lexer.h"
 
+typedef struct s_args
+{
+	char			*str;
+	int				is_main;
+	struct s_args	*next;
+}	t_args;
+
+typedef struct s_line
+{
+	t_args	*cmd;
+	char	*file_name;
+	int		file;
+	int		pipe;
+	int		fd;
+}	t_line;
+
+typedef struct s_list
+{
+	t_line			*line;
+	struct s_list	*next;
+}	t_list;
+
 int		ft_check_argmt(char *line);
 char	*ft_check_cmd(char *cmd);
 char	**ft_pipe_mngmt(char *argmt);
-
 #endif
