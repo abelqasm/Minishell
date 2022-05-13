@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/08 01:09:46 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/13 14:00:02 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_args
 typedef struct s_line
 {
 	t_args	*cmd;
-	char	*file_name;
-	int		file;
-	int		pipe;
+	char	*intput;
+	char	*output;
 	int		fd;
+	int		pipe;
 }	t_line;
 
 typedef struct s_list
