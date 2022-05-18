@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:49:55 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/04/25 12:58:36 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:03:06 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ t_lexer	*init_lexer(char *str)
 		lexer->cp = str[lexer->i + 1];
 	lexer->size = ft_strlen(str);
 	return (lexer);
+}
+
+t_token	*init_token(char *value, int type)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->value = value;
+	token->e_type = type;
+	free(value);
+	return (token);
 }
 
 void	lexer_advance(t_lexer *lexer)

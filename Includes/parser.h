@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 19:07:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/17 15:05:53 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/05/15 22:22:47 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/15 22:25:21 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef PARSER_H
+# define PARSER_H
+# include "../minishell.h"
 
-typedef struct s_lexer
+typedef struct s_parser
 {
-	char	*str;
-	char	c;
-	char	cp;
-	size_t	i;
-	size_t	size;
-}	t_lexer;
-t_lexer	*init_lexer(char *str);
-void	lexer_advance(t_lexer *lexer);
-void	lexer_skip_whitespace(t_lexer *lexer);
+	t_token	*token;
+	t_lexer	*lexer;
+}	t_parser;
+t_parser *init_parser(t_lexer *lexer);
 #endif

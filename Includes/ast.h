@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   AST.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 19:07:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/17 15:05:53 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/05/15 22:18:21 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/17 15:00:35 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef AST_H
+# define AST_H
 
-typedef struct s_lexer
+typedef struct s_ast
 {
-	char	*str;
-	char	c;
-	char	cp;
-	size_t	i;
-	size_t	size;
-}	t_lexer;
-t_lexer	*init_lexer(char *str);
-void	lexer_advance(t_lexer *lexer);
-void	lexer_skip_whitespace(t_lexer *lexer);
+	void			*data;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	enum
+	{
+		ASR_ID,
+		ASR_SLQUOTE,
+		ASR_SRQUOTE,
+		ASR_DLQUOTE, 
+		ASR_DRQUOTE,
+		ASR_DOLLAR,
+		ASR_RDIN,
+		ASR_RDOUT,
+		ASR_APPEND,
+		ASR_DELIM,
+		ASR_PIPE,
+		ASR_OR,
+		ASR_AND,
+		ASR_EOF,
+	} e_type;
+}	t_ast;
+
+t_ast	*init_ast(void *data, int type);
 #endif

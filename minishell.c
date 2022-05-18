@@ -6,11 +6,28 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/04/25 00:32:14 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:05:01 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_tokenize(char *str)
+{
+	t_token	*token;
+	t_lexer	*lexer;
+
+	lexer = init_lexer(str);
+	token = lexer_next_token(lexer);
+	while (token->e_type != TOKEN_EOF)
+	{
+		printf("this is the token %s\nand this is its type %u\n", token->value, token->e_type);
+		free(token);
+		token = lexer_next_token(lexer);
+	}
+	free(lexer);
+	free(token);
+}
 
 int	main(void)
 {

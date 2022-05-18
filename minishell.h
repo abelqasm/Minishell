@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/13 14:00:02 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/15 22:28:01 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include "./libft/libft.h"
 # include "./Includes/token.h"
 # include "./Includes/lexer.h"
+# include "./Includes/parser.h"
+# include "./Includes/ast.h"
 
 typedef struct s_args
 {
@@ -34,7 +36,6 @@ typedef struct s_line
 	t_args	*cmd;
 	char	*intput;
 	char	*output;
-	int		fd;
 	int		pipe;
 }	t_line;
 

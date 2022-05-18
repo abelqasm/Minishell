@@ -6,38 +6,66 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/07 22:59:35 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:04:57 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token	*init_token(char *value, int type)
+t_token	*lexer_parse_token(t_lexer *lexer)
 {
-	t_token	*token;
+	char	*str;
 
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->value = value;
-	token->e_type = type;
-	free(value);
-	return (token);
+	str = ft_calloc(1, sizeof(char));
+	if (lexer->c == 34 || lexer->c == 22)
+		lexer_advance(lexer);
+	while (ft_isalnum(lexer->c))
+	{
+		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
+		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
+		lexer_advance(lexer);
+	}
+	return (init_token(str, TOKEN_ID));
 }
 
-void	ft_tokenize(char *str)
+t_token	*lexer_set_token_value(t_lexer *lexer, int type)
 {
-	t_token	*token;
-	t_lexer	*lexer;
+	char	*value;
 
-	lexer = init_lexer(str);
-	token = lexer_next_token(lexer);
-	while (token->e_type != TOKEN_EOF)
+	value = malloc(sizeof(char) * 2);
+	value[0] = lexer->c;
+	value[1] = '\0';
+	lexer_advance(lexer);
+	if (type == TOKEN_OR || type == TOKEN_AND
+		|| type == TOKEN_APPEND || type == TOKEN_DELIM)
 	{
-		printf("this is the token %s\nand this is its type %u\n", token->value, token->e_type);
-		free(token);
-		token = lexer_next_token(lexer);
+		value = ft_realloc(value,sizeof(char) * 3);
+		ft_strlcat(value, (char []){lexer->c, 0}, 3);
+		lexer_advance(lexer);
 	}
-	free(lexer);
-	free(token);
+	return (init_token(value, type));
+}
+
+t_token	*lexer_next_token(t_lexer *lexer)
+{
+	lexer_skip_whitespace(lexer);
+	if (ft_isalnum(lexer->c) || lexer->c == 34 || lexer->c == 22)
+		return (lexer_parse_token(lexer));
+	if (lexer->c == '|' && lexer->cp == '|')
+		return (lexer_set_token_value(lexer, TOKEN_OR));
+	if (lexer->c == '&' && lexer->cp == '&')
+		return (lexer_set_token_value(lexer, TOKEN_AND));
+	if (lexer->c == '<' && lexer->cp == '<')
+		return (lexer_set_token_value(lexer, TOKEN_DELIM));
+	if (lexer->c == '>' && lexer->cp == '>')
+		return (lexer_set_token_value(lexer, TOKEN_APPEND));
+	if (lexer->c == '|')
+		return (lexer_set_token_value(lexer, TOKEN_PIPE));
+	if (lexer->c == '<')
+		return (lexer_set_token_value(lexer, TOKEN_RDIN));
+	if (lexer->c == '>')
+		return (lexer_set_token_value(lexer, TOKEN_RDOUT));
+	if (lexer->c == '$')
+		return (lexer_set_token_value(lexer, TOKEN_DOLLAR));
+	return (lexer_set_token_value(lexer, TOKEN_EOF));
 }
