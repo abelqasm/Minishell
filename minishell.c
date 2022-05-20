@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/17 15:05:01 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:15:58 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_tokenize(char *str)
 {
 	t_token	*token;
 	t_lexer	*lexer;
-
+	
 	lexer = init_lexer(str);
 	token = lexer_next_token(lexer);
 	while (token->e_type != TOKEN_EOF)

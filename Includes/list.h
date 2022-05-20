@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 22:22:47 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/20 13:56:46 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/05/19 11:59:36 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/20 14:03:31 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef LIST_H
+# define LIST_H
 
-typedef struct s_parser
+typedef struct s_list
 {
-	t_token	*token;
-	t_lexer	*lexer;
-}	t_parser;
-t_parser	*init_parser(t_lexer *lexer);
+	void			*item;
+	struct s_list	*next;
+}	t_list;
+t_list	*init_list(void *item);
+void	list_push(t_list *list, void *item);
 #endif

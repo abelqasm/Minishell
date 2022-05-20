@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 22:22:47 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/20 13:56:46 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/05/19 12:12:13 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/19 12:14:20 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "libft.h"
 
-typedef struct s_parser
+t_list	*ft_lstlast(t_list *lst)
 {
-	t_token	*token;
-	t_lexer	*lexer;
-}	t_parser;
-t_parser	*init_parser(t_lexer *lexer);
-#endif
+	t_list	*ptr;
+
+	ptr = lst;
+	if (!ptr)
+		return (NULL);
+	while (ptr->next != NULL)
+		ptr = ptr->next;
+	return (ptr);
+}

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/17 15:04:57 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/20 13:55:17 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_token	*lexer_set_token_value(t_lexer *lexer, int type)
 	if (type == TOKEN_OR || type == TOKEN_AND
 		|| type == TOKEN_APPEND || type == TOKEN_DELIM)
 	{
-		value = ft_realloc(value,sizeof(char) * 3);
+		value = ft_realloc(value, sizeof(char) * 3);
 		ft_strlcat(value, (char []){lexer->c, 0}, 3);
 		lexer_advance(lexer);
 	}

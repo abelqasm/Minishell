@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 22:22:47 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/20 13:56:46 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/20 13:55:37 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../minishell.h"
 
-typedef struct s_parser
+t_list	*init_list(void *item)
 {
-	t_token	*token;
-	t_lexer	*lexer;
-}	t_parser;
-t_parser	*init_parser(t_lexer *lexer);
-#endif
+	t_list	*list;
+
+	list = malloc(sizeof(t_list));
+	list->item = item;
+	list->next = NULL;
+	return (list);
+}
+
+void	list_push(t_list *list, void *item)
+{
+	t_list	*push;
+
+	push = ft_lstlast(list);
+	push->next = init_list(item);
+}

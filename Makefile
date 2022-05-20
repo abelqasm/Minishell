@@ -1,7 +1,9 @@
 SRCS = minishell.c \
-	./lexer/lexer_1.c \
-	./lexer/lexer_2.c \
-	./lexer/token.c
+	./lexer/lexer.c \
+	./lexer/token.c \
+	./lexer/parser.c \
+	./lexer/ast.c \
+	./lexer/list.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
