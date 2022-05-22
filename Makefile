@@ -3,11 +3,12 @@ SRCS = minishell.c \
 	./lexer/token.c \
 	./lexer/parser.c \
 	./lexer/ast.c \
-	./lexer/list.c
+	./lexer/list.c \
+	./lexer/parse_opperators.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g
 NAME = minishell
 LIBFT = ./libft/libft.a
 

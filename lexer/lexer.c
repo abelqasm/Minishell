@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:49:55 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/19 15:50:55 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/22 18:08:32 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_token	*init_token(char *value, int type)
 		return (NULL);
 	token->value = value;
 	token->e_type = type;
-	free(value);
 	return (token);
 }
 
