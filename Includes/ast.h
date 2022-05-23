@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:18:21 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/23 11:52:35 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:23:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define AST_H
 
 typedef struct s_ast	t_ast;
-typedef struct s_pipe
+typedef struct s_node
 {
 	t_ast	*left;
 	t_ast	*right;
-}	t_pipe;
+}	t_node;
 typedef union s_data_type
 {
-	t_pipe		*tree;
+	t_node		*tree;
 	t_cmd_data	*command;
 }	t_data_type;
 struct s_ast
@@ -49,7 +49,7 @@ struct s_ast
 t_ast		*init_ast(int type);
 t_ast		*parser_parse(t_parser **parser);
 t_ast		*parse_command(t_parser **parser);
-t_ast		*init_pipe_node(t_ast *left, t_ast *right);
+t_ast		*init_node(t_ast *left, t_ast *right);
 t_ast		*parse_and_cmd(t_parser **parser);
 t_ast		*parse_or_cmd(t_parser **parser);
 t_data_type	fill_struct(t_parser **start);

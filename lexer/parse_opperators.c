@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:42:02 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/22 13:32:57 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:18:01 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast	*parse_or_cmd(t_parser **start)
 	{
 		parser->token = lexer_next_token(parser->lexer);
 		tree2 = parser_parse(&parser);
-		return (init_pipe_node(tree, tree2));
+		return (init_node(tree, tree2));
 	}
 	*start = parser;
 	return (tree);
@@ -42,7 +42,7 @@ t_ast	*parse_and_cmd(t_parser **start)
 	{
 		parser->token = lexer_next_token(parser->lexer);
 		tree2 = parser_parse(&parser);
-		return (init_pipe_node(tree, tree2));
+		return (init_node(tree, tree2));
 	}
 	*start = parser;
 	return (tree);
