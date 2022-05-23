@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/22 17:05:27 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:52:13 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,13 @@ void	args_push(t_args **args, char *item)
 	push->next = init_args(item);
 }
 
-t_data_type	*fill_struct(t_parser **start)
+t_data_type	fill_struct(t_parser **start)
 {
 	t_parser	*parser;
 	t_cmd_data	*command;
-	t_data_type	*data;
+	t_data_type	data;
 
 	command = malloc(sizeof(t_cmd_data));
-	data = malloc(sizeof(t_data_type));
 	parser = *start;
 	command->args = NULL;
 	while (parser->token->e_type != TOKEN_EOF && parser->token->e_type != TOKEN_PIPE)
@@ -65,6 +64,6 @@ t_data_type	*fill_struct(t_parser **start)
 		parser->token = lexer_next_token(parser->lexer);
 	}
 	*start = parser;
-	data->command = command;
+	data.command = command;
 	return (data);
 }

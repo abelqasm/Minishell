@@ -6,12 +6,28 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/22 17:09:21 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:04:20 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+void	print_ast(t_ast *ast, int n)
+{
+	if (ast->e_type == AST_PIPE)
+	{
+		printf("%*s(\n", n*4,"");
+		print_ast(ast->data.tree->left, n + 1);
+		printf("%*s|\n", n*4,"");
+		print_ast(ast->data.tree->right, n + 1);
+		printf("%*s)\n", n*4,"");
+		return ;
+	}
+	while (ast->data.command->args)
+	{
+		printf("%*sthis is the value :%s\n", n*4, "",ast->data.command->args->str);
+		ast->data.command->args = ast->data.command->args->next;
+	}
+}
 void	ft_tokenize(char *str)
 {
 	t_parser	*parser;
@@ -21,18 +37,7 @@ void	ft_tokenize(char *str)
 	lexer = init_lexer(str);
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser);
-	// while (parser->token->e_type != TOKEN_EOF)
-	// {
-	// 	printf("this is the token %s\nand this is its type %u\n", parser->token->value, parser->token->e_type);
-	// 	parser->token = lexer_next_token(lexer);
-	// }
-	// free(lexer);
-	// free(token);
-	while (ast->data->command->args)
-	{
-		printf("this is the value :%s\n", ast->data->command->args->str);
-		ast->data->command->args = ast->data->command->args->next;
-	}
+	print_ast(ast, 0);
 }
 
 int	main(void)
