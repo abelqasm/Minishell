@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 12:12:13 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/22 11:40:13 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/03/11 22:48:12 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/29 19:16:07 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../pipex.h"
 
-t_list	*ft_lstlast(t_list *lst)
+void	ft_error(void)
 {
-	t_list	*ptr;
+	perror("Error");
+	exit(1);
+}
 
-	ptr = lst;
-	if (!ptr)
-		return (NULL);
-	while (ptr->next != NULL)
-		ptr = ptr->next;
-	return (ptr);
+void	ft_argmt_error(void)
+{
+	write(1, "Wrong number of arguments\n", 26);
+	exit(0);
 }

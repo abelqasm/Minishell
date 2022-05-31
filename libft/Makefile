@@ -32,8 +32,7 @@ SRCS =  ft_strlen.c \
 		ft_putchar_fd.c \
 		ft_putstr_fd.c \
 		ft_putendl_fd.c \
-		ft_putnbr_fd.c \
-		ft_lstlast.c
+		ft_putnbr_fd.c 
 
 OBJS = $(SRCS:.c=.o)
 CC = gcc -Wall -Werror -Wextra -c

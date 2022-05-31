@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:18:21 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/23 14:23:14 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:41:20 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,18 @@ struct s_ast
 {
 	enum
 	{
+		AST_PIPE,
+		AST_OR,
+		AST_AND,
 		AST_COMMAND,
 		AST_ID,
-		AST_SLQUOTE,
-		AST_SRQUOTE,
-		AST_DLQUOTE,
-		AST_DRQUOTE,
+		AST_SQUOTE,
+		AST_DQUOTE,
 		AST_DOLLAR,
 		AST_RDIN,
 		AST_RDOUT,
 		AST_APPEND,
 		AST_DELIM,
-		AST_PIPE,
-		AST_OR,
-		AST_AND,
 		AST_EOF,
 	} e_type;
 	t_data_type	data;
@@ -49,8 +47,9 @@ struct s_ast
 t_ast		*init_ast(int type);
 t_ast		*parser_parse(t_parser **parser);
 t_ast		*parse_command(t_parser **parser);
-t_ast		*init_node(t_ast *left, t_ast *right);
+t_ast		*init_node(t_ast *left, t_ast *right, int type);
 t_ast		*parse_and_cmd(t_parser **parser);
 t_ast		*parse_or_cmd(t_parser **parser);
 t_data_type	fill_struct(t_parser **start);
+void		free_ast(t_ast **ast);
 #endif

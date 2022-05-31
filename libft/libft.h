@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:52:52 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/19 12:22:09 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/28 18:03:12 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <string.h>
 # include "../Includes/list.h"
 
-t_list	*ft_lstlast(t_list *lst);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);

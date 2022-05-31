@@ -4,11 +4,14 @@ SRCS = minishell.c \
 	./lexer/parser.c \
 	./lexer/ast.c \
 	./lexer/list.c \
-	./lexer/parse_opperators.c
+	# ./exec/pipex/pipex_bonus.c \
+	# ./exec/pipex/pipex_bonus_child.c \
+	# ./exec/pipex/utils/ft_errors.c \
+	# ./exec/pipex/utils/ft_close_pipes.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g
+CFLAGS = -Werror -Wextra -Wall
 NAME = minishell
 LIBFT = ./libft/libft.a
 

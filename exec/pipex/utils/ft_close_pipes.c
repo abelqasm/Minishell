@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.h                                             :+:      :+:    :+:   */
+/*   ft_close_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 11:59:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/28 18:02:48 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/03/13 03:05:55 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/29 19:15:43 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIST_H
-# define LIST_H
+#include "../pipex.h"
 
-typedef struct s_args
+void	ft_close_pipes(t_pipex *pipex)
 {
-	char			*str;
-	struct s_args	*next;
-}	t_args;
+	int	i;
 
-typedef struct s_cmd_data
-{
-	t_args	*args;
-	t_args	*intput;
-	t_args	*output;
-}	t_cmd_data;
-
-t_args	*init_args(char *item);
-void	args_push(t_args **list, char *item);
-#endif
+	i = 0;
+	while (i < pipex->cmd_nbr - 1)
+	{
+		close(pipex->pipe[i][0]);
+		close(pipex->pipe[i][1]);
+		i++;
+	}
+}
