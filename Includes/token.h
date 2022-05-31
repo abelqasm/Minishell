@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:57:57 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/28 17:13:17 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:41:06 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_token
 		TOKEN_ID,
 		TOKEN_SQUOTE,
 		TOKEN_DQUOTE,
+		TOKEN_LPARENTH,
+		TOKEN_RPARENTH,
 		TOKEN_DOLLAR,
 		TOKEN_RDIN,
 		TOKEN_RDOUT,

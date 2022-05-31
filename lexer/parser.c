@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 17:24:49 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/28 18:44:47 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:31:11 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_ast	*parser_parse(t_parser **start)
 	int			type;
 
 	parser = *start;
-	tree = parse_command(&parser);
+	tree = parse_parenth(&parser);
 	if (parser->token->e_type == TOKEN_PIPE
 		|| parser->token->e_type == TOKEN_OR || parser->token->e_type == TOKEN_AND)
 	{
