@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:06:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/30 17:45:42 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 21:12:51 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_ast	*init_node(t_ast *left, t_ast *right, int type)
 		node = init_ast(AST_OR);
 	if (type == TOKEN_AND)
 		node = init_ast(AST_AND);
+	if ( type == AST_PARENTH)
+		node = init_ast(AST_PARENTH);
 	node->data.tree->left = left;
 	node->data.tree->right = right;
 	return (node);

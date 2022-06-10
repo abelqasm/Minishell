@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/31 21:13:18 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:58:34 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_data_type	fill_struct(t_parser **start)
 	parser = *start;
 	command->args = NULL;
 	while (parser->token->e_type != TOKEN_EOF && parser->token->e_type != TOKEN_PIPE
-			&& parser->token->e_type != TOKEN_OR && parser->token->e_type != TOKEN_AND)
+			&& parser->token->e_type != TOKEN_OR && parser->token->e_type != TOKEN_AND 
+			&& parser->token->e_type != TOKEN_RPARENTH)
 	{
 		if (parser->token->e_type == TOKEN_ID || parser->token->e_type == TOKEN_DOLLAR
 				|| parser->token->e_type == TOKEN_SQUOTE || parser->token->e_type == TOKEN_DQUOTE)

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/31 21:16:22 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 21:12:58 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ void	print_ast(t_ast *ast, int n)
 {
 	t_args	*tmp;
 
-	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR || ast->e_type == AST_AND)
+	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR || ast->e_type == AST_AND || ast->e_type == AST_PARENTH)
 	{
 		printf("%*s(\n", n*4,"");
 		print_ast(ast->data.tree->left, n + 1);
@@ -66,4 +66,4 @@ int	main(void)
 	}
 }
 
-// cat Makefile | ls -l || wc -l
+// ls -la | wc -l || cat Makefile

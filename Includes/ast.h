@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:18:21 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/31 18:39:11 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:18:52 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ struct s_ast
 		AST_OR,
 		AST_AND,
 		AST_COMMAND,
+		AST_PARENTH,
 		AST_ID,
 		AST_SQUOTE,
 		AST_DQUOTE,
