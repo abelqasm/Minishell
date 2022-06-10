@@ -1,6 +1,7 @@
 SRCS = minishell.c \
 	./lexer/lexer.c \
 	./lexer/token.c \
+	./lexer/token2.c \
 	./lexer/parser.c \
 	./lexer/ast.c \
 	./lexer/list.c \

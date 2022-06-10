@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:42:02 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 21:15:17 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 22:20:19 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_ast	*parse_parenth(t_parser **start)
 {
 	t_parser	*parser;
 	t_ast		*tree;
-	
+
 	parser = *start;
 	if (parser->token->e_type == TOKEN_LPARENTH)
 	{

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:06:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 21:12:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 22:17:06 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ t_ast	*init_node(t_ast *left, t_ast *right, int type)
 		node = init_ast(AST_OR);
 	if (type == TOKEN_AND)
 		node = init_ast(AST_AND);
-	if ( type == AST_PARENTH)
-		node = init_ast(AST_PARENTH);
 	node->data.tree->left = left;
 	node->data.tree->right = right;
 	return (node);
@@ -42,18 +40,19 @@ t_ast	*init_node(t_ast *left, t_ast *right, int type)
 
 void	free_ast(t_ast **tree)
 {
-	t_args *tmp;
+	t_args	*tmp;
 	t_ast	*ast;
-	
+
 	ast = *tree;
-	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR || ast->e_type == AST_AND)
+	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR
+		|| ast->e_type == AST_AND)
 	{
 		free_ast(&ast->data.tree->left);
 		free(ast->data.tree->left);
 		free_ast(&ast->data.tree->right);
 		free(ast->data.tree->right);
 		free(ast->data.tree);
-		return ; 
+		return ;
 	}
 	while (ast->data.command->args)
 	{

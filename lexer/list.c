@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 18:58:34 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 22:18:31 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ void	args_push(t_args **args, char *item)
 	push->next = init_args(item);
 }
 
+int	command_type(int type)
+{
+	if (type != TOKEN_EOF && type != TOKEN_PIPE && type != TOKEN_OR
+		&& type != TOKEN_AND && type != TOKEN_RPARENTH)
+		return (1);
+	return (0);
+}
+
 t_data_type	fill_struct(t_parser **start)
 {
 	t_parser	*parser;
@@ -47,9 +55,7 @@ t_data_type	fill_struct(t_parser **start)
 	command = malloc(sizeof(t_cmd_data));
 	parser = *start;
 	command->args = NULL;
-	while (parser->token->e_type != TOKEN_EOF && parser->token->e_type != TOKEN_PIPE
-			&& parser->token->e_type != TOKEN_OR && parser->token->e_type != TOKEN_AND 
-			&& parser->token->e_type != TOKEN_RPARENTH)
+	while (command_type(parser->token->e_type))
 	{
 		if (parser->token->e_type == TOKEN_ID || parser->token->e_type == TOKEN_DOLLAR
 				|| parser->token->e_type == TOKEN_SQUOTE || parser->token->e_type == TOKEN_DQUOTE)
@@ -69,7 +75,6 @@ t_data_type	fill_struct(t_parser **start)
 		free(parser->token);
 		parser->token = lexer_next_token(parser->lexer);
 	}
-	// free(parser->token);
 	*start = parser;
 	data.command = command;
 	return (data);

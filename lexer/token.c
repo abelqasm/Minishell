@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 19:01:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/10 22:35:11 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,6 @@ t_token	*lexer_parse_token(t_lexer *lexer, int type)
 	return (init_token(str, type));
 }
 
-t_token	*lexer_set_token_value(t_lexer *lexer, int type)
-{
-	char	*value;
-
-	value = malloc(sizeof(char) * 2);
-	value[0] = lexer->c;
-	value[1] = '\0';
-	lexer_advance(lexer);
-	if (type == TOKEN_OR || type == TOKEN_AND
-		|| type == TOKEN_APPEND || type == TOKEN_DELIM)
-	{
-		value = ft_realloc(value, sizeof(char) * 3);
-		ft_strlcat(value, (char []){lexer->c, 0}, 3);
-		lexer_advance(lexer);
-	}
-	return (init_token(value, type));
-}
-
 t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 {
 	char	*str;
@@ -77,8 +59,10 @@ t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 		if (lexer->c == '$' && type == TOKEN_DQUOTE)
 		{
 			env = lexer_parse_dollard(lexer);
-			str = ft_realloc(str, (ft_strlen(str) + ft_strlen(env->value) +1) * sizeof(char));
-			ft_strlcat(str, env->value, ft_strlen(str) + ft_strlen(env->value) +1);
+			str = ft_realloc(str, (ft_strlen(str)
+						+ ft_strlen(env->value) + 1) * sizeof(char));
+			ft_strlcat(str, env->value, ft_strlen(str)
+				+ ft_strlen(env->value) + 1);
 			free(env);
 		}
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
@@ -88,36 +72,4 @@ t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 	if (lexer->c == '"' || lexer->c == '\'')
 		lexer_advance(lexer);
 	return (init_token(str, type));
-}
-
-t_token	*lexer_next_token(t_lexer *lexer)
-{
-	lexer_skip_whitespace(lexer);
-	if (lexer->c == '$')
-		return (lexer_parse_dollard(lexer));
-	if (lexer->c == '(')
-		return (lexer_set_token_value(lexer, TOKEN_LPARENTH));
-	if (lexer->c == ')')
-		return (lexer_set_token_value(lexer, TOKEN_RPARENTH));
-	if (lexer_args_char(lexer->c) && lexer->c != '\'' && lexer->c != '"')
-		return (lexer_parse_token(lexer, TOKEN_ID));
-	if (lexer->c == '|' && lexer->cp == '|')
-		return (lexer_set_token_value(lexer, TOKEN_OR));
-	if (lexer->c == '&' && lexer->cp == '&')
-		return (lexer_set_token_value(lexer, TOKEN_AND));
-	if (lexer->c == '<' && lexer->cp == '<')
-		return (lexer_set_token_value(lexer, TOKEN_DELIM));
-	if (lexer->c == '>' && lexer->cp == '>')
-		return (lexer_set_token_value(lexer, TOKEN_APPEND));
-	if (lexer->c == '|')
-		return (lexer_set_token_value(lexer, TOKEN_PIPE));
-	if (lexer->c == '<')
-		return (lexer_set_token_value(lexer, TOKEN_RDIN));
-	if (lexer->c == '>')
-		return (lexer_set_token_value(lexer, TOKEN_RDOUT));
-	if (lexer->c == '\'')
-		return (lexer_parse_quote(lexer, TOKEN_SQUOTE));
-	if (lexer->c == '"')
-		return (lexer_parse_quote(lexer, TOKEN_DQUOTE));
-	return (lexer_set_token_value(lexer, TOKEN_EOF));
 }
