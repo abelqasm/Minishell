@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 22:22:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/11 17:51:18 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:54:06 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ t_token	*lexer_next_token(t_parser **parser)
 	{
 		if ((*parser)->token->e_type == TOKEN_PIPE
 			|| (*parser)->token->e_type == TOKEN_AND
-			|| (*parser)->token->e_type == TOKEN_OR)
+			|| (*parser)->token->e_type == TOKEN_OR
+			|| (*parser)->token->e_type == TOKEN_LPARENTH
+			|| (*parser)->token->e_type == TOKEN_RPARENTH)
 			free((*parser)->token->value);
 		free((*parser)->token);
 	}
