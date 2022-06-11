@@ -6,13 +6,14 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:57:57 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/11 16:01:24 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:52:50 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
+typedef struct s_parser	t_parser;
 typedef struct s_token
 {
 	char	*value;
@@ -34,13 +35,20 @@ typedef struct s_token
 		TOKEN_EOF,
 	} e_type;
 }	t_token;
-t_token	*init_token(char *str, int type);
-t_token	*lexer_next_token(t_lexer *lexer);
-t_token	*lexer_set_token_value(t_lexer *lexer, int type);
-t_token	*lexer_help_set_token(t_lexer *lexer);
-t_token	*lexer_parse_token(t_lexer *lexe, int type);
-t_token	*lexer_parse_dollard(t_lexer *lexer);
-t_token	*lexer_parse_expand(t_lexer *lexer);
-t_token	*lexer_parse_quote(t_lexer *lexer, int type);
-void	ft_tokenize(char *str);
+struct s_parser
+{
+	t_token	*token;
+	t_lexer	*lexer;
+};
+t_parser	*init_parser(t_lexer *lexer);
+t_token		*init_token(char *str, int type);
+t_token		*lexer_next_token(t_parser **parser);
+t_token		*lexer_set_token_value(t_lexer *lexer, int type);
+t_token		*lexer_help_set_token(t_lexer *lexer);
+t_token		*lexer_parse_token(t_lexer *lexe, int type);
+t_token		*lexer_parse_dollard(t_lexer *lexer);
+t_token		*lexer_parse_expand(t_lexer *lexer);
+t_token		*lexer_parse_quote(t_lexer *lexer, int type);
+t_token		*lexer_tokenize(t_lexer *lexer);
+void		ft_tokenize(char *str);
 #endif

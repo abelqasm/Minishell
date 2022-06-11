@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/22 13:30:23 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:41:30 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include "./libft/libft.h"
 # include "./Includes/lexer.h"
 # include "./Includes/token.h"
-# include "./Includes/parser.h"
 # include "./Includes/ast.h"
 # include "./Includes/list.h"
 

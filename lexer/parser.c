@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 17:24:49 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 22:20:00 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:42:42 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_parser	*init_parser(t_lexer *lexer)
 
 	parser = malloc(sizeof(t_parser));
 	parser->lexer = lexer;
-	parser->token = lexer_next_token(parser->lexer);
+	parser->token = NULL;
+	parser->token = lexer_next_token(&parser);
 	return (parser);
 }
 
@@ -45,8 +46,7 @@ t_ast	*parser_parse(t_parser **start)
 		|| parser->token->e_type == TOKEN_AND)
 	{
 		type = parser->token->e_type;
-		free(parser->token->value);
-		parser->token = lexer_next_token(parser->lexer);
+		parser->token = lexer_next_token(&parser);
 		tree2 = parser_parse(&parser);
 		return (init_node(tree, tree2, type));
 	}

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 22:22:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 22:55:15 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:51:18 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ t_token	*lexer_help_set_token(t_lexer *lexer)
 	return (lexer_set_token_value(lexer, TOKEN_EOF));
 }
 
-t_token	*lexer_next_token(t_lexer *lexer)
+t_token	*lexer_tokenize(t_lexer *lexer)
 {
-	lexer_skip_whitespace(lexer);
 	if (lexer->c == '(' || lexer->c == ')' || lexer->c == '|'
 		|| lexer->c == '&' || lexer->c == '>' || lexer->c == '<')
 		return (lexer_help_set_token(lexer));
@@ -68,4 +67,18 @@ t_token	*lexer_next_token(t_lexer *lexer)
 	if (lexer->c == '"')
 		return (lexer_parse_quote(lexer, TOKEN_DQUOTE));
 	return (lexer_set_token_value(lexer, TOKEN_EOF));
+}
+
+t_token	*lexer_next_token(t_parser **parser)
+{
+	lexer_skip_whitespace((*parser)->lexer);
+	if ((*parser)->token)
+	{
+		if ((*parser)->token->e_type == TOKEN_PIPE
+			|| (*parser)->token->e_type == TOKEN_AND
+			|| (*parser)->token->e_type == TOKEN_OR)
+			free((*parser)->token->value);
+		free((*parser)->token);
+	}
+	return (lexer_tokenize((*parser)->lexer));
 }
