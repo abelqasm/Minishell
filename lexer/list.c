@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/11 15:56:07 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:34:02 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	fill_redirect(t_parser **start, t_cmd_data **cmd)
 
 	parser = *start;
 	command = *cmd;
-	command->intput = NULL;
-	command->output = NULL;
 	if (parser->token->e_type == TOKEN_RDIN)
 	{
 		free(parser->token);
@@ -79,6 +77,8 @@ t_data_type	fill_struct(t_parser **start)
 	command = malloc(sizeof(t_cmd_data));
 	parser = *start;
 	command->args = NULL;
+	command->intput = NULL;
+	command->output = NULL;
 	while (command_type(parser->token->e_type))
 	{
 		if (parser->token->e_type == TOKEN_ID

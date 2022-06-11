@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:06:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 22:17:06 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:34:34 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,41 @@ t_ast	*init_node(t_ast *left, t_ast *right, int type)
 	return (node);
 }
 
-void	free_ast(t_ast **tree)
+void	free_ast(t_ast **ast)
 {
 	t_args	*tmp;
-	t_ast	*ast;
 
-	ast = *tree;
-	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR
-		|| ast->e_type == AST_AND)
+	if ((*ast)->e_type == AST_PIPE || (*ast)->e_type == AST_OR
+		|| (*ast)->e_type == AST_AND)
 	{
-		free_ast(&ast->data.tree->left);
-		free(ast->data.tree->left);
-		free_ast(&ast->data.tree->right);
-		free(ast->data.tree->right);
-		free(ast->data.tree);
+		free_ast(&(*ast)->data.tree->left);
+		free((*ast)->data.tree->left);
+		free_ast(&(*ast)->data.tree->right);
+		free((*ast)->data.tree->right);
+		free((*ast)->data.tree);
 		return ;
 	}
-	while (ast->data.command->args)
+	while ((*ast)->data.command->args)
 	{
-		tmp = ast->data.command->args;
-		free(ast->data.command->args->str);
-		ast->data.command->args = ast->data.command->args->next;
+		if ((*ast)->data.command->intput)
+			free((*ast)->data.command->intput);
+		if ((*ast)->data.command->output)
+			free((*ast)->data.command->output);
+		tmp = (*ast)->data.command->args;
+		free((*ast)->data.command->args->str);
+		(*ast)->data.command->args = (*ast)->data.command->args->next;
 		free(tmp);
 	}
-	free(ast->data.command);
+	free((*ast)->data.command);
+}
+
+void	free_tree(t_ast **ast, t_parser **parser)
+{
+	free_ast(ast);
+	free((*parser)->lexer->str);
+	free((*parser)->lexer);
+	free((*parser)->token->value);
+	free((*parser)->token);
+	free((*parser));
+	free(*ast);
 }

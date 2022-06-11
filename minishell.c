@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 21:12:58 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:31:49 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ void	ft_tokenize(char *str)
 	lexer = init_lexer(str);
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser);
-	print_ast(ast, 0);
-	free(lexer);
-	// free_ast(&ast);
-	free(parser);
-	free(ast);
+	// print_ast(ast, 0);
+	free_tree(&ast, &parser);
 }
 
 int	main(void)
@@ -62,7 +59,6 @@ int	main(void)
 	{
 		str = readline("myshell >");
 		ft_tokenize(str);
-		free(str);
 	}
 }
 

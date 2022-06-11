@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:18:21 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 18:18:52 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 16:29:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ t_ast		*parse_parenth(t_parser **start);
 t_ast		*parse_or_cmd(t_parser **parser);
 t_data_type	fill_struct(t_parser **start);
 void		free_ast(t_ast **ast);
+void		free_tree(t_ast **ast, t_parser **parser);
 #endif
