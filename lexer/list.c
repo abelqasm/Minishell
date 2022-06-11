@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 22:18:31 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 15:56:07 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,30 @@ int	command_type(int type)
 	return (0);
 }
 
+void	fill_redirect(t_parser **start, t_cmd_data **cmd)
+{
+	t_parser	*parser;
+	t_cmd_data	*command;
+
+	parser = *start;
+	command = *cmd;
+	command->intput = NULL;
+	command->output = NULL;
+	if (parser->token->e_type == TOKEN_RDIN)
+	{
+		free(parser->token);
+		parser->token = lexer_next_token(parser->lexer);
+		args_push(&command->intput, parser->token->value);
+	}
+	if (parser->token->e_type == TOKEN_RDOUT)
+	{
+		free(parser->token);
+		parser->token = lexer_next_token(parser->lexer);
+		args_push(&command->output, parser->token->value);
+	}
+	*start = parser;
+}
+
 t_data_type	fill_struct(t_parser **start)
 {
 	t_parser	*parser;
@@ -57,21 +81,14 @@ t_data_type	fill_struct(t_parser **start)
 	command->args = NULL;
 	while (command_type(parser->token->e_type))
 	{
-		if (parser->token->e_type == TOKEN_ID || parser->token->e_type == TOKEN_DOLLAR
-				|| parser->token->e_type == TOKEN_SQUOTE || parser->token->e_type == TOKEN_DQUOTE)
+		if (parser->token->e_type == TOKEN_ID
+			|| parser->token->e_type == TOKEN_DOLLAR
+			|| parser->token->e_type == TOKEN_SQUOTE
+			|| parser->token->e_type == TOKEN_DQUOTE)
 			args_push(&command->args, parser->token->value);
-		if (parser->token->e_type == TOKEN_RDIN)
-		{
-			free(parser->token);
-			parser->token = lexer_next_token(parser->lexer);
-			args_push(&command->intput, parser->token->value);
-		}
-		if (parser->token->e_type == TOKEN_RDOUT)
-		{
-			free(parser->token);
-			parser->token = lexer_next_token(parser->lexer);
-			args_push(&command->output, parser->token->value);
-		}
+		if (parser->token->e_type == TOKEN_RDIN
+			|| parser->token->e_type == TOKEN_RDOUT)
+			fill_redirect(&parser, &command);
 		free(parser->token);
 		parser->token = lexer_next_token(parser->lexer);
 	}
