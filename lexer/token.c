@@ -6,11 +6,17 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/12 15:58:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/12 16:17:39 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	lexer_advance_quotes(t_lexer *lexer)
+{
+	if (lexer->c == '"' || lexer->c == '\'')
+		lexer_advance(lexer);
+}
 
 t_token	*lexer_parse_dollard(t_lexer *lexer)
 {
@@ -56,8 +62,7 @@ t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 		|| (lexer->c == ' ' || lexer->c == '\f' || lexer->c == '\v'
 			|| lexer->c == '\t' || lexer->c == '\r' || lexer->c == '\n'))
 	{
-		if (lexer->c == '"' || lexer->c == '\'')
-			lexer_advance(lexer);
+		lexer_advance_quotes(lexer);
 		if (lexer->c == '$' && type == TOKEN_DQUOTE)
 		{
 			env = lexer_parse_dollard(lexer);
@@ -71,7 +76,6 @@ t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
 		lexer_advance(lexer);
 	}
-	if (lexer->c == '"' || lexer->c == '\'')
-		lexer_advance(lexer);
+	lexer_advance_quotes(lexer);
 	return (init_token(str, type));
 }
