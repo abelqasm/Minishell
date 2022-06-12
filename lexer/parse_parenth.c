@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:42:02 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/11 17:33:56 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/11 18:28:09 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ t_ast	*parse_parenth(t_parser **start)
 		{
 			parser->token = lexer_next_token(&parser);
 			return (tree);
+		}
+		else
+		{
+			free_ast(&tree);
+			printf("mn nytek???\n");
+			exit(0);
 		}
 	}
 	*start = parser;

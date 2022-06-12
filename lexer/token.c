@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/10 22:35:11 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:58:51 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 
 	str = ft_calloc(1, sizeof(char));
 	lexer_advance(lexer);
-	while ((ft_isprint(lexer->c) && lexer->c != '"' && lexer->c != '\'')
+	while (lexer_args_char(lexer->c)
 		|| (lexer->c == ' ' || lexer->c == '\f' || lexer->c == '\v'
 			|| lexer->c == '\t' || lexer->c == '\r' || lexer->c == '\n'))
 	{
+		if (lexer->c == '"' || lexer->c == '\'')
+			lexer_advance(lexer);
 		if (lexer->c == '$' && type == TOKEN_DQUOTE)
 		{
 			env = lexer_parse_dollard(lexer);
