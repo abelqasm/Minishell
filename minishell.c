@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/13 19:54:05 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:25:40 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_ast(t_ast *ast, int n)
 	}
 }
 
-void	ft_tokenize(char *str)
+void	ft_tokenize(char *str, char **env)
 {
 	t_parser	*parser;
 	t_lexer		*lexer;
@@ -39,25 +39,22 @@ void	ft_tokenize(char *str)
 	lexer = init_lexer(str);
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser);
-	print_ast(ast, 0);
+	// print_ast(ast, 0);
+	execute(ast->data.command, env);
 	free_tree(&ast, &parser);
 }
 
-static void sigintHandler(int sig)
+int	main(int argc, char **argv, char **env)
 {
-	printf("%d\n", sig);
-	exit(EXIT_SUCCESS);
-}
-
-int	main(void)
-{
+	(void)argc;
+	(void)argv;
 	char	*str;
 
-	signal(SIGINT, sigintHandler);
 	while (1)
 	{
 		str = readline("myshell >");
-		ft_tokenize(str);
+		add_history(str);
+		ft_tokenize(str, env);
 	}
 }
 

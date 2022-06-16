@@ -6,12 +6,13 @@ SRCS = minishell.c \
 	./lexer/ast.c \
 	./lexer/list.c \
 	./lexer/parse_parenth.c \
+	./exec/execute.c \
 	# ./exec/pipex/pipex_bonus.c \
 	# ./exec/pipex/pipex_bonus_child.c \
 	# ./exec/pipex/utils/ft_errors.c \
 	# ./exec/pipex/utils/ft_close_pipes.c
 OBJS = $(SRCS:.c=.o)
-
+LFLAGS = -lreadline
 CC = cc
 CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
 NAME = minishell
@@ -20,7 +21,7 @@ LIBFT = ./libft/libft.a
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) -o $(NAME)
 
 $(LIBFT) :
 	cd ./libft && make

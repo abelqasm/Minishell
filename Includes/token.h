@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:57:57 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/13 16:56:58 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:56:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ t_token		*lexer_parse_dollard(t_lexer *lexer);
 t_token		*lexer_parse_expand(t_lexer *lexer);
 t_token		*lexer_parse_quote(t_lexer *lexer, int type);
 t_token		*lexer_tokenize(t_lexer *lexer);
-void		ft_tokenize(char *str);
+void		ft_tokenize(char *str, char **env);
 #endif

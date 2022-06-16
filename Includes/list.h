@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:59:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/28 18:02:48 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:30:52 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_cmd_data
 	t_args	*args;
 	t_args	*intput;
 	t_args	*output;
+	int		in;
+	int		out;
 }	t_cmd_data;
 
 t_args	*init_args(char *item);
