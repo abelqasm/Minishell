@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/16 16:25:40 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:49:10 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,15 @@ void	ft_tokenize(char *str, char **env)
 	t_parser	*parser;
 	t_lexer		*lexer;
 	t_ast		*ast;
+	t_exec		*exec;
 	
 	lexer = init_lexer(str);
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser);
+	exec = init_exec(env);
 	// print_ast(ast, 0);
-	execute(ast->data.command, env);
+	// printf("%s\n", ast->data.tree->right->data.tree->left->data.command->args->str);
+	exec_ast(ast, exec, 0);
 	free_tree(&ast, &parser);
 }
 

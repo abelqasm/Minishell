@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/16 17:38:48 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:21:47 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ char	*ft_find_cmd(char **paths, char *cmd)
 
 void	open_io(t_cmd_data *data)
 {
-	data->in = 0;
-	data->out = 1;
 	while (data->intput)
 	{
 		data->in = open(data->intput->str, O_RDWR | O_CREAT, 0644);
@@ -57,6 +55,7 @@ void	execute(t_cmd_data *data, char **env)
 	path = ft_split(envp, ':');
 	cmd_path = ft_find_cmd(path, data->args->str);
 	open_io(data);
+	printf("[%d] [%d]\n", data->in, data->out);
 	dup2(data->in, STDIN_FILENO);
 	dup2(data->out, STDOUT_FILENO);
 	execve(cmd_path, &data->args->str, env);
