@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:06:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/16 15:05:52 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:08:00 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,21 @@ t_ast	*init_node(t_ast *left, t_ast *right, int type)
 	return (node);
 }
 
-void	free_ast(t_ast **ast)
+void	free_args(t_args **args)
 {
 	t_args	*tmp;
 
+	while ((*args))
+	{
+		tmp = *args;
+		free((*args)->str);
+		(*args) = (*args)->next;
+		free(tmp);
+	}
+}
+
+void	free_ast(t_ast **ast)
+{
 	if ((*ast)->e_type == AST_PIPE || (*ast)->e_type == AST_OR
 		|| (*ast)->e_type == AST_AND)
 	{
@@ -52,17 +63,9 @@ void	free_ast(t_ast **ast)
 		free((*ast)->data.tree);
 		return ;
 	}
-	while ((*ast)->data.command->args)
-	{
-		if ((*ast)->data.command->intput)
-			free((*ast)->data.command->intput);
-		if ((*ast)->data.command->output)
-			free((*ast)->data.command->output);
-		tmp = (*ast)->data.command->args;
-		free((*ast)->data.command->args->str);
-		(*ast)->data.command->args = (*ast)->data.command->args->next;
-		free(tmp);
-	}
+	free_args(&(*ast)->data.command->args);
+	free_args(&(*ast)->data.command->intput);
+	free_args(&(*ast)->data.command->output);
 	free((*ast)->data.command);
 }
 
