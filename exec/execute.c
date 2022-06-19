@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/18 18:42:14 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:38:36 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,23 @@ char	*ft_find_cmd(char **paths, char *cmd)
 	char	*cmd_path;
 	char	*tmp;
 
+	if (cmd[0] != '/')
+	{
+		while (paths && *paths)
+		{
+			tmp = ft_strjoin(*paths, "/");
+			cmd_path = ft_strjoin(tmp, cmd);
+			free(tmp);
+			if (access(cmd_path, F_OK) == 0)
+				return (cmd_path);
+			free(cmd_path);
+			paths++;
+		}
+	}
 	while (paths && *paths)
 	{
-		tmp = ft_strjoin(*paths, "/");
-		cmd_path = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(cmd_path, F_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
+		if (access(cmd, F_OK) == 0)
+			return (cmd);
 		paths++;
 	}
 	printf("command not found: %s\n", cmd);
