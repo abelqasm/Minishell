@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/19 17:54:26 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:57:32 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	fd_management(t_ast *ast, t_exec *exec, int flag)
 {
-	printf("%d\n", exec->i);
 	if (flag == 2)
 	{
 		ast->data.command->in = exec->pipe[exec->i][0];

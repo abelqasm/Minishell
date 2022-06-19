@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/19 15:38:36 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:59:48 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ void	execute(t_cmd_data *data, char **env)
 		close(data->out);
 	}
 	execve(cmd_path, args, env);
+	exit(1);
 }
