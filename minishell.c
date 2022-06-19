@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/19 16:17:49 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/19 17:45:53 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_tokenize(char *str, char **env)
 	lexer = init_lexer(str);
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser, &pipe);
-	printf("%d\n", pipe);
 	exec = init_exec(env, pipe);
 	// print_ast(ast, 0);
 	exec_ast(ast, exec, 0);
