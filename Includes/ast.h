@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:18:21 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/19 16:12:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:36:53 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,6 @@ struct s_ast
 		AST_AND,
 		AST_COMMAND,
 		AST_PARENTH,
-		AST_ID,
-		AST_SQUOTE,
-		AST_DQUOTE,
-		AST_DOLLAR,
-		AST_RDIN,
-		AST_RDOUT,
-		AST_APPEND,
-		AST_DELIM,
 		AST_EOF,
 	} e_type;
 	t_data_type	data;

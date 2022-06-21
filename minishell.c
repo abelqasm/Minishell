@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/19 17:45:53 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:23:19 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_ast(t_ast *ast, int n)
 {
-	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR || ast->e_type == AST_AND || ast->e_type == AST_PARENTH)
+	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR || ast->e_type == AST_AND)
 	{
 		printf("%*s(\n", n*4,"");
 		print_ast(ast->data.tree->left, n + 1);

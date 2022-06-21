@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/19 18:57:32 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:54:05 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	fd_management(t_ast *ast, t_exec *exec, int flag)
 {
+	printf("{%d}\n", exec->i);
 	if (flag == 2)
 	{
 		ast->data.command->in = exec->pipe[exec->i][0];
@@ -45,16 +46,20 @@ void	exec_ast(t_ast *ast, t_exec *exec, int flag)
 	pid_t	pid;
 
 	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR
-		|| ast->e_type == AST_AND || ast->e_type == AST_PARENTH)
+		|| ast->e_type == AST_AND)
 	{
 		exec->i++;
+		if (ast->data.tree->left->e_type != AST_COMMAND)
+			exec->i--;
 		flag = 1;
 		exec_ast(ast->data.tree->left, exec, flag);
+		if (ast->data.tree->left->e_type != AST_COMMAND)
+			exec->i++;
 		flag = 2;
 		exec_ast(ast->data.tree->right, exec, flag);
 		return ;
 	}
-	else
+	if (ast->e_type == AST_COMMAND)
 		fd_management(ast, exec, flag);
 	pid = fork();
 	if (pid == 0)
