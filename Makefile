@@ -1,4 +1,5 @@
 SRCS = minishell.c \
+	execute_shell.c \
 	./lexer/lexer.c \
 	./lexer/token.c \
 	./lexer/token2.c \

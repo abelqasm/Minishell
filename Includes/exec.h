@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 14:02:29 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 15:09:24 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_exec
 	int		**pipe;
 	int		i;
 	int		first;
+	int		pipe_parenth;
 	int		n_pipe;
 }	t_exec;
 t_exec	*init_exec(char **env, int n_pipe);

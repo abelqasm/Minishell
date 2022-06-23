@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 14:41:36 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:12:45 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	fd_management(t_ast *ast, t_exec *exec, int flag)
 	if (flag == 2)
 	{
 		ast->data.command->in = exec->pipe[exec->i][0];
-		// if (exec->i + 1 < exec->n_pipe)
-		// 	ast->data.command->out = exec->pipe[exec->i + 1][1];
-		// else
-			ast->data.command->out = 1;
+		if (exec->pipe_parenth == 1)
+			ast->data.command->out = exec->pipe[exec->i + 1][1];
+		else
+		ast->data.command->out = 1;
 	}
 	else if (flag == 1)
 	{
@@ -64,7 +64,7 @@ int	exec_ast(t_ast *ast, t_exec *exec, int flag)
 		execute(ast->data.command, exec->env);
 	if (ast->data.command->out != 1)
 		close(ast->data.command->out);
-	wait(&exit_value);	
+	wait(&exit_value);
 	if (WEXITSTATUS(exit_value) == 0)
 		return (0);
 	return (1);
