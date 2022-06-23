@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/22 19:24:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:40:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_tokenize(char *str, char **env)
 	t_ast		*ast;
 	t_exec		*exec;
 	int			pipe;
+	int			exit_value;
 
 	pipe = 0;
 	lexer = init_lexer(str);
@@ -44,13 +45,16 @@ void	ft_tokenize(char *str, char **env)
 	ast = parser_parse(&parser, &pipe);
 	exec = init_exec(env, pipe);
 	// print_ast(ast, 0);
-	if (ast->e_type != AST_COMMAND && ast->data.tree->left->e_type != AST_COMMAND)
-	{
-		exec_ast(ast->data.tree->left, exec, 0);
-		exec_ast(ast->data.tree->right, exec, 0);
-	}
-	else
+	if (ast->e_type == AST_COMMAND || ast->data.tree->left->e_type == AST_COMMAND)
 		exec_ast(ast, exec, 0);
+	else
+	{
+		exit_value = exec_ast(ast->data.tree->left, exec, 0);
+		if (exit_value != 0 && ast->e_type == AST_OR)
+			exec_ast(ast->data.tree->right, exec, 0);
+		if (exit_value == 0 && ast->e_type == AST_AND)
+			exec_ast(ast->data.tree->right, exec, 0);
+	}
 	free_tree(&ast, &parser);
 }
 
@@ -63,6 +67,11 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		str = readline("myshell >");
+		if (!str)
+		{
+			printf("exit\n");
+			exit(1);
+		}
 		add_history(str);
 		ft_tokenize(str, env);
 	}

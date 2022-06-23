@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/22 19:33:10 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:41:36 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void	fd_management(t_ast *ast, t_exec *exec, int flag)
 	}
 }
 
-void	exec_ast(t_ast *ast, t_exec *exec, int flag)
+int	exec_ast(t_ast *ast, t_exec *exec, int flag)
 {
 	pid_t	pid;
+	int		exit_value;
 
 	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR
 		|| ast->e_type == AST_AND)
@@ -51,8 +52,10 @@ void	exec_ast(t_ast *ast, t_exec *exec, int flag)
 		flag = 1;
 		exec_ast(ast->data.tree->left, exec, flag);
 		flag = 2;
-		exec_ast(ast->data.tree->right, exec, flag);
-		return ;
+		exit_value = exec_ast(ast->data.tree->right, exec, flag);
+		if (exit_value == 0)
+			return (0);
+		return (1);
 	}
 	if (ast->e_type == AST_COMMAND)
 		fd_management(ast, exec, flag);
@@ -61,5 +64,8 @@ void	exec_ast(t_ast *ast, t_exec *exec, int flag)
 		execute(ast->data.command, exec->env);
 	if (ast->data.command->out != 1)
 		close(ast->data.command->out);
-	wait(NULL);
+	wait(&exit_value);	
+	if (WEXITSTATUS(exit_value) == 0)
+		return (0);
+	return (1);
 }

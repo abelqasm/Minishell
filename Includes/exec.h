@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/21 13:59:53 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:02:29 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ char	*ft_find_cmd(char **paths, char *cmd);
 char	*join_args(t_args *args);
 void	execute(t_cmd_data *data, char **env);
 void	open_io(t_cmd_data *data);
-void	exec_ast(t_ast *ast, t_exec *exec, int flag);
+int		exec_ast(t_ast *ast, t_exec *exec, int flag);
 #endif
