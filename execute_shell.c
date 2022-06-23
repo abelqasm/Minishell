@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 16:15:04 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:32:58 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe)
 	free_tree(ast, parser);
 	if (n_pipe)
 	{
-		(*exec)->i = 0;
+		(*exec)->i = -1;
 		while (++(*exec)->i < n_pipe)
 			free((*exec)->pipe[(*exec)->i]);
 		free((*exec)->pipe);
