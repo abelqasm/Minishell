@@ -6,17 +6,11 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/13 17:23:56 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:05:19 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	lexer_advance_quotes(t_lexer *lexer)
-{
-	if (lexer->c == '"' || lexer->c == '\'')
-		lexer_advance(lexer);
-}
 
 t_token	*lexer_parse_dollard(t_lexer *lexer)
 {
@@ -51,7 +45,7 @@ t_token	*lexer_parse_token(t_lexer *lexer, int type)
 	return (init_token(str, type));
 }
 
-t_token	*lexer_parse_quote(t_lexer *lexer, int type)
+t_token	*lexer_parse_double_quote(t_lexer *lexer, int type)
 {
 	char	*str;
 	t_token	*env;
@@ -62,8 +56,7 @@ t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 		|| (lexer->c == ' ' || lexer->c == '\f' || lexer->c == '\v'
 			|| lexer->c == '\t' || lexer->c == '\r' || lexer->c == '\n'))
 	{
-		lexer_advance_quotes(lexer);
-		if (lexer->c == '$' && type == TOKEN_DQUOTE)
+		if (lexer->c == '$')
 		{
 			env = lexer_parse_dollard(lexer);
 			str = ft_realloc(str, (ft_strlen(str)
@@ -75,7 +68,27 @@ t_token	*lexer_parse_quote(t_lexer *lexer, int type)
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
 		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
 		lexer_advance(lexer);
+		if (lexer->c == '"' && lexer_args_char(lexer->cp))
+			lexer_advance(lexer);
 	}
-	lexer_advance_quotes(lexer);
+	return (init_token(str, type));
+}
+
+t_token	*lexer_parse_single_quote(t_lexer *lexer, int type)
+{
+	char	*str;
+
+	str = ft_calloc(1, sizeof(char));
+	lexer_advance(lexer);
+	while (lexer_args_char(lexer->c)
+		|| (lexer->c == ' ' || lexer->c == '\f' || lexer->c == '\v'
+			|| lexer->c == '\t' || lexer->c == '\r' || lexer->c == '\n'))
+	{
+		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
+		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
+		lexer_advance(lexer);
+		if (lexer->c == '\'' && lexer_args_char(lexer->cp))
+			lexer_advance(lexer);
+	}
 	return (init_token(str, type));
 }

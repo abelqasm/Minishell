@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 16:10:34 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:06:54 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ void	print_ast(t_ast *ast, int n)
 {
 	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR || ast->e_type == AST_AND)
 	{
-		printf("%*s(\n", n*4,"");
+		printf("%*s(\n", n*4, "");
 		print_ast(ast->data.tree->left, n + 1);
-		printf("%*s|\n", n*4,"");
+		printf("%*s|\n", n*4, "");
 		print_ast(ast->data.tree->right, n + 1);
-		printf("%*s)\n", n*4,"");
+		printf("%*s)\n", n*4, "");
 		return ;
 	}
 	while (ast->data.command->args)
 	{
-		printf("%*sthis is the value :%s\n", n*4, "",ast->data.command->args->str);
+		printf("%*sthis is the value :%s\n", n*4, "", ast->data.command->args->str);
 		ast->data.command->args = ast->data.command->args->next;
 	}
 }
