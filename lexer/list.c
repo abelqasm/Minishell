@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 18:57:36 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/24 19:06:32 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,12 @@ int	command_type(int type)
 void	fill_redirect(t_parser **start, t_cmd_data **cmd)
 {
 	t_parser	*parser;
-	t_cmd_data	*command;
 
 	parser = *start;
-	command = *cmd;
 	if (parser->token->e_type == TOKEN_RDIN)
-	{
-		parser->token = lexer_next_token(&parser);
-		args_push(&command->intput, parser->token->value);
-	}
+		fill_rdin(start, cmd);
 	if (parser->token->e_type == TOKEN_RDOUT)
-	{
-		parser->token = lexer_next_token(&parser);
-		args_push(&command->output, parser->token->value);
-	}
-	*start = parser;
+		fill_rdout(start, cmd);
 }
 
 t_data_type	fill_struct(t_parser **start)
@@ -77,6 +68,8 @@ t_data_type	fill_struct(t_parser **start)
 	command->args = NULL;
 	command->intput = NULL;
 	command->output = NULL;
+	command->in = 0;
+	command->out = 1;
 	while (command_type(parser->token->e_type))
 	{
 		if (parser->token->e_type == TOKEN_ID

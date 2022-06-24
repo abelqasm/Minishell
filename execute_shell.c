@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 16:32:58 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:38:01 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,29 @@ void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe)
 	free((*exec));
 }
 
-void	execute_tree(t_ast *ast, t_exec *exec)
+int	execute_tree(t_ast *ast, t_exec *exec, int flag)
 {
 	int	exit_value;
 
-	if (ast->e_type == AST_COMMAND
-		|| ast->data.tree->left->e_type == AST_COMMAND)
-		exec_ast(ast, exec, 0);
-	else
+	if (ast->e_type != AST_COMMAND && ast->data.tree->left->e_type != AST_COMMAND)
 	{
 		if (ast->e_type == AST_PIPE)
 			exec->pipe_parenth = 1;
-		exit_value = exec_ast(ast->data.tree->left, exec, 0);
-		if (ast->e_type != AST_PIPE)
-			exec->first = 1;
+		exit_value = execute_tree(ast->data.tree->left, exec, 0);
 		if (ast->e_type == AST_PIPE)
 		{
 			exec->i++;
-			exec->pipe_parenth = 0;
-			exec_ast(ast->data.tree->right, exec, 2);
+			execute_tree(ast->data.tree->right, exec, 2);
 		}
 		if (exit_value != 0 && ast->e_type == AST_OR)
-			exec_ast(ast->data.tree->right, exec, 0);
+			execute_tree(ast->data.tree->right, exec, flag);
 		if (exit_value == 0 && ast->e_type == AST_AND)
-			exec_ast(ast->data.tree->right, exec, 0);
+			execute_tree(ast->data.tree->right, exec, flag);
+		return (0);
 	}
+	if (execute_ast(ast, exec, flag) == 1)
+		return (1);
+	return (0);
 }
 
 void	execute_shell(char *str, char **env)
@@ -65,6 +63,9 @@ void	execute_shell(char *str, char **env)
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser, &pipe);
 	exec = init_exec(env, pipe);
-	execute_tree(ast, exec);
+	if (!parser->syntax_error)
+		execute_tree(ast, exec, 0);
+	else
+		printf("syntax error\n");
 	free_shell(&ast, &parser, &exec, pipe);
 }

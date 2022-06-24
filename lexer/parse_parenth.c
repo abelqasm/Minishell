@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:42:02 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/19 16:12:28 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:39:25 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_ast	*parse_parenth(t_parser **start, int *pipe)
 	t_ast		*tree;
 
 	parser = *start;
+	if (parser->token->e_type == TOKEN_PIPE)
+		parser->syntax_error++;
 	if (parser->token->e_type == TOKEN_LPARENTH)
 	{
 		parser->token = lexer_next_token(&parser);
@@ -28,11 +30,7 @@ t_ast	*parse_parenth(t_parser **start, int *pipe)
 			return (tree);
 		}
 		else
-		{
-			free_ast(&tree);
-			printf("mn nytek???\n");
-			exit(0);
-		}
+			parser->syntax_error++;
 	}
 	*start = parser;
 	return (parse_command(&parser));

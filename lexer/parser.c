@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 17:24:49 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 15:39:34 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:50:32 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_parser	*init_parser(t_lexer *lexer)
 	parser->lexer = lexer;
 	parser->token = NULL;
 	parser->token = lexer_next_token(&parser);
+	parser->syntax_error = 0;
 	return (parser);
 }
 
@@ -32,6 +33,14 @@ t_ast	*parse_command(t_parser **parser)
 	return (tree);
 }
 
+int	token_type(int type)
+{
+	if (type == TOKEN_PIPE || type == TOKEN_OR
+		|| type == TOKEN_AND)
+		return (1);
+	return (0);
+}
+
 t_ast	*parser_parse(t_parser **start, int *pipe)
 {
 	t_parser	*parser;
@@ -41,13 +50,14 @@ t_ast	*parser_parse(t_parser **start, int *pipe)
 
 	parser = *start;
 	tree = parse_parenth(&parser, pipe);
-	if (parser->token->e_type == TOKEN_PIPE
-		|| parser->token->e_type == TOKEN_OR
-		|| parser->token->e_type == TOKEN_AND)
+	if (token_type(parser->token->e_type))
 	{
 		(*pipe)++;
 		type = parser->token->e_type;
 		parser->token = lexer_next_token(&parser);
+		if (parser->token->e_type == TOKEN_EOF
+			|| token_type(parser->token->e_type))
+			parser->syntax_error++;
 		tree2 = parser_parse(&parser, pipe);
 		return (init_node(tree, tree2, type));
 	}

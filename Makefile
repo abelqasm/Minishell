@@ -6,10 +6,11 @@ SRCS = minishell.c \
 	./lexer/parser.c \
 	./lexer/ast.c \
 	./lexer/list.c \
+	./lexer/redirect.c \
 	./lexer/parse_parenth.c \
 	./exec/init_exec.c \
 	./exec/execute.c \
-	./exec/exec_ast.c \
+	./exec/execute_ast.c \
 	# ./exec/pipex/pipex_bonus.c \
 	# ./exec/pipex/pipex_bonus_child.c \
 	# ./exec/pipex/utils/ft_errors.c \

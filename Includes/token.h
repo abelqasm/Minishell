@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:57:57 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 18:57:03 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/24 19:07:53 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ struct s_parser
 {
 	t_token	*token;
 	t_lexer	*lexer;
+	int		syntax_error;
 };
 t_parser	*init_parser(t_lexer *lexer);
 t_token		*init_token(char *str, int type);
@@ -51,5 +52,7 @@ t_token		*lexer_parse_expand(t_lexer *lexer);
 t_token		*lexer_parse_single_quote(t_lexer *lexer, int type);
 t_token		*lexer_parse_double_quote(t_lexer *lexer, int type);
 t_token		*lexer_tokenize(t_lexer *lexer);
+void	fill_rdin(t_parser **start, t_cmd_data **cmd);
+void	fill_rdout(t_parser **start, t_cmd_data **cmd);
 void		ft_tokenize(char *str, char **env);
 #endif

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:06:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/18 19:08:00 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:38:24 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	free_ast(t_ast **ast)
 void	free_tree(t_ast **ast, t_parser **parser)
 {
 	free_ast(ast);
+	free(*ast);
 	free((*parser)->lexer->str);
 	free((*parser)->lexer);
 	free((*parser)->token->value);
 	free((*parser)->token);
 	free((*parser));
-	free(*ast);
 }
