@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/25 17:53:29 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/25 18:05:50 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	execute_tree(t_ast *ast, t_exec *exec, int flag)
 {
 	int	exit_value;
 
-	if (ast->e_type != AST_COMMAND && ast->data.tree->left->e_type != AST_COMMAND)
+	if (ast->e_type != AST_COMMAND
+		&& ast->data.tree->left->e_type != AST_COMMAND)
 	{
 		if (ast->e_type == AST_PIPE)
 			exec->pipe_parenth = 1;
@@ -68,7 +69,9 @@ void	execute_shell(char *str, char **env)
 	if (!parser->syntax_error)
 	{
 		execute_tree(ast, exec, 0);
-		while (waitpid(-1, NULL, 0) > 0);
+		while (waitpid(-1, NULL, 0) > 0)
+		{
+		}
 	}
 	else
 		printf("syntax error\n");

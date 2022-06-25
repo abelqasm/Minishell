@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 19:06:54 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/25 18:06:07 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	print_ast(t_ast *ast, int n)
 
 int	main(int argc, char **argv, char **env)
 {
-	(void)argc;
-	(void)argv;
 	char	*str;
 
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		str = readline("myshell >");
