@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 14:28:32 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/25 17:55:07 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ void	open_io(t_cmd_data *data)
 {
 	while (data->intput)
 	{
-		data->in = open(data->intput->str, O_RDWR | O_CREAT, 0644);
+		data->in = open(data->intput->str, O_RDWR, 0644);
+		if (data->in < 0)
+		{
+			printf("wttf???\n");
+			exit(0);
+		}
 		data->intput = data->intput->next;
 	}
 	while (data->output)
@@ -66,7 +71,6 @@ void	execute(t_cmd_data *data, char **env)
 	cmd_path = ft_find_cmd(path, data->args->str);
 	args = ft_split(join_args(data->args), ' ');
 	open_io(data);
-	printf("[%d] [%d]   %s\n", data->in, data->out, args[0]);
 	if (data->in != 0)
 	{
 		dup2(data->in, STDIN_FILENO);

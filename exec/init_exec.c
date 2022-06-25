@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:46:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/23 15:09:46 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/25 17:46:59 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_exec	*init_exec(char **env, int n_pipe)
 	t_exec	*exec;
 
 	exec = malloc(sizeof(t_exec));
+	exec->pid = malloc(sizeof(int) * (n_pipe + 1));
+	exec->pid_i = -1;
 	exec->env = env;
 	exec->first = 1;
 	exec->i = -1;

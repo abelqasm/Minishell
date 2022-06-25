@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/24 18:38:01 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/25 17:53:29 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe)
 	free((*exec));
 }
 
-int	execute_tree(t_ast *ast, t_exec *exec, int flag)
+void	execute_tree(t_ast *ast, t_exec *exec, int flag)
 {
 	int	exit_value;
 
@@ -33,21 +33,23 @@ int	execute_tree(t_ast *ast, t_exec *exec, int flag)
 	{
 		if (ast->e_type == AST_PIPE)
 			exec->pipe_parenth = 1;
-		exit_value = execute_tree(ast->data.tree->left, exec, 0);
+		execute_tree(ast->data.tree->left, exec, 0);
 		if (ast->e_type == AST_PIPE)
 		{
 			exec->i++;
 			execute_tree(ast->data.tree->right, exec, 2);
 		}
-		if (exit_value != 0 && ast->e_type == AST_OR)
-			execute_tree(ast->data.tree->right, exec, flag);
-		if (exit_value == 0 && ast->e_type == AST_AND)
-			execute_tree(ast->data.tree->right, exec, flag);
-		return (0);
+		if (ast->e_type == AST_OR || ast->e_type == AST_AND)
+		{
+			waitpid(exec->pid[exec->pid_i], &exit_value, 0);
+			if (WEXITSTATUS(exit_value) != 0 && ast->e_type == AST_OR)
+				execute_tree(ast->data.tree->right, exec, flag);
+			if (WEXITSTATUS(exit_value) == 0 && ast->e_type == AST_AND)
+				execute_tree(ast->data.tree->right, exec, flag);
+		}
+		return ;
 	}
-	if (execute_ast(ast, exec, flag) == 1)
-		return (1);
-	return (0);
+	execute_ast(ast, exec, flag);
 }
 
 void	execute_shell(char *str, char **env)
@@ -64,7 +66,10 @@ void	execute_shell(char *str, char **env)
 	ast = parser_parse(&parser, &pipe);
 	exec = init_exec(env, pipe);
 	if (!parser->syntax_error)
+	{
 		execute_tree(ast, exec, 0);
+		while (waitpid(-1, NULL, 0) > 0);
+	}
 	else
 		printf("syntax error\n");
 	free_shell(&ast, &parser, &exec, pipe);

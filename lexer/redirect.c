@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/24 19:11:14 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/25 15:28:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	fill_rdin(t_parser **start, t_cmd_data **cmd)
 	args_push(&command->intput, parser->token->value);
 	*start = parser;
 }
-
 
 void	fill_rdout(t_parser **start, t_cmd_data **cmd)
 {
