@@ -2,9 +2,12 @@ SRCS = minishell.c \
 	execute_shell.c \
 	./lexer/lexer.c \
 	./lexer/token.c \
-	./lexer/token2.c \
+	./lexer/token_id.c \
+	./lexer/token_quotes.c \
+	./lexer/fill_struct.c \
 	./lexer/parser.c \
 	./lexer/ast.c \
+	./lexer/utils.c \
 	./lexer/list.c \
 	./lexer/redirect.c \
 	./lexer/parse_parenth.c \
@@ -18,7 +21,7 @@ SRCS = minishell.c \
 OBJS = $(SRCS:.c=.o)
 LFLAGS = -lreadline
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g
+CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
 NAME = minishell
 LIBFT = ./libft/libft.a
 

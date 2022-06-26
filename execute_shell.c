@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/25 18:05:50 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/26 16:37:41 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute_shell(char *str, char **env)
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser, &pipe);
 	exec = init_exec(env, pipe);
-	if (!parser->syntax_error)
+	if (!parser->lexer->error)
 	{
 		execute_tree(ast, exec, 0);
 		while (waitpid(-1, NULL, 0) > 0)
@@ -75,5 +75,6 @@ void	execute_shell(char *str, char **env)
 	}
 	else
 		printf("syntax error\n");
+	// print_ast(ast, 0);
 	free_shell(&ast, &parser, &exec, pipe);
 }

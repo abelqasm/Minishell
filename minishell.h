@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/24 15:49:09 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/26 16:52:39 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,9 @@
 
 void	execute_shell(char *str, char **env);
 void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe);
+void	print_ast(t_ast *ast, int n);
+int		check_parenth(char *str);
+int		check_double(char *str, int c);
+int		advance_quotes(t_lexer *lexer);
 
 #endif

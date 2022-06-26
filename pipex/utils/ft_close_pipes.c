@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_close_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 17:47:20 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/03/13 03:05:55 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/29 19:15:43 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../pipex.h"
 
-t_args	*init_args(char *item)
+void	ft_close_pipes(t_pipex *pipex)
 {
-	t_args	*list;
+	int	i;
 
-	list = malloc(sizeof(t_args));
-	list->str = item;
-	list->next = NULL;
-	return (list);
-}
-
-void	args_push(t_args **args, char *item)
-{
-	t_args	*push;
-
-	push = *args;
-	if (!push)
+	i = 0;
+	while (i < pipex->cmd_nbr - 1)
 	{
-		push = init_args(item);
-		*args = push;
-		return ;
+		close(pipex->pipe[i][0]);
+		close(pipex->pipe[i][1]);
+		i++;
 	}
-	while (push->next)
-		push = push->next;
-	push->next = init_args(item);
 }

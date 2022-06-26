@@ -1,39 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 17:47:20 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/06/26 16:48:48 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/06/26 16:52:08 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_args	*init_args(char *item)
+int	check_double(char *str, int c)
 {
-	t_args	*list;
+	int	i;
+	int	count;
 
-	list = malloc(sizeof(t_args));
-	list->str = item;
-	list->next = NULL;
-	return (list);
+	i = -1;
+	count = 0;
+	while (str[++i])
+	{
+		if (str[i] == c)
+			return (1);
+	}
+	return (0);
 }
 
-void	args_push(t_args **args, char *item)
+int	check_parenth(char *str)
 {
-	t_args	*push;
+	int	i;
+	int	left;
+	int	right;
 
-	push = *args;
-	if (!push)
+	i = -1;
+	left = 0;
+	right = 0;
+	while (str[++i])
 	{
-		push = init_args(item);
-		*args = push;
-		return ;
+		if (str[i] == '(')
+			left++;
+		if (str[i] == ')')
+			right++;
 	}
-	while (push->next)
-		push = push->next;
-	push->next = init_args(item);
+	if (left == right)
+		return (1);
+	return (0);
+}
+
+int	advance_quotes(t_lexer *lexer)
+{
+	lexer_advance(lexer);
+	return (1);
 }

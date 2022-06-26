@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 10:42:02 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/24 18:39:25 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/26 16:51:52 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ast	*parse_parenth(t_parser **start, int *pipe)
 
 	parser = *start;
 	if (parser->token->e_type == TOKEN_PIPE)
-		parser->syntax_error++;
+		parser->lexer->error++;
 	if (parser->token->e_type == TOKEN_LPARENTH)
 	{
 		parser->token = lexer_next_token(&parser);
@@ -30,7 +30,7 @@ t_ast	*parse_parenth(t_parser **start, int *pipe)
 			return (tree);
 		}
 		else
-			parser->syntax_error++;
+			parser->lexer->error++;
 	}
 	*start = parser;
 	return (parse_command(&parser));

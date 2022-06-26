@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/25 17:55:07 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/26 18:32:25 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,16 @@ void	open_io(t_cmd_data *data)
 	}
 	while (data->output)
 	{
-		data->out = open(data->output->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (data->append)
+			data->out = open(data->output->str, O_RDWR
+					| O_CREAT | O_APPEND, 0644);
+		else
+			data->out = open(data->output->str, O_RDWR
+					| O_CREAT | O_TRUNC, 0644);
 		data->output = data->output->next;
 	}
+	if (data->delim)
+		data->in = data->delim;
 }
 
 void	execute(t_cmd_data *data, char **env)

@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 12:06:04 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 17:47:20 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/03/11 22:48:12 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/05/29 19:16:07 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../pipex.h"
 
-t_args	*init_args(char *item)
+void	ft_error(void)
 {
-	t_args	*list;
-
-	list = malloc(sizeof(t_args));
-	list->str = item;
-	list->next = NULL;
-	return (list);
+	perror("Error");
+	exit(1);
 }
 
-void	args_push(t_args **args, char *item)
+void	ft_argmt_error(void)
 {
-	t_args	*push;
-
-	push = *args;
-	if (!push)
-	{
-		push = init_args(item);
-		*args = push;
-		return ;
-	}
-	while (push->next)
-		push = push->next;
-	push->next = init_args(item);
+	write(1, "Wrong number of arguments\n", 26);
+	exit(0);
 }

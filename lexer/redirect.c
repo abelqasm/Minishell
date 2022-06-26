@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/25 15:28:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/26 18:31:21 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	fill_rdin(t_parser **start, t_cmd_data **cmd)
 	parser->token = lexer_next_token(&parser);
 	if (parser->token->e_type != TOKEN_ID)
 	{
-		parser->syntax_error++;
+		parser->lexer->error++;
 		return ;
 	}
 	args_push(&command->intput, parser->token->value);
@@ -36,12 +36,46 @@ void	fill_rdout(t_parser **start, t_cmd_data **cmd)
 
 	parser = *start;
 	command = *cmd;
+	if (parser->token->e_type == TOKEN_APPEND)
+		command->append = 1;
 	parser->token = lexer_next_token(&parser);
 	if (parser->token->e_type != TOKEN_ID)
 	{
-		parser->syntax_error++;
+		parser->lexer->error++;
 		return ;
 	}
 	args_push(&command->output, parser->token->value);
+	*start = parser;
+}
+
+void	fill_delim(t_parser **start, t_cmd_data **cmd)
+{
+	t_parser	*parser;
+	char		*str;
+	int			fd[2];
+
+	parser = *start;
+	parser->token = lexer_next_token(&parser);
+	if (parser->token->e_type != TOKEN_ID)
+	{
+		parser->lexer->error++;
+		return ;
+	}
+	pipe(fd);
+	while (1)
+	{
+		str = readline("> ");
+		if (!ft_strncmp(str, parser->token->value,
+				ft_strlen(parser->token->value)) || !str)
+			break ;
+		write(fd[1], str, ft_strlen(str) + 1);
+		write(fd[1], "\n", 1);
+		free(str);
+	}
+	if (str)
+		free(str);
+	free(parser->token->value);
+	close(fd[1]);
+	(*cmd)->delim = fd[0];
 	*start = parser;
 }
