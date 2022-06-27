@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 18:54:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:48:18 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ void	execute_shell(char *str)
 	}
 	else
 		printf("syntax error\n");
-	// print_ast(ast, 0);
 	free_shell(&ast, &parser, &exec, pipe);
 }

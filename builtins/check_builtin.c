@@ -6,13 +6,13 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:49:33 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 15:05:56 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:47:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		check_builtin(char *str)
+int	check_builtin(char *str)
 {
 	if (!ft_strncmp(str, "export", ft_strlen(str)))
 		return (0);

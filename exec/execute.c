@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 18:32:25 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 20:13:26 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	execute(t_cmd_data *data, char **env)
 	char	*envp;
 	char	**args;
 
-	envp = getenv("PATH");
+	envp = ft_getenv("PATH");
 	path = ft_split(envp, ':');
 	cmd_path = ft_find_cmd(path, data->args->str);
 	args = ft_split(join_args(data->args), ' ');

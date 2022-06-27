@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:07:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 19:32:27 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:57:11 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ int	line_count(char **str)
 	return (i);
 }
 
-void	export_value(char ***exp, char *value)
+void	export_value(char *value)
 {
 	char	**tmp;
 	int		i;
 
 	i = 0;
 	tmp = g_env.exp;
-	(void)exp;
 	g_env.exp = malloc(sizeof(char *) * (line_count(tmp) + 2));
 	while (tmp[i])
 	{
@@ -46,5 +45,12 @@ void	export(t_cmd_data *data)
 	if (!data->args->next)
 		print_export(&g_env.exp);
 	else
-		export_value(&g_env.exp, data->args->next->str);
+	{
+		if (data->args->next->str && data->args->next->str[0] != '=')
+		{
+			export_value(data->args->next->str);
+			if (check_char(data->args->next->str, '='))
+				add_to_env(data->args->next->str);
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:35:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 17:50:41 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:53:11 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,22 @@ void	print_export(char ***exp)
 			{
 				tmp = str[j];
 				str[j] = str[j + 1];
-				str[j + 1] = tmp; 
+				str[j + 1] = tmp;
 			}
 		}
 	}
 	print_it(str);
+}
+
+int	check_char(char *str, char c)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == c)
+			return (1);
+	}
+	return (0);
 }
