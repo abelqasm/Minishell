@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_close_pipes.c                                   :+:      :+:    :+:   */
+/*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 03:05:55 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/29 19:15:43 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/06/27 14:54:06 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/06/27 19:18:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../minishell.h"
 
-void	ft_close_pipes(t_pipex *pipex)
+void	execute_builtin(t_cmd_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (i < pipex->cmd_nbr - 1)
-	{
-		close(pipex->pipe[i][0]);
-		close(pipex->pipe[i][1]);
-		i++;
-	}
+	t_builtins_function	built[7];
+	
+	built[0] = export;
+	// built[1] = unset;
+	built[2] = ft_env;
+	// built[3] = cd;
+	// built[4] = pwd;
+	// built[5] = echo;
+	// built[6] = ft_exit;
+	built[check_builtin(data->args->str)](data);
 }

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 16:37:41 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:54:51 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	execute_tree(t_ast *ast, t_exec *exec, int flag)
 	execute_ast(ast, exec, flag);
 }
 
-void	execute_shell(char *str, char **env)
+void	execute_shell(char *str)
 {
 	t_parser	*parser;
 	t_lexer		*lexer;
@@ -65,7 +65,7 @@ void	execute_shell(char *str, char **env)
 	lexer = init_lexer(str);
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser, &pipe);
-	exec = init_exec(env, pipe);
+	exec = init_exec(pipe);
 	if (!parser->lexer->error)
 	{
 		execute_tree(ast, exec, 0);

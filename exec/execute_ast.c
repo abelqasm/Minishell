@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/25 18:03:57 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:31:54 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,14 @@ void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 	if (ast->e_type == AST_COMMAND)
 		fd_management(ast, exec, flag);
 	exec->pid_i++;
+	if (check_builtin(ast->data.command->args->str) != -1)
+	{
+		execute_builtin(ast->data.command);
+		return ;
+	}
 	exec->pid[exec->pid_i] = fork();
 	if (exec->pid[exec->pid_i] == 0)
-		execute(ast->data.command, exec->env);
+		execute(ast->data.command, g_env.env);
 	if (ast->data.command->out != 1)
 		close(ast->data.command->out);
 }

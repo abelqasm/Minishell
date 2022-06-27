@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_errors.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/11 22:48:12 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/05/29 19:16:07 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/06/27 16:18:42 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/06/27 19:19:52 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../minishell.h"
 
-void	ft_error(void)
+void	ft_env(t_cmd_data *data)
 {
-	perror("Error");
-	exit(1);
-}
+	int		i;
 
-void	ft_argmt_error(void)
-{
-	write(1, "Wrong number of arguments\n", 26);
-	exit(0);
+	i = -1;
+	(void)data;
+	while (g_env.env[++i])
+		printf("%s\n", g_env.env[i]);
 }

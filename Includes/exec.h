@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/25 15:23:25 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:12:46 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 typedef struct s_exec
 {
-	char	**env;
 	pid_t	*pid;
 	int		pid_i;
 	int		**pipe;
@@ -24,7 +23,14 @@ typedef struct s_exec
 	int		pipe_parenth;
 	int		n_pipe;
 }	t_exec;
-t_exec	*init_exec(char **env, int n_pipe);
+
+typedef struct s_global
+{
+	char	**env;
+	char	**exp;	
+}	t_global;
+
+t_exec	*init_exec(int n_pipe);
 char	*ft_find_cmd(char **paths, char *cmd);
 char	*join_args(t_args *args);
 void	execute(t_cmd_data *data, char **env);
