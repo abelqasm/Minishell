@@ -6,13 +6,14 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 19:11:05 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:59:58 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <unistd.h>
+# include <dirent.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>

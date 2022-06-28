@@ -6,51 +6,80 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:07:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 19:57:11 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/28 12:00:35 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	line_count(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
 
 void	export_value(char *value)
 {
 	char	**tmp;
 	int		i;
 
-	i = 0;
+	i = -1;
 	tmp = g_env.exp;
 	g_env.exp = malloc(sizeof(char *) * (line_count(tmp) + 2));
-	while (tmp[i])
+	while (tmp[++i])
 	{
 		g_env.exp[i] = ft_strdup(tmp[i]);
-		i++;
+		free(tmp[i]);
 	}
 	g_env.exp[i] = ft_strdup(value);
-	i++;
-	g_env.exp[i] = 0;
+	g_env.exp[++i] = 0;
+	free(tmp);
+}
+
+void	replace_value(char *value)
+{
+	char	*str;
+	char	**split;
+	int		i;
+
+	i = -1;
+	split = ft_split(value, '=');
+	while (g_env.exp[++i])
+	{
+		if (!ft_strncmp(g_env.exp[i], split[0], ft_strlen(split[0])))
+		{
+			str = g_env.exp[i];
+			g_env.exp[i] = ft_strdup(value);
+			free(str);
+		}
+	}
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
 }
 
 void	export(t_cmd_data *data)
 {
 	if (!data->args->next)
-		print_export(&g_env.exp);
+		print_export();
 	else
 	{
 		if (data->args->next->str && data->args->next->str[0] != '=')
 		{
-			export_value(data->args->next->str);
-			if (check_char(data->args->next->str, '='))
-				add_to_env(data->args->next->str);
+			data->args = data->args->next;
+			while (data->args)
+			{
+				if (!check_value(g_env.exp, data->args->str))
+				{
+					export_value(data->args->str);
+					if (check_char(data->args->str, '='))
+						add_to_env(data->args->str);
+				}
+				else
+				{
+					if (check_char(data->args->str, '='))
+					{
+						replace_value(data->args->str);
+						replace_env_value(data->args->str);
+					}
+				}
+				data->args = data->args->next;
+			}
 		}
 	}
 }

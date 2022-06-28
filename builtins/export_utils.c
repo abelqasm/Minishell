@@ -6,44 +6,53 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:35:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 19:53:11 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/28 11:03:37 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_it(char **exp)
+int	line_count(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
+
+void	print_it(void)
 {
 	int	i;
 
 	i = -1;
-	while (exp && exp[++i])
-		printf("declare -x %s\n", exp[i]);
+	while (g_env.exp && g_env.exp[++i])
+		printf("declare -x %s\n", g_env.exp[i]);
 }
 
-void	print_export(char ***exp)
+void	print_export(void)
 {
 	char	*tmp;
-	char	**str;
 	int		i;
 	int		j;
 
 	i = -1;
-	str = *exp;
-	while (str[++i])
+	while (g_env.exp[++i])
 	{
 		j = -1;
-		while (str[++j + 1])
+		while (g_env.exp[++j + 1])
 		{
-			if (ft_strncmp(str[j], str[j + 1], ft_strlen(str[j])))
+			if (ft_strncmp(g_env.exp[j], g_env.exp[j + 1],
+					ft_strlen(g_env.exp[j])) > 0)
 			{
-				tmp = str[j];
-				str[j] = str[j + 1];
-				str[j + 1] = tmp;
+				tmp = g_env.exp[j];
+				g_env.exp[j] = g_env.exp[j + 1];
+				g_env.exp[j + 1] = tmp;
 			}
 		}
 	}
-	print_it(str);
+	print_it();
 }
 
 int	check_char(char *str, char c)

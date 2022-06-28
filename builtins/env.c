@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 16:18:42 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 20:13:28 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:08:05 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,40 @@ void	add_to_env(char *value)
 	char	**tmp;
 	int		i;
 
-	i = 0;
+	i = -1;
 	tmp = g_env.env;
 	g_env.env = malloc(sizeof(char *) * (line_count(tmp) + 2));
-	while (tmp[i])
+	while (tmp[++i])
 	{
 		g_env.env[i] = ft_strdup(tmp[i]);
-		i++;
+		free(tmp[i]);
 	}
 	g_env.env[i] = ft_strdup(value);
-	i++;
-	g_env.env[i] = 0;
+	g_env.env[++i] = 0;
+	free(tmp);
+}
+
+void	replace_env_value(char *value)
+{
+	char	*str;
+	char	**split;
+	int		i;
+
+	i = -1;
+	split = ft_split(value, '=');
+	while (g_env.env[++i])
+	{
+		if (!ft_strncmp(g_env.env[i], split[0], ft_strlen(split[0])))
+		{
+			str = g_env.env[i];
+			g_env.env[i] = ft_strdup(value);
+			free(str);
+		}
+	}
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
 }
 
 void	ft_env(t_cmd_data *data)

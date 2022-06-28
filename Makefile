@@ -20,6 +20,11 @@ SRCS = minishell.c \
 	./builtins/export.c \
 	./builtins/env.c \
 	./builtins/unset.c \
+	./builtins/unset_utils.c \
+	./builtins/pwd.c \
+	./builtins/cd.c \
+	./builtins/exit.c \
+	# ./builtins/echo.c \
 	# ./exec/pipex/pipex_bonus.c \
 	# ./exec/pipex/pipex_bonus_child.c \
 	# ./exec/pipex/utils/ft_errors.c \
@@ -27,7 +32,7 @@ SRCS = minishell.c \
 OBJS = $(SRCS:.c=.o)
 LFLAGS = -lreadline
 CC = cc
-CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
+CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g
 NAME = minishell
 LIBFT = ./libft/libft.a
 

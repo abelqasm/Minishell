@@ -6,13 +6,13 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:48:35 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 20:13:47 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/28 10:50:39 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	do_the_unset(char *value)
+void	do_the_unset(char ***src, char *value)
 {
 	char	**tmp;
 	int		i;
@@ -20,18 +20,28 @@ void	do_the_unset(char *value)
 
 	i = -1;
 	j = -1;
-	tmp = g_env.env;
-	g_env.env = malloc(sizeof(char *) * (line_count(tmp)));
+	tmp = (*src);
+	(*src) = malloc(sizeof(char *) * (line_count(tmp)));
 	while (tmp[++i])
 	{
-		if (ft_strncmp(tmp[i], value, ft_strlen(value)))
-			g_env.env[++j] = ft_strdup(tmp[i]);
+		if (!check_existing(tmp[i], value))
+			(*src)[++j] = ft_strdup(tmp[i]);
 	}
-	g_env.env[j] = 0;
+	(*src)[++j] = 0;
 }
 
 void	unset(t_cmd_data *data)
 {
 	if (data->args->next)
-		do_the_unset(data->args->next->str);
+	{
+		data->args = data->args->next;
+		while (data->args)
+		{
+			if (check_value(g_env.env, data->args->str))
+				do_the_unset(&g_env.env, data->args->str);
+			if (check_value(g_env.exp, data->args->str))
+				do_the_unset(&g_env.exp, data->args->str);
+			data->args = data->args->next;
+		}
+	}
 }

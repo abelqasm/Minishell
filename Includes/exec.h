@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 20:10:26 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:34:42 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_exec
 typedef struct s_global
 {
 	char	**env;
-	char	**exp;	
+	char	**exp;
+	int		exit_status;
 }	t_global;
 
 t_exec	*init_exec(int n_pipe);
