@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 13:59:59 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:25:31 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ t_token	*lexer_parse_dollard(t_lexer *lexer)
 		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
 		lexer_advance(lexer);
 	}
-	tmp = getenv(str);
+	tmp = ft_getenv(str);
 	free(str);
+	if (!tmp)
+		tmp = ft_strdup("\n");
 	return (init_token(tmp, TOKEN_DOLLAR));
 }
 

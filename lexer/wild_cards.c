@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_builtin.c                                  :+:      :+:    :+:   */
+/*   wild_cards.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/27 14:54:06 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 18:50:37 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/06/29 14:47:09 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/06/29 16:43:53 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	execute_builtin(t_cmd_data *data)
+int	is_match(char *string, char *begin, char *end)
 {
-	t_builtins_function	built[7];
-
-	built[0] = export;
-	built[1] = unset;
-	built[2] = ft_env;
-	built[3] = cd;
-	built[4] = pwd;
-	built[5] = echo;
-	built[6] = ft_exit;
-	built[check_builtin(data->args->str)](data);
+	
 }

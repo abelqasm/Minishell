@@ -24,7 +24,7 @@ SRCS = minishell.c \
 	./builtins/pwd.c \
 	./builtins/cd.c \
 	./builtins/exit.c \
-	# ./builtins/echo.c \
+	./builtins/echo.c \
 	# ./exec/pipex/pipex_bonus.c \
 	# ./exec/pipex/pipex_bonus_child.c \
 	# ./exec/pipex/utils/ft_errors.c \
