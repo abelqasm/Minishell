@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 19:31:54 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 10:53:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	execute_node(t_ast *ast, t_exec *exec, int flag)
 
 void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 {
+	if (!ast->data.command->args)
+		return ;
 	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR
 		|| ast->e_type == AST_AND)
 	{

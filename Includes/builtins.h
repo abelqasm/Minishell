@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:39:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 11:58:22 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 09:55:27 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 typedef void	(*t_builtins_function)(t_cmd_data *data);
 int		check_builtin(char *str);
 void	execute_builtin(t_cmd_data *data);
-void	export_value(char *value);
+void	add_export_value(char *value);
 void	print_it(void);
 void	print_export(void);
 void	export(t_cmd_data *data);

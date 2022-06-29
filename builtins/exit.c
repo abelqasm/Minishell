@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:17:26 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 17:48:24 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 11:47:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,26 @@ int	ft_isd(char *str)
 	return (0);
 }
 
-void    ft_exit(t_cmd_data *data)
+void	exit_with_status(int check, int nbr, int res)
+{
+	if (check == 0 && res == 1)
+	{
+		printf("exit\n");
+		exit(nbr);
+	}
+	else if (check == 0 && res >= 2)
+	{
+		printf("exit: too many arguments\n");
+		g_env.exit_status = 1;
+	}
+	else if (check == 1 && res >= 1)
+	{
+		printf("exit: numeric argument required\n");
+		exit(255);
+	}
+}
+
+void	ft_exit(t_cmd_data *data)
 {
 	int	nbr;
 	int	res;
@@ -59,19 +78,5 @@ void    ft_exit(t_cmd_data *data)
 	}
 	nbr = ft_atoi(data->args->next->str);
 	check = ft_isd(data->args->next->str);
-	if (check == 0 && res == 1)
-	{
-		printf("exit\n");
-		exit(nbr);
-	}
-	else if (check == 0 && res >= 2)
-    {
-		printf("exit: too many arguments\n");
-        g_env.exit_status = 1;
-	}
-	else if (check == 1 && res >= 1)
-	{
-		printf("exit: numeric argument required\n");
-		exit(255);
-	}
+	exit_with_status(check, nbr, res);
 }

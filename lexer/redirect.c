@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 12:24:16 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 11:20:41 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,10 @@ void	fill_rdout(t_parser **start, t_cmd_data **cmd)
 	*start = parser;
 }
 
-void	fill_delim(t_parser **start, t_cmd_data **cmd)
+void	fill_heredoc(t_parser *parser, int *fd)
 {
-	t_parser	*parser;
-	char		*str;
-	int			fd[2];
+	char	*str;
 
-	parser = *start;
-	parser->token = lexer_next_token(&parser);
-	if (parser->token->e_type != TOKEN_ID)
-	{
-		parser->lexer->error++;
-		return ;
-	}
-	pipe(fd);
 	while (1)
 	{
 		str = readline("> ");
@@ -74,6 +64,22 @@ void	fill_delim(t_parser **start, t_cmd_data **cmd)
 	}
 	if (str)
 		free(str);
+}
+
+void	fill_delim(t_parser **start, t_cmd_data **cmd)
+{
+	t_parser	*parser;
+	int			fd[2];
+
+	parser = *start;
+	parser->token = lexer_next_token(&parser);
+	if (parser->token->e_type != TOKEN_ID)
+	{
+		parser->lexer->error++;
+		return ;
+	}
+	pipe(fd);
+	fill_heredoc(parser, fd);
 	free(parser->token->value);
 	close(fd[1]);
 	(*cmd)->delim = fd[0];

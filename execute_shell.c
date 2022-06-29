@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 17:56:26 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 11:19:26 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe)
 			free((*exec)->pipe[(*exec)->i]);
 		free((*exec)->pipe);
 	}
+	free((*exec)->pid);
 	free((*exec));
 }
 
@@ -63,8 +64,6 @@ void	execute_shell(char *str)
 
 	pipe = 0;
 	lexer = init_lexer(str);
-	if (lexer->str[0] == '\0')
-		return ;
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser, &pipe);
 	exec = init_exec(pipe);

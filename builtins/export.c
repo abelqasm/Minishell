@@ -6,13 +6,13 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:07:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 12:00:35 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 09:55:49 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	export_value(char *value)
+void	add_export_value(char *value)
 {
 	char	**tmp;
 	int		i;
@@ -53,33 +53,36 @@ void	replace_value(char *value)
 	free(split);
 }
 
+void	export_value(t_cmd_data *data)
+{
+	if (data->args->next->str && data->args->next->str[0] != '=')
+	{
+		data->args = data->args->next;
+		while (data->args)
+		{
+			if (!check_value(g_env.exp, data->args->str))
+			{
+				add_export_value(data->args->str);
+				if (check_char(data->args->str, '='))
+					add_to_env(data->args->str);
+			}
+			else
+			{
+				if (check_char(data->args->str, '='))
+				{
+					replace_value(data->args->str);
+					replace_env_value(data->args->str);
+				}
+			}
+			data->args = data->args->next;
+		}
+	}
+}
+
 void	export(t_cmd_data *data)
 {
 	if (!data->args->next)
 		print_export();
 	else
-	{
-		if (data->args->next->str && data->args->next->str[0] != '=')
-		{
-			data->args = data->args->next;
-			while (data->args)
-			{
-				if (!check_value(g_env.exp, data->args->str))
-				{
-					export_value(data->args->str);
-					if (check_char(data->args->str, '='))
-						add_to_env(data->args->str);
-				}
-				else
-				{
-					if (check_char(data->args->str, '='))
-					{
-						replace_value(data->args->str);
-						replace_env_value(data->args->str);
-					}
-				}
-				data->args = data->args->next;
-			}
-		}
-	}
+		export_value(data);
 }

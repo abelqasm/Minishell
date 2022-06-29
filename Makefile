@@ -32,7 +32,7 @@ SRCS = minishell.c \
 OBJS = $(SRCS:.c=.o)
 LFLAGS = -lreadline
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g
+CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
 NAME = minishell
 LIBFT = ./libft/libft.a
 

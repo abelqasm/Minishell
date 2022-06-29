@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 17:42:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 18:28:54 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/29 10:18:13 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	fill_redirect(t_parser **start, t_cmd_data **cmd)
 	if (parser->token->e_type == TOKEN_RDOUT
 		|| parser->token->e_type == TOKEN_APPEND)
 		fill_rdout(start, cmd);
-	if (parser->token->e_type == TOKEN_RDOUT)
+	if (parser->token->e_type == TOKEN_DELIM)
 		fill_delim(start, cmd);
 }
 
