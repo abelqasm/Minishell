@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 12:25:31 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:56:30 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_token	*lexer_parse_token(t_lexer *lexer, int type)
 	str = ft_calloc(1, sizeof(char));
 	while (lexer_args_char(lexer->c))
 	{
+		if (lexer->c == '*')
+			type = TOKEN_WILDCARDS;
 		if (lexer->c == '"' || lexer->c == '\'')
 			lexer_advance(lexer);
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));

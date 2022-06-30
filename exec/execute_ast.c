@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 10:53:14 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:27:18 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execute_node(t_ast *ast, t_exec *exec, int flag)
 	int	exit_value;
 
 	exec->i++;
-	if (ast->e_type == AST_PIPE)
+	if (ast->e_type == AST_PIPE || exec->pipe_parenth)
 		flag = 1;
 	execute_ast(ast->data.tree->left, exec, flag);
 	if (ast->e_type == AST_PIPE)

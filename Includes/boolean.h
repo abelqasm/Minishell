@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_builtin.c                                  :+:      :+:    :+:   */
+/*   boolean.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/27 14:54:06 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 16:27:12 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/06/30 12:01:38 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/06/30 12:03:37 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#ifndef BOOLEAN_H
+# define BOOLEAN_H
 
-void	execute_builtin(t_cmd_data *data)
-{
-	t_builtins_function	built[7];
+# define FALSE 0
+# define TRUE 1
+# define BOOL int
 
-	built[0] = export;
-	built[1] = unset;
-	built[2] = ft_env;
-	built[3] = cd;
-	built[4] = pwd;
-	built[5] = echo;
-	built[6] = ft_exit;
-	built[check_builtin(data->args->str)](data);
-}
+#endif

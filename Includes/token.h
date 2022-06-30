@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:57:57 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 17:48:58 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:56:00 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_token
 		TOKEN_RDOUT,
 		TOKEN_APPEND,
 		TOKEN_DELIM,
+		TOKEN_WILDCARDS,
 		TOKEN_EOF,
 	} e_type;
 }	t_token;

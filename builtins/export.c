@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:07:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 09:55:49 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:45:28 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,13 @@ void	replace_value(char *value)
 
 void	export_value(t_cmd_data *data)
 {
+	t_args	*tmp;
+
 	if (data->args->next->str && data->args->next->str[0] != '=')
 	{
+		tmp = data->args;
 		data->args = data->args->next;
+		free_node(tmp);
 		while (data->args)
 		{
 			if (!check_value(g_env.exp, data->args->str))
@@ -74,7 +78,9 @@ void	export_value(t_cmd_data *data)
 					replace_env_value(data->args->str);
 				}
 			}
+			tmp = data->args;
 			data->args = data->args->next;
+			free_node(tmp);
 		}
 	}
 }

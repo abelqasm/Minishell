@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:35:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 11:03:37 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:37:02 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,10 @@ int	check_char(char *str, char c)
 			return (1);
 	}
 	return (0);
+}
+
+void	free_node(t_args *args)
+{
+	free(args->str);
+	free(args);
 }

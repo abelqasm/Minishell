@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 17:42:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 10:18:13 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:28:56 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ t_data_type	fill_struct(t_parser **start)
 			|| parser->token->e_type == TOKEN_DELIM
 			|| parser->token->e_type == TOKEN_APPEND)
 			fill_redirect(&parser, &command);
+		if (parser->token->e_type == TOKEN_WILDCARDS)
+			fill_wildcards(parser->token->value, &command);
 		parser->token = lexer_next_token(&parser);
 	}
 	*start = parser;

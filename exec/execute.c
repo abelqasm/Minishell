@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 20:13:26 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 15:09:45 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	open_io(t_cmd_data *data)
 		data->in = open(data->intput->str, O_RDWR, 0644);
 		if (data->in < 0)
 		{
-			printf("wttf???\n");
-			exit(0);
+			printf("no such file or directory: %s\n", data->intput->str);
+			exit(1);
 		}
 		data->intput = data->intput->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:39:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 09:55:27 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:37:09 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int		check_value(char **src, char *value);
 int		check_existing(char *src, char *dst);
 void	replace_env_value(char *value);
 void	replace_value(char *value);
+void	free_node(t_args *args);
 
 #endif

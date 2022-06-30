@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:20:13 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 19:42:50 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:47:20 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	echo(t_cmd_data *data)
 {
 	int	count;
 	int	n;
+	t_args	*tmp;
 
 	count = count_arg(data->args);
 	n = 0;
@@ -60,10 +61,14 @@ void	echo(t_cmd_data *data)
 		printf("\n");
 	if (count >= 1)
 	{
+		tmp = data->args;
 		data->args = data->args->next;
+		free_node(tmp);
 		while (data->args && !check_n(data->args->str))
 		{
+			tmp = data->args;
 			data->args = data->args->next;
+			free_node(tmp);
 			n++;
 		}
 		while (data->args)
@@ -71,7 +76,9 @@ void	echo(t_cmd_data *data)
 			printf("%s", data->args->str);
 			if (data->args->next || !n)
 				printf(" ");
+			tmp = data->args;
 			data->args = data->args->next;
+			free_node(tmp);
 		}
 	}
 	if (!n)
