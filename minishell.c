@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 17:34:24 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 01:12:22 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,21 @@ void	print_ast(t_ast *ast, int n)
 	}
 }
 
-// void	ctrl_c(int sig)
-// {
-// 	(void)sig;
-// 	printf("\n");
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
+void	ctrl_c(int sig)
+{
+	(void)sig;
+	rl_replace_line("", 0);
+    ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_redisplay();
+	return ;
+}
 
-// void	catch_signal()
-// {
-// 	signal(SIGINT, ctrl_c);
-// 	signal(SIGQUIT, SIG_IGN);
-// }
+void	catch_signal()
+{
+	signal(SIGINT, ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
+}
 
 char	**env_exp(char **env)
 {
@@ -68,6 +69,8 @@ int	main(int argc, char **argv, char **env)
 	g_env.env = env_exp(env);
 	while (1)
 	{
+		signal(SIGINT, ctrl_c);
+		signal(SIGQUIT, SIG_IGN);
 		str = readline("myshell >");
 		if (!str)
 		{

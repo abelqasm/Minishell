@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:46:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/27 19:18:17 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 00:19:40 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_exec	*init_exec(int n_pipe)
 		}
 	}
 	exec->i = -1;
-	exec->pipe_parenth = 0;
 	exec->n_pipe = n_pipe;
 	return (exec);
 }

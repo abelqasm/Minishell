@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 16:27:18 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 01:13:39 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@ void	fd_management(t_ast *ast, t_exec *exec, int flag)
 	if (flag == 2)
 	{
 		ast->data.command->in = exec->pipe[exec->i][0];
-		if (exec->pipe_parenth > 0)
-		{
-			ast->data.command->out = exec->pipe[exec->i + 1][1];
-			exec->pipe_parenth = 0;
-		}
-		else
 		ast->data.command->out = 1;
 	}
 	else if (flag == 1)
@@ -40,25 +34,11 @@ void	fd_management(t_ast *ast, t_exec *exec, int flag)
 
 void	execute_node(t_ast *ast, t_exec *exec, int flag)
 {
-	int	exit_value;
-
 	exec->i++;
-	if (ast->e_type == AST_PIPE || exec->pipe_parenth)
-		flag = 1;
+	flag = 1;
 	execute_ast(ast->data.tree->left, exec, flag);
-	if (ast->e_type == AST_PIPE)
-	{
-		flag = 2;
-		execute_ast(ast->data.tree->right, exec, flag);
-	}
-	if (ast->e_type == AST_OR || ast->e_type == AST_AND)
-	{
-		waitpid(exec->pid[exec->pid_i], &exit_value, 0);
-		if (WEXITSTATUS(exit_value) != 0 && ast->e_type == AST_OR)
-			execute_ast(ast->data.tree->right, exec, flag);
-		if (WEXITSTATUS(exit_value) == 0 && ast->e_type == AST_AND)
-			execute_ast(ast->data.tree->right, exec, flag);
-	}
+	flag = 2;
+	execute_ast(ast->data.tree->right, exec, flag);
 }
 
 void	execute_ast(t_ast *ast, t_exec *exec, int flag)
@@ -80,6 +60,8 @@ void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 		return ;
 	}
 	exec->pid[exec->pid_i] = fork();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (exec->pid[exec->pid_i] == 0)
 		execute(ast->data.command, g_env.env);
 	if (ast->data.command->out != 1)

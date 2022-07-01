@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 15:09:45 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 01:13:26 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	execute(t_cmd_data *data, char **env)
 	cmd_path = ft_find_cmd(path, data->args->str);
 	args = ft_split(join_args(data->args), ' ');
 	open_io(data);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (data->in != 0)
 	{
 		dup2(data->in, STDIN_FILENO);

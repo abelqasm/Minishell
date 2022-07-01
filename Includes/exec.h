@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/29 11:19:02 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 00:18:52 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef struct s_exec
 	int		**pipe;
 	int		i;
 	int		first;
-	int		pipe_parenth;
 	int		n_pipe;
 }	t_exec;
 

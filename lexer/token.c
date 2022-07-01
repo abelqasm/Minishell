@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 22:22:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 16:07:22 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 00:23:57 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ t_token	*lexer_set_token_value(t_lexer *lexer, int type)
 
 t_token	*lexer_help_set_token(t_lexer *lexer)
 {
-	if (lexer->c == '(')
-		return (lexer_set_token_value(lexer, TOKEN_LPARENTH));
-	if (lexer->c == ')')
-		return (lexer_set_token_value(lexer, TOKEN_RPARENTH));
 	if (lexer->c == '|' && lexer->cp == '|')
 		return (lexer_set_token_value(lexer, TOKEN_OR));
 	if (lexer->c == '&' && lexer->cp == '&')
@@ -77,8 +73,6 @@ t_token	*lexer_next_token(t_parser **parser)
 		if ((*parser)->token->e_type == TOKEN_PIPE
 			|| (*parser)->token->e_type == TOKEN_AND
 			|| (*parser)->token->e_type == TOKEN_OR
-			|| (*parser)->token->e_type == TOKEN_LPARENTH
-			|| (*parser)->token->e_type == TOKEN_RPARENTH
 			|| (*parser)->token->e_type == TOKEN_EOF
 			|| (*parser)->token->e_type == TOKEN_RDIN
 			|| (*parser)->token->e_type == TOKEN_RDOUT

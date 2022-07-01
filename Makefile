@@ -10,7 +10,6 @@ SRCS = minishell.c \
 	./lexer/utils.c \
 	./lexer/list.c \
 	./lexer/redirect.c \
-	./lexer/parse_parenth.c \
 	./lexer/wild_cards.c \
 	./exec/init_exec.c \
 	./exec/execute.c \

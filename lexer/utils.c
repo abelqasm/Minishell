@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:48:48 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 16:52:08 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 01:05:12 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,6 @@ int	check_double(char *str, int c)
 		if (str[i] == c)
 			return (1);
 	}
-	return (0);
-}
-
-int	check_parenth(char *str)
-{
-	int	i;
-	int	left;
-	int	right;
-
-	i = -1;
-	left = 0;
-	right = 0;
-	while (str[++i])
-	{
-		if (str[i] == '(')
-			left++;
-		if (str[i] == ')')
-			right++;
-	}
-	if (left == right)
-		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 16:24:49 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/01 01:12:54 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,40 +26,13 @@ void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe)
 	free((*exec));
 }
 
-void	execute_tree(t_ast *ast, t_exec *exec, int flag)
-{
-	int	exit_value;
-
-	if (ast->e_type != AST_COMMAND
-		&& ast->data.tree->left->e_type != AST_COMMAND)
-	{
-		if (ast->e_type == AST_PIPE)
-			exec->pipe_parenth = 1;
-		execute_tree(ast->data.tree->left, exec, 0);
-		if (ast->e_type == AST_PIPE)
-		{
-			exec->i++;
-			execute_tree(ast->data.tree->right, exec, 2);
-		}
-		if (ast->e_type == AST_OR || ast->e_type == AST_AND)
-		{
-			waitpid(exec->pid[exec->pid_i], &exit_value, 0);
-			if (WEXITSTATUS(exit_value) != 0 && ast->e_type == AST_OR)
-				execute_tree(ast->data.tree->right, exec, flag);
-			if (WEXITSTATUS(exit_value) == 0 && ast->e_type == AST_AND)
-				execute_tree(ast->data.tree->right, exec, flag);
-		}
-		return ;
-	}
-	execute_ast(ast, exec, flag);
-}
-
 void	execute_shell(char *str)
 {
 	t_parser	*parser;
 	t_lexer		*lexer;
 	t_exec		*exec;
 	t_ast		*ast;
+	int			exit_value;
 	int			pipe;
 
 	pipe = 0;
@@ -69,10 +42,9 @@ void	execute_shell(char *str)
 	exec = init_exec(pipe);
 	if (!parser->lexer->error)
 	{
-		execute_tree(ast, exec, 0);
-		while (waitpid(-1, NULL, 0) > 0)
-		{
-		}
+		execute_ast(ast, exec, 0);
+		while (waitpid(-1, &exit_value, 0) > 0)
+			g_env.exit_status = WEXITSTATUS(exit_value);
 	}
 	else
 		printf("syntax error\n");
