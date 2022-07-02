@@ -1,5 +1,4 @@
-SRCS = minishell.c \
-	execute_shell.c \
+SRCS =execute_shell.c \
 	./lexer/lexer.c \
 	./lexer/token.c \
 	./lexer/token_id.c \
@@ -30,7 +29,8 @@ SRCS = minishell.c \
 	# ./exec/pipex/utils/ft_errors.c \
 	# ./exec/pipex/utils/ft_close_pipes.c
 OBJS = $(SRCS:.c=.o)
-LFLAGS = -lreadline
+CONTROL = @stty -echoctl
+LFLAGS = -lreadline -L/Users/abelqasm/.brew/opt/readline/lib -I/Users/abelqasm/.brew/opt/readline/include
 CC = cc
 CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
 NAME = minishell
@@ -39,7 +39,7 @@ LIBFT = ./libft/libft.a
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) minishell.c -o $(NAME)
 
 $(LIBFT) :
 	cd ./libft && make

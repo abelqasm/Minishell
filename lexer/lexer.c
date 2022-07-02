@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:49:55 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/01 01:05:44 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:34:07 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ t_lexer	*init_lexer(char *str)
 	if (lexer->c != '\0')
 		lexer->cp = str[lexer->i + 1];
 	lexer->size = ft_strlen(str);
+	lexer->delim = NULL;
 	lexer->error = 0;
-	if (!check_parenth(str))
-		lexer->error++;
 	return (lexer);
 }
 

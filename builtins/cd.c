@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:14:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 17:08:46 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:21:49 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	add_pwd(char *str, int type)
 			add_to_env(pwd);
 		else
 			replace_env_value(pwd);
-		free(pwd);
 	}
 	if (type == 2)
 	{
@@ -49,20 +48,23 @@ void	add_pwd(char *str, int type)
 			add_to_env(pwd);
 		else
 			replace_env_value(pwd);
-		free(pwd);
 	}
+	free(pwd);
 }
 
 void	cd_home(void)
 {
 	char	*old;
 	char	*new;
+	char	*home;
 
+	home = ft_getenv_home("HOME");
 	old = getcwd(NULL, 0);
 	add_pwd(old, 1);
-	chdir(ft_getenv_home("HOME"));
+	chdir(home);
 	new = getcwd(NULL, 0);
 	add_pwd(new, 2);
+	free(home);
 	free(old);
 	free(new);
 }

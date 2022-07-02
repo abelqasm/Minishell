@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 22:22:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/01 00:23:57 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:34:19 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_token	*lexer_next_token(t_parser **parser)
 			|| (*parser)->token->e_type == TOKEN_OR
 			|| (*parser)->token->e_type == TOKEN_EOF
 			|| (*parser)->token->e_type == TOKEN_RDIN
+			|| (*parser)->token->e_type == TOKEN_APPEND
 			|| (*parser)->token->e_type == TOKEN_RDOUT
 			|| (*parser)->token->e_type == TOKEN_DELIM
 			|| (*parser)->token->e_type == TOKEN_WILDCARDS)

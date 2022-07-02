@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:20:13 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 16:47:20 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:39:44 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,38 +49,42 @@ int	check_n(char *str)
 	return (0);
 }
 
+void	print_echo(t_cmd_data *data, int *n)
+{
+	t_args	*tmp;
+
+	tmp = data->args;
+	data->args = data->args->next;
+	free_node(tmp);
+	while (data->args && !check_n(data->args->str))
+	{
+		tmp = data->args;
+		data->args = data->args->next;
+		free_node(tmp);
+		n++;
+	}
+	while (data->args)
+	{
+		printf("%s", data->args->str);
+		if (data->args->next || !n)
+			printf(" ");
+		tmp = data->args;
+		data->args = data->args->next;
+		free_node(tmp);
+	}
+}
+
 void	echo(t_cmd_data *data)
 {
-	int	count;
-	int	n;
-	t_args	*tmp;
+	int		count;
+	int		n;
 
 	count = count_arg(data->args);
 	n = 0;
 	if (count == 0)
 		printf("\n");
 	if (count >= 1)
-	{
-		tmp = data->args;
-		data->args = data->args->next;
-		free_node(tmp);
-		while (data->args && !check_n(data->args->str))
-		{
-			tmp = data->args;
-			data->args = data->args->next;
-			free_node(tmp);
-			n++;
-		}
-		while (data->args)
-		{
-			printf("%s", data->args->str);
-			if (data->args->next || !n)
-				printf(" ");
-			tmp = data->args;
-			data->args = data->args->next;
-			free_node(tmp);
-		}
-	}
+		print_echo(data, &n);
 	if (!n)
 		printf("\n");
 }

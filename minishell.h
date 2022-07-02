@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 12:14:03 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:42:12 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	print_ast(t_ast *ast, int n);
 int		check_parenth(char *str);
 int		check_double(char *str, int c);
 int		advance_quotes(t_lexer *lexer);
+void	rl_replace_line(const char *text, int clear_undo);
 
 t_global	g_env;
 

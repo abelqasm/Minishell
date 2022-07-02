@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/01 01:14:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 17:07:21 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,13 @@ void	fill_heredoc(t_parser *parser, int *fd)
 		delim = parser->token->value;
 	else
 		delim = parser->lexer->delim;
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	while (1)
 	{
 		str = readline("> ");
+		if (!str)
+			exit(0);
 		if (!ft_strncmp(str, delim, ft_strlen(delim)) || !str)
 			break ;
 		write(fd[1], str, ft_strlen(str) + 1);
@@ -76,10 +80,12 @@ void	fill_delim(t_parser **start, t_cmd_data **cmd)
 	t_parser	*parser;
 	int			fd[2];
 	pid_t		pid;
+	int			exit_status;
 
 	parser = *start;
 	parser->token = lexer_next_token(&parser);
-	if (parser->token->e_type != TOKEN_ID && parser->token->e_type != TOKEN_DOLLAR)
+	if (parser->token->e_type != TOKEN_ID
+		&& parser->token->e_type != TOKEN_DOLLAR)
 	{
 		parser->lexer->error++;
 		return ;
@@ -88,9 +94,8 @@ void	fill_delim(t_parser **start, t_cmd_data **cmd)
 	pid = fork();
 	if (pid == 0)
 		fill_heredoc(parser, fd);
-	wait(NULL);
-	if (parser->token->e_type == TOKEN_DOLLAR)
-		free(parser->lexer->delim);
+	wait(&exit_status);
+	g_env.exit_status = WEXITSTATUS(exit_status);
 	free(parser->token->value);
 	close(fd[1]);
 	(*cmd)->delim = fd[0];

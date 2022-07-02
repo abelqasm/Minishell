@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:07:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 16:45:28 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:49:37 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,24 @@ void	replace_value(char *value)
 	free(split);
 }
 
+void	export_value_handler(t_cmd_data *data)
+{
+	if (!check_value(g_env.exp, data->args->str))
+	{
+		add_export_value(data->args->str);
+		if (check_char(data->args->str, '='))
+			add_to_env(data->args->str);
+	}
+	else
+	{
+		if (check_char(data->args->str, '='))
+		{
+			replace_value(data->args->str);
+			replace_env_value(data->args->str);
+		}
+	}
+}
+
 void	export_value(t_cmd_data *data)
 {
 	t_args	*tmp;
@@ -62,22 +80,10 @@ void	export_value(t_cmd_data *data)
 		tmp = data->args;
 		data->args = data->args->next;
 		free_node(tmp);
+		printf("%s\n", data->args->str);
 		while (data->args)
 		{
-			if (!check_value(g_env.exp, data->args->str))
-			{
-				add_export_value(data->args->str);
-				if (check_char(data->args->str, '='))
-					add_to_env(data->args->str);
-			}
-			else
-			{
-				if (check_char(data->args->str, '='))
-				{
-					replace_value(data->args->str);
-					replace_env_value(data->args->str);
-				}
-			}
+			export_value_handler(data);
 			tmp = data->args;
 			data->args = data->args->next;
 			free_node(tmp);

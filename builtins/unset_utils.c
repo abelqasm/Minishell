@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 09:38:33 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 12:05:18 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:54:52 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	check_existing(char *src, char *dst)
 
 	str1 = ft_split(src, '=');
 	str2 = ft_split(dst, '=');
-	value = ft_strncmp(str1[0], str2[0], ft_strlen(str1[0]));
+	value = 1;
+	if (ft_strlen(str1[0]) == ft_strlen(str2[0]))
+		value = ft_strncmp(str1[0], str2[0], ft_strlen(str1[0]));
 	i = -1;
 	while (str1[++i])
 		free(str1[i]);

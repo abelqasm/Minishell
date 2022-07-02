@@ -6,11 +6,29 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/01 01:14:59 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:15:38 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*parse_return_value(char *str, char **tmp)
+{
+	char	*value;
+	int		i;
+
+	i = -1;
+	value = ft_itoa(g_env.exit_status);
+	while (str[i] != '?')
+		i++;
+	while (str[++i])
+	{
+		value = ft_realloc(value, (ft_strlen(value + 2) * sizeof(char)));
+		ft_strlcat(value, (char []){str[i], 0}, ft_strlen(value) + 2);
+	}
+	free(*tmp);
+	return (value);
+}
 
 t_token	*lexer_parse_dollard(t_lexer *lexer)
 {
@@ -20,7 +38,8 @@ t_token	*lexer_parse_dollard(t_lexer *lexer)
 	str = ft_calloc(1, sizeof(char));
 	tmp = NULL;
 	lexer_advance(lexer);
-	while (ft_isalnum(lexer->c) && lexer->c != '"' && lexer->c != '\'')
+	while ((ft_isalnum(lexer->c) && lexer->c != '"'
+			&& lexer->c != '\'') || lexer->c == '?')
 	{
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
 		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
@@ -28,6 +47,8 @@ t_token	*lexer_parse_dollard(t_lexer *lexer)
 	}
 	lexer->delim = ft_strjoin("$", str);
 	tmp = ft_getenv(str);
+	if (check_double(str, '?'))
+		tmp = parse_return_value(str, &tmp);
 	free(str);
 	if (!tmp)
 		tmp = ft_strdup("\n");
