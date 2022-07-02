@@ -39,6 +39,7 @@ LIBFT = ./libft/libft.a
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
+	$(CONTROL)
 	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) minishell.c -o $(NAME)
 
 $(LIBFT) :

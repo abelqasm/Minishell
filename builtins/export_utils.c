@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:35:54 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 16:37:02 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 20:37:45 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,20 @@ int	line_count(char **str)
 
 void	print_it(void)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	**split;
 
 	i = -1;
 	while (g_env.exp && g_env.exp[++i])
-		printf("declare -x %s\n", g_env.exp[i]);
+	{
+		j = -1;
+		split = ft_split(g_env.exp[i], '=');
+		printf("declare -x %s=\"%s\"\n", split[0], split[1]);
+		while (split[++j])
+			free(split[j]);
+		free(split);
+	}
 }
 
 void	print_export(void)

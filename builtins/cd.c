@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:14:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 18:21:49 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/02 20:27:29 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	cd_home(void)
 
 	home = ft_getenv_home("HOME");
 	old = getcwd(NULL, 0);
-	add_pwd(old, 1);
+	if (old)
+		add_pwd(old, 1);
 	chdir(home);
 	new = getcwd(NULL, 0);
 	add_pwd(new, 2);
