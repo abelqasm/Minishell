@@ -21,8 +21,8 @@ SRCS =execute_shell.c \
 	./builtins/cd.c \
 	./builtins/exit01.c \
 	./builtins/exit_pwd.c \
-	./builtins/echo.c
-	./builtins/env.c \
+	./builtins/echo.c \
+	./builtins/env.c 
 OBJS = $(SRCS:.c=.o)
 CONTROL = @stty -echoctl
 LFLAGS = -lreadline -L/Users/abelqasm/.brew/opt/readline/lib -I/Users/abelqasm/.brew/opt/readline/include
