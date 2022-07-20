@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/01 01:13:39 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/20 22:45:37 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 {
 	if (!ast->data.command->args)
 		return ;
-	if (ast->e_type == AST_PIPE || ast->e_type == AST_OR
-		|| ast->e_type == AST_AND)
+	if (ast->e_type == AST_PIPE)
 	{
 		execute_node(ast, exec, flag);
 		return ;
@@ -54,11 +53,8 @@ void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 	if (ast->e_type == AST_COMMAND)
 		fd_management(ast, exec, flag);
 	exec->pid_i++;
-	if (check_builtin(ast->data.command->args->str) != -1)
-	{
-		execute_builtin(ast->data.command);
+	if (all_builtins01(ft_split(join_args(ast->data.command->args), ' '), g_env.npipe,  0, ast->data.command->out))
 		return ;
-	}
 	exec->pid[exec->pid_i] = fork();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

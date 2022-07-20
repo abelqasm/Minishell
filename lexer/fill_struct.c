@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 17:42:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 11:28:56 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/20 22:31:09 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ t_cmd_data	*init_command(void)
 
 int	command_type(int type)
 {
-	if (type != TOKEN_EOF && type != TOKEN_PIPE && type != TOKEN_OR
-		&& type != TOKEN_AND && type != TOKEN_RPARENTH)
+	if (type != TOKEN_EOF && type != TOKEN_PIPE)
 		return (1);
 	return (0);
 }

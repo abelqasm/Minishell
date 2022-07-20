@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 22:22:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 17:34:19 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:38:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ t_token	*lexer_set_token_value(t_lexer *lexer, int type)
 	value[0] = lexer->c;
 	value[1] = '\0';
 	lexer_advance(lexer);
-	if (type == TOKEN_OR || type == TOKEN_AND
-		|| type == TOKEN_APPEND || type == TOKEN_DELIM)
+	if (type == TOKEN_APPEND || type == TOKEN_DELIM)
 	{
 		value = ft_realloc(value, sizeof(char) * 3);
 		ft_strlcat(value, (char []){lexer->c, 0}, 3);
@@ -32,10 +31,6 @@ t_token	*lexer_set_token_value(t_lexer *lexer, int type)
 
 t_token	*lexer_help_set_token(t_lexer *lexer)
 {
-	if (lexer->c == '|' && lexer->cp == '|')
-		return (lexer_set_token_value(lexer, TOKEN_OR));
-	if (lexer->c == '&' && lexer->cp == '&')
-		return (lexer_set_token_value(lexer, TOKEN_AND));
 	if (lexer->c == '<' && lexer->cp == '<')
 		return (lexer_set_token_value(lexer, TOKEN_DELIM));
 	if (lexer->c == '>' && lexer->cp == '>')
@@ -51,8 +46,7 @@ t_token	*lexer_help_set_token(t_lexer *lexer)
 
 t_token	*lexer_tokenize(t_lexer *lexer)
 {
-	if (lexer->c == '(' || lexer->c == ')' || lexer->c == '|'
-		|| lexer->c == '&' || lexer->c == '>' || lexer->c == '<')
+	if (lexer->c == '|' || lexer->c == '>' || lexer->c == '<')
 		return (lexer_help_set_token(lexer));
 	if (lexer->c == '$')
 		return (lexer_parse_dollard(lexer));
@@ -71,8 +65,6 @@ t_token	*lexer_next_token(t_parser **parser)
 	if ((*parser)->token)
 	{
 		if ((*parser)->token->e_type == TOKEN_PIPE
-			|| (*parser)->token->e_type == TOKEN_AND
-			|| (*parser)->token->e_type == TOKEN_OR
 			|| (*parser)->token->e_type == TOKEN_EOF
 			|| (*parser)->token->e_type == TOKEN_RDIN
 			|| (*parser)->token->e_type == TOKEN_APPEND

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:57:57 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 11:56:00 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:41:12 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,9 @@ typedef struct s_token
 	enum
 	{
 		TOKEN_PIPE,
-		TOKEN_OR,
-		TOKEN_AND,
 		TOKEN_ID,
 		TOKEN_SQUOTE,
 		TOKEN_DQUOTE,
-		TOKEN_LPARENTH,
-		TOKEN_RPARENTH,
 		TOKEN_DOLLAR,
 		TOKEN_RDIN,
 		TOKEN_RDOUT,

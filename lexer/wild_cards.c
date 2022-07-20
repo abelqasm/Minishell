@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:47:09 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 20:40:11 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:48:02 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ BOOL	is_match(char *str, char *pattern, size_t s, size_t p)
 			if (str[i - 1] == pattern[j - 1])
 				tab[i][j] = tab[i - 1][j - 1];
 			else if (pattern[j - 1] == '*')
-				tab[i][j] = tab[i - 1][j] || tab[i][j - 1];
+				tab[i][j] = (tab[i - 1][j] || tab[i][j - 1]);
 			else
 				tab[i][j] = FALSE;
 		}

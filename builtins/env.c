@@ -5,73 +5,67 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/27 16:18:42 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 15:08:05 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/06/12 02:31:14 by brmohamm          #+#    #+#             */
+/*   Updated: 2022/07/20 22:26:08 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_getenv(char *env)
+void	if_equal_exist(int equal_exist, int out, int i)
+{
+	if (equal_exist == 1)
+	{
+		write(out, g_env.env[i],
+			ft_strlen(g_env.env[i]));
+		write(out, "\n", 1);
+	}
+}
+
+void	print_env(int out)
 {
 	int	i;
+	int	y;
+	int	equal_exist;
 
-	i = -1;
-	while (g_env.env[++i])
+	i = 0;
+	equal_exist = 0;
+	while (g_env.env[i])
 	{
-		if (!ft_strncmp(g_env.env[i], env, ft_strlen(env)))
-			return (g_env.env[i]);
-	}
-	return (NULL);
-}
-
-void	add_to_env(char *value)
-{
-	char	**tmp;
-	int		i;
-
-	i = -1;
-	tmp = g_env.env;
-	g_env.env = malloc(sizeof(char *) * (line_count(tmp) + 2));
-	while (tmp[++i])
-	{
-		g_env.env[i] = ft_strdup(tmp[i]);
-		free(tmp[i]);
-	}
-	g_env.env[i] = ft_strdup(value);
-	g_env.env[++i] = 0;
-	free(tmp);
-}
-
-void	replace_env_value(char *value)
-{
-	char	*str;
-	char	**split;
-	int		i;
-
-	i = -1;
-	split = ft_split(value, '=');
-	while (g_env.env[++i])
-	{
-		if (!ft_strncmp(g_env.env[i], split[0], ft_strlen(split[0])))
+		y = 0;
+		equal_exist = 0;
+		while (g_env.env[i][y])
 		{
-			str = g_env.env[i];
-			g_env.env[i] = ft_strdup(value);
-			free(str);
+			if (g_env.env[i][y] == '=' && g_env.env[i][y + 1])
+			{
+				equal_exist = 1;
+				break ;
+			}
+			y++;
 		}
+		if_equal_exist(equal_exist, out, i);
+		i++;
 	}
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
 }
 
-void	ft_env(t_cmd_data *data)
+void	envm(char **c, int fd, int pipe_exist, int out)
 {
-	int		i;
+	int	error;
 
-	i = -1;
-	(void)data;
-	while (g_env.env[++i])
-		printf("%s\n", g_env.env[i]);
+	error = 0;
+	if (c[1])
+		error = args_error(c[1], 1, "env");
+	if (error == 0)
+	{
+		redir_or_pipe(pipe_exist, fd, out);
+		print_env(out);
+	}
+	if (pipe_exist == 1)
+	{
+		if (error == 0)
+			g_env.exit_status = 0;
+		exit(g_env.exit_status);
+	}
+	if (error == 0)
+			g_env.exit_status = 0;
 }

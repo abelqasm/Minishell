@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strtolower.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/28 12:14:44 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/28 14:43:08 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/07/20 22:49:33 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/07/20 22:53:49 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	pwd(t_cmd_data *data)
+char	*ft_strtolower(char *str)
 {
-	char	*str;
+	int		i;
+	char	*value;
 
-	(void)data;
-	str = getcwd(NULL, 0);
-	printf("%s\n", str);
-	free(str);
+	i = -1;
+	value = malloc(sizeof(char) * (ft_strlen(str) + 1))
+	while (str[++i])
+		value[i] = ft_tolower(str[i]);
+	value[i] = 0;
+	return (value);
 }

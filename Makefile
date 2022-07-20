@@ -13,21 +13,16 @@ SRCS =execute_shell.c \
 	./exec/init_exec.c \
 	./exec/execute.c \
 	./exec/execute_ast.c \
-	./builtins/check_builtin.c \
 	./builtins/execute_builtin.c \
-	./builtins/export_utils.c \
+	./builtins/export01.c \
 	./builtins/export.c \
-	./builtins/env.c \
 	./builtins/unset.c \
-	./builtins/unset_utils.c \
 	./builtins/pwd.c \
 	./builtins/cd.c \
-	./builtins/exit.c \
-	./builtins/echo.c \
-	# ./exec/pipex/pipex_bonus.c \
-	# ./exec/pipex/pipex_bonus_child.c \
-	# ./exec/pipex/utils/ft_errors.c \
-	# ./exec/pipex/utils/ft_close_pipes.c
+	./builtins/exit01.c \
+	./builtins/exit_pwd.c \
+	./builtins/echo.c
+	./builtins/env.c \
 OBJS = $(SRCS:.c=.o)
 CONTROL = @stty -echoctl
 LFLAGS = -lreadline -L/Users/abelqasm/.brew/opt/readline/lib -I/Users/abelqasm/.brew/opt/readline/include

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 16:41:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/20 22:43:21 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **env)
 	g_env.env = env_exp(env);
 	while (1)
 	{
+		g_env.error = 0;
 		signal(SIGINT, ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		str = readline("myshell >");

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 18:32:53 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/20 22:43:54 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	execute_shell(char *str)
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser, &lexer->pipe);
 	exec = init_exec(lexer->pipe);
-	if (!parser->lexer->error)
+	g_env.npipe = lexer->pipe;
+	if (!g_env.error)
 	{
 		execute_ast(ast, exec, 0);
 		while (waitpid(-1, &exit_value, 0) > 0)

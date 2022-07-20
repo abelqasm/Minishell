@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:10:37 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/26 16:52:03 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:24:34 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token	*lexer_parse_double_quote(t_lexer *lexer, int type)
 	quotes = 0;
 	lexer_advance(lexer);
 	if (!check_double(lexer->str + lexer->i, '"'))
-		lexer->error++;
+		g_env.error++;
 	while (lexer_args_quotes(lexer->c) && lexer->c != '"')
 	{
 		if (quotes == 1 && lexer->c == '\'')
@@ -73,7 +73,7 @@ t_token	*lexer_parse_single_quote(t_lexer *lexer, int type)
 	quotes = 0;
 	lexer_advance(lexer);
 	if (!check_double(lexer->str + lexer->i, '\''))
-		lexer->error++;
+		g_env.error++;
 	while (lexer_args_quotes(lexer->c) && lexer->c != '\'')
 	{
 		if (quotes == 1 && lexer->c == '"')

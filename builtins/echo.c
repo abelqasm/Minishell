@@ -5,86 +5,78 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/28 12:20:13 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 16:39:44 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/06/12 02:30:46 by brmohamm          #+#    #+#             */
+/*   Updated: 2022/07/20 22:26:52 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_arg(t_args *args)
+int	nl_not_exist(int *nl_exist, char *c, int *i)
 {
-	t_args	*ptr;
-	int		i;
+	int	y;
 
-	i = 0;
-	ptr = args;
-	while (ptr->next)
+	if (c[0] == '-')
 	{
-		i++;
-		ptr = ptr->next;
+		y = 1;
+		while (c[y] && c[y] == 'n')
+			y++;
+		if (c[y] == '\0')
+		{
+			*nl_exist = 0;
+			*i = *i + 1;
+			return (0);
+		}
 	}
-	return (i);
+	return (1);
 }
 
-int	check_n(char *str)
+void	redir_or_pipe(int pipe_exist, int fd, int out)
+{
+	if (pipe_exist == 1 && out != 0)
+	{
+		dup2(out, 1);
+		out = 1;
+	}
+	else if (out == 0)
+		out = 1;
+	else if (pipe_exist == 1)
+		dup2(fd, 1);
+}
+
+void	while_on_newlin(char **c, int *nl_exist, int *i)
+{
+	while (c[*i + 1])
+	{
+		if (nl_not_exist(nl_exist, c[*i + 1], i) == 1)
+			break ;
+	}
+}
+
+void	echo(char **c, int fd, int pipe_exist, int out)
 {
 	int	i;
-	int	dush;
-	int	n;
+	int	nl_exist;
 
 	i = 0;
-	dush = 0;
-	n = 0;
-	while (str[i])
+	nl_exist = 1;
+	redir_or_pipe(pipe_exist, fd, out);
+	while_on_newlin(c, &nl_exist, &i);
+	while (c[i + 1])
 	{
-		if (str[i] == '-')
-			dush++;
-		if (str[i] != '-' && str[i] != 'n')
-			n++;
+		if (c[i + 1] != NULL)
+			write(out, c[i + 1], ft_strlen(c[i + 1]));
 		i++;
+		if (c[i + 1])
+			write(out, " ", 1);
 	}
-	if (dush != 1 || n)
-		return (1);
-	return (0);
-}
-
-void	print_echo(t_cmd_data *data, int *n)
-{
-	t_args	*tmp;
-
-	tmp = data->args;
-	data->args = data->args->next;
-	free_node(tmp);
-	while (data->args && !check_n(data->args->str))
+	if (nl_exist == 1)
+		write(out, "\n", 1);
+	if (pipe_exist == 1)
 	{
-		tmp = data->args;
-		data->args = data->args->next;
-		free_node(tmp);
-		n++;
+		g_env.exit_status = 0;
+		exit(0);
 	}
-	while (data->args)
-	{
-		printf("%s", data->args->str);
-		if (data->args->next || !n)
-			printf(" ");
-		tmp = data->args;
-		data->args = data->args->next;
-		free_node(tmp);
-	}
-}
-
-void	echo(t_cmd_data *data)
-{
-	int		count;
-	int		n;
-
-	count = count_arg(data->args);
-	n = 0;
-	if (count == 0)
-		printf("\n");
-	if (count >= 1)
-		print_echo(data, &n);
-	if (!n)
-		printf("\n");
+	else
+		g_env.exit_status = 0;
 }

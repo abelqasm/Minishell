@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 17:07:21 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/20 22:59:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	fill_rdin(t_parser **start, t_cmd_data **cmd)
 	parser->token = lexer_next_token(&parser);
 	if (parser->token->e_type != TOKEN_ID)
 	{
-		parser->lexer->error++;
+		g_env.error++;
 		return ;
 	}
 	args_push(&command->intput, parser->token->value);
@@ -41,7 +41,7 @@ void	fill_rdout(t_parser **start, t_cmd_data **cmd)
 	parser->token = lexer_next_token(&parser);
 	if (parser->token->e_type != TOKEN_ID)
 	{
-		parser->lexer->error++;
+		g_env.error++;
 		return ;
 	}
 	args_push(&command->output, parser->token->value);
@@ -64,7 +64,7 @@ void	fill_heredoc(t_parser *parser, int *fd)
 		str = readline("> ");
 		if (!str)
 			exit(0);
-		if (!ft_strncmp(str, delim, ft_strlen(delim)) || !str)
+		if (!ft_strcmp(str, delim) || !str)
 			break ;
 		write(fd[1], str, ft_strlen(str) + 1);
 		write(fd[1], "\n", 1);
@@ -87,7 +87,7 @@ void	fill_delim(t_parser **start, t_cmd_data **cmd)
 	if (parser->token->e_type != TOKEN_ID
 		&& parser->token->e_type != TOKEN_DOLLAR)
 	{
-		parser->lexer->error++;
+		g_env.error++;
 		return ;
 	}
 	pipe(fd);

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 19:07:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 18:33:22 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:25:34 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct s_lexer
 	int		pipe;
 	size_t	i;
 	size_t	size;
-	size_t	error;
 }	t_lexer;
 t_lexer	*init_lexer(char *str);
 void	lexer_advance(t_lexer *lexer);

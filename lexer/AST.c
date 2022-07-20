@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast.c                                              :+:      :+:    :+:   */
+/*   AST.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:06:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 17:04:10 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:32:32 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,11 @@ t_ast	*init_ast(int type)
 	return (ast);
 }
 
-t_ast	*init_node(t_ast *left, t_ast *right, int type)
+t_ast	*init_node(t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 
-	if (type == TOKEN_PIPE)
-		node = init_ast(AST_PIPE);
-	if (type == TOKEN_OR)
-		node = init_ast(AST_OR);
-	if (type == TOKEN_AND)
-		node = init_ast(AST_AND);
+	node = init_ast(AST_PIPE);
 	node->data.tree->left = left;
 	node->data.tree->right = right;
 	return (node);
