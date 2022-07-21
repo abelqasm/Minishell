@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:46:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/01 00:19:40 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:59:20 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,18 @@ t_exec	*init_exec(int n_pipe)
 char	*join_args(t_args *args)
 {
 	char	*str;
+	char	*tmp;
 
 	str = ft_strdup(args->str);
 	while (args->next)
 	{
 		args = args->next;
+		tmp = str;
 		str = ft_strjoin(str, " ");
+		free(tmp);
+		tmp = str;
 		str = ft_strjoin(str, args->str);
+		free(tmp);
 	}
 	return (str);
 }

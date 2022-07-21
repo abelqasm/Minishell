@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:05:32 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:30:03 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:55:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	move_to_dir(char *c, int out)
 	if (temp == NULL)
 		return (0);
 	getcwd(cwd, sizeof(cwd));
-	old = ft_strjoin(old, cwd);
+	old = ft_ftjoin(old, cwd);
 	temp[1] = ft_strdup(old);
 	export(temp, 0, 0, out);
 	free(old);
@@ -52,7 +52,7 @@ int	move_to_dir(char *c, int out)
 	chdir(c);
 	old = ft_strdup("PWD=");
 	getcwd(cwd, sizeof(cwd));
-	old = ft_strjoin(old, cwd);
+	old = ft_ftjoin(old, cwd);
 	temp[1] = ft_strdup(old);
 	export(temp, 0, 0, out);
 	free_table(temp);

@@ -13,9 +13,11 @@ SRCS =  ft_strlen.c \
 		ft_toupper.c \
 		ft_tolower.c \
 		ft_strtolower.c \
+		ft_strdigit.c \
 		ft_strchr.c \
 		ft_strrchr.c \
 		ft_strncmp.c \
+		ft_stralnum.c \
 		ft_strcmp.c \
 		ft_memchr.c \
 		ft_memcmp.c \
@@ -25,6 +27,7 @@ SRCS =  ft_strlen.c \
 		ft_realloc.c \
 		ft_strdup.c \
 		ft_substr.c \
+		ft_ftjoin.c \
 		ft_strjoin.c \
 		ft_strtrim.c \
 		ft_split.c \

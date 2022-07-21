@@ -1,32 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/26 16:48:48 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 19:18:08 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/07/21 09:57:26 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/07/21 18:29:42 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_double(char *str, int c)
+int	line_count(char **str)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == c)
-			return (1);
-	}
-	return (0);
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
 }
 
-int	advance_quotes(t_lexer *lexer)
+char	*ft_getenv(char *env)
 {
-	lexer_advance(lexer);
-	return (1);
+	int		i;
+	char	**split;
+	char	*value;
+
+	i = -1;
+	while (g_env.env[++i])
+	{
+		split = ft_split(g_env.env[i], '=');
+		if (!ft_strcmp(split[0], env))
+		{
+			value = ft_strdup(split[1]);
+			free_table(split);
+			return (value);
+		}
+		free_table(split);
+	}
+	return (NULL);
 }

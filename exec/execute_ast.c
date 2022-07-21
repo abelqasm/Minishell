@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:45:37 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:44:17 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,32 @@ void	fd_management(t_ast *ast, t_exec *exec, int flag)
 	}
 }
 
+void	open_io(t_cmd_data *data)
+{
+	while (data->intput)
+	{
+		data->in = open(data->intput->str, O_RDWR, 0644);
+		if (data->in < 0)
+		{
+			printf("no such file or directory: %s\n", data->intput->str);
+			exit(1);
+		}
+		data->intput = data->intput->next;
+	}
+	while (data->output)
+	{
+		if (data->append)
+			data->out = open(data->output->str, O_RDWR
+					| O_CREAT | O_APPEND, 0644);
+		else
+			data->out = open(data->output->str, O_RDWR
+					| O_CREAT | O_TRUNC, 0644);
+		data->output = data->output->next;
+	}
+	if (data->delim)
+		data->in = data->delim;
+}
+
 void	execute_node(t_ast *ast, t_exec *exec, int flag)
 {
 	exec->i++;
@@ -50,10 +76,10 @@ void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 		execute_node(ast, exec, flag);
 		return ;
 	}
-	if (ast->e_type == AST_COMMAND)
-		fd_management(ast, exec, flag);
+	fd_management(ast, exec, flag);
+	open_io(ast->data.command);
 	exec->pid_i++;
-	if (all_builtins01(ft_split(join_args(ast->data.command->args), ' '), g_env.npipe,  0, ast->data.command->out))
+	if (check_bultins(ast))
 		return ;
 	exec->pid[exec->pid_i] = fork();
 	signal(SIGINT, SIG_IGN);

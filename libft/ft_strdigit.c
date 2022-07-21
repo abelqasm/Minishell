@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strdigit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/26 16:48:48 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 19:18:08 by abelqasm         ###   ########.fr       */
+/*   Created: 2022/07/21 09:50:44 by abelqasm          #+#    #+#             */
+/*   Updated: 2022/07/21 09:50:55 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-int	check_double(char *str, int c)
+int	ft_strdigit(char *c)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (c[i])
 	{
-		if (str[i] == c)
+		if (c[i] < '0' && c[i] > '9')
 			return (1);
+		i++;
 	}
 	return (0);
-}
-
-int	advance_quotes(t_lexer *lexer)
-{
-	lexer_advance(lexer);
-	return (1);
 }

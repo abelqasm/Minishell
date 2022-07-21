@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 18:26:46 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:24:35 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*parse_return_value(char *str, char **tmp)
 
 	i = -1;
 	value = ft_itoa(g_env.exit_status);
-	while (str[i] != '?')
+	while (str[++i] && str[i] != '?')
 		i++;
 	while (str[++i])
 	{

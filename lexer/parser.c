@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 17:24:49 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/19 15:25:05 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 14:04:43 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_parser	*init_parser(t_lexer *lexer)
 	parser->lexer = lexer;
 	parser->token = NULL;
 	parser->token = lexer_next_token(&parser);
+	if (parser->token->e_type == TOKEN_PIPE)
+		g_env.error = 1;
 	return (parser);
 }
 

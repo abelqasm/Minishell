@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:39:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/20 23:05:04 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 11:40:22 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@ void	exitm(char **c);
 void	free_table(char **c);
 int		all_builtins01(char **c, int pipe_exist, int fd, int out);
 int		all_builtins(char **c, int pipe_exist, int fd, int out);
-int     errorin_args(char *c, int error, int i);
-int     replace(int i, char *c);
+int		args_error(char *c, int false, char *name);
+int		errorin_args(char *c, int error, int i);
+int		check_bultins(t_ast *ast);
+int		replace(int i, char *c);
 int		line_count(char **str);
-int     input_error(char *c);
+int		input_error(char *c);
 int		lop_onarg(char *c);
 int		is_d(int c);
+int		line_count(char **str);
+char	*ft_getenv(char *env);
 
 #endif

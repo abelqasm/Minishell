@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:47:35 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/20 23:09:17 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:11:13 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	input_error(char *c)
 		g_env.exit_status = 1;
 		return (1);
 	}
-	if ((ft_isalnum(c) == 1 && ft_isdigit(c) == 0)
+	if ((ft_stralnum(c) == 1 && ft_strdigit(c) == 0)
 		|| (c[0] >= '0' && c[0] <= '9'))
 	{
 		write(2, "minishell: export: `", 20);
@@ -88,7 +88,7 @@ void	delete(int *error, int *error_out, char *c)
 		*error_out = 1;
 	if (*error_out == 0)
 	{
-			y = 0;
+		y = 0;
 		br = 0;
 		while (g_env.env[y] != NULL)
 		{
