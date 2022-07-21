@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:31:14 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:26:08 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 23:39:39 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_env(int out)
 	}
 }
 
-void	envm(char **c, int fd, int pipe_exist, int out)
+void	envm(char **c, int pipe_exist, int out)
 {
 	int	error;
 
@@ -57,7 +57,7 @@ void	envm(char **c, int fd, int pipe_exist, int out)
 		error = args_error(c[1], 1, "env");
 	if (error == 0)
 	{
-		redir_or_pipe(pipe_exist, fd, out);
+		redir_or_pipe(pipe_exist, out);
 		print_env(out);
 	}
 	if (pipe_exist == 1)

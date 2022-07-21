@@ -6,13 +6,13 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:39:11 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:33:20 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 23:40:24 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	just_export(int fd, int pipe_exist, int out)
+void	just_export(int pipe_exist, int out)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ void	just_export(int fd, int pipe_exist, int out)
 	else if (out == 0)
 		out = 1;
 	else if (pipe_exist == 1)
-		dup2(fd, 1);
+		dup2(out, 1);
 	while (g_env.env[i])
 	{
 		print_export(g_env.env[i], out);
@@ -107,13 +107,13 @@ void	add_in_export(char **c, int *error_out)
 	}
 }
 
-void	export(char **c, int fd, int pipe_exist, int out)
+void	export(char **c, int pipe_exist, int out)
 {
 	int	error;
 
 	error = 0;
 	if (c[1] == '\0')
-		just_export(fd, pipe_exist, out);
+		just_export(pipe_exist, out);
 	else
 		add_in_export(c, &error);
 	if (pipe_exist == 1)

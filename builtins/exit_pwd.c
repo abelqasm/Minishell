@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:36:03 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:24:08 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 23:37:28 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	shearch_and_print(int out)
 	}
 }
 
-void	pwd(char **c, int fd, int pipe_exist, int out)
+void	pwd(char **c, int pipe_exist, int out)
 {
 	int	error;
 
@@ -103,7 +103,7 @@ void	pwd(char **c, int fd, int pipe_exist, int out)
 		error = args_error(c[1], 0, "pwd");
 	if (error == 0)
 	{
-		redir_or_pipe(pipe_exist, fd, out);
+		redir_or_pipe(pipe_exist, out);
 		shearch_and_print(out);
 	}
 	if (pipe_exist == 1)

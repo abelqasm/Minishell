@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:30:46 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/21 12:22:09 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 23:39:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	nl_not_exist(int *nl_exist, char *c, int *i)
 	return (1);
 }
 
-void	redir_or_pipe(int pipe_exist, int fd, int out)
+void	redir_or_pipe(int pipe_exist, int out)
 {
 	if (pipe_exist == 1 && out != 0)
 	{
@@ -41,7 +41,7 @@ void	redir_or_pipe(int pipe_exist, int fd, int out)
 	else if (out == 0)
 		out = 1;
 	else if (pipe_exist == 1)
-		dup2(fd, 1);
+		dup2(out, 1);
 }
 
 void	while_on_newlin(char **c, int *nl_exist, int *i)
@@ -53,14 +53,14 @@ void	while_on_newlin(char **c, int *nl_exist, int *i)
 	}
 }
 
-void	echo(char **c, int fd, int pipe_exist, int out)
+void	echo(char **c, int pipe_exist, int out)
 {
 	int	i;
 	int	nl_exist;
 
 	i = 0;
 	nl_exist = 1;
-	redir_or_pipe(pipe_exist, fd, out);
+	redir_or_pipe(pipe_exist, out);
 	while_on_newlin(c, &nl_exist, &i);
 	while (c[i + 1])
 	{

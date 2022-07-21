@@ -6,17 +6,17 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:54:06 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 18:25:07 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/21 23:40:06 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	all_builtins01(char **c, int pipe_exist, int fd, int out)
+int	all_builtins01(char **c, int pipe_exist, int out)
 {
 	if (ft_strcmp(c[0], "export") == 0)
 	{
-		export(c, fd, pipe_exist, out);
+		export(c, pipe_exist, out);
 		return (1);
 	}
 	if (ft_strcmp(c[0], "unset") == 0)
@@ -31,28 +31,28 @@ int	all_builtins01(char **c, int pipe_exist, int fd, int out)
 	}
 	if (ft_strcmp(c[0], "env") == 0)
 	{
-		envm(c, fd, pipe_exist, out);
+		envm(c, pipe_exist, out);
 		return (1);
 	}
 	return (0);
 }
 
-int	all_builtins(char **c, int pipe_exist, int fd, int out)
+int	all_builtins(char **c, int pipe_exist, int out)
 {
 	char	*temp;
 
-	if (all_builtins01(c, pipe_exist, fd, out) == 1)
+	if (all_builtins01(c, pipe_exist, out) == 1)
 		return (1);
 	temp = ft_strtolower(c[0]);
 	if (ft_strcmp(temp, "pwd") == 0)
 	{
-		pwd (c, fd, pipe_exist, out);
+		pwd (c, pipe_exist, out);
 		free(temp);
 		return (1);
 	}
 	if (ft_strcmp(temp, "echo") == 0)
 	{
-		echo(c, fd, pipe_exist, out);
+		echo(c, pipe_exist, out);
 		free(temp);
 		return (1);
 	}
@@ -76,7 +76,7 @@ int	check_bultins(t_ast *ast)
 	i = -1;
 	str = join_args(ast->data.command->args);
 	args = ft_split(str, ' ');
-	value = all_builtins(args, g_env.npipe, 0, ast->data.command->out);
+	value = all_builtins(args, g_env.npipe, ast->data.command->out);
 	free(str);
 	while (args[++i])
 		free(args[i]);
