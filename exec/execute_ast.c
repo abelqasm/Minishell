@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/22 12:18:50 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/22 16:23:54 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,27 @@ void	fd_management(t_ast *ast, t_exec *exec, int flag)
 
 void	open_io(t_cmd_data *data)
 {
-	while (data->intput)
+	t_args	*args;
+
+	args = data->intput;
+	while (args)
 	{
-		data->in = open(data->intput->str, O_RDWR, 0644);
+		data->in = open(args->str, O_RDWR, 0644);
 		if (data->in < 0)
 		{
-			printf("no such file or directory: %s\n", data->intput->str);
+			printf("no such file or directory: %s\n", args->str);
 			exit(1);
 		}
-		data->intput = data->intput->next;
+		args = args->next;
 	}
-	while (data->output)
+	args = data->output;
+	while (args)
 	{
 		if (data->append)
-			data->out = open(data->output->str, O_RDWR
-					| O_CREAT | O_APPEND, 0644);
+			data->out = open(args->str, O_RDWR | O_CREAT | O_APPEND, 0644);
 		else
-			data->out = open(data->output->str, O_RDWR
-					| O_CREAT | O_TRUNC, 0644);
-		data->output = data->output->next;
+			data->out = open(args->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		args = args->next;
 	}
 	if (data->delim)
 		data->in = data->delim;
