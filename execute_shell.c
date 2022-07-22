@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:43:54 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/22 12:43:55 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,14 @@ void	execute_shell(char *str)
 	if (!g_env.error)
 	{
 		execute_ast(ast, exec, 0);
+		ft_close_pipes(exec);
 		while (waitpid(-1, &exit_value, 0) > 0)
 			g_env.exit_status = WEXITSTATUS(exit_value);
 	}
 	else
+	{
+		ft_close_pipes(exec);
 		printf("syntax error\n");
+	}
 	free_shell(&ast, &parser, &exec, lexer->pipe);
 }

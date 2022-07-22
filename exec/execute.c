@@ -6,11 +6,23 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 11:48:43 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/22 12:19:01 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	ft_close_pipes(t_exec *exec)
+{
+	int	i;
+
+	i = -1;
+	while (++i < exec->n_pipe)
+	{
+		close(exec->pipe[i][0]);
+		close(exec->pipe[i][1]);
+	}
+}
 
 char	*ft_find_cmd(char **paths, char *cmd)
 {
@@ -30,17 +42,10 @@ char	*ft_find_cmd(char **paths, char *cmd)
 			paths++;
 		}
 	}
-	while (paths && *paths)
-	{
-		if (access(cmd, F_OK) == 0)
-			return (cmd);
-		paths++;
-	}
-	printf("command not found: %s\n", cmd);
-	return (NULL);
+	return (cmd);
 }
 
-void	execute(t_cmd_data *data, char **env)
+void	execute(t_cmd_data *data, char **env, t_exec *exec)
 {
 	char	**path;
 	char	*cmd_path;
@@ -54,15 +59,11 @@ void	execute(t_cmd_data *data, char **env)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (data->in != 0)
-	{
 		dup2(data->in, STDIN_FILENO);
-		close(data->in);
-	}
 	if (data->out != 1)
-	{
 		dup2(data->out, STDOUT_FILENO);
-		close(data->out);
-	}
+	ft_close_pipes(exec);
 	execve(cmd_path, args, env);
+	printf("command not found: %s\n", cmd_path);
 	exit(127);
 }

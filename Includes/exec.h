@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:42:47 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:59:13 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ typedef struct s_global
 }	t_global;
 
 t_exec	*init_exec(int n_pipe);
-void	execute(t_cmd_data *data, char **env);
+void	execute(t_cmd_data *data, char **env, t_exec *exec);
 void	open_io(t_cmd_data *data);
+void	ft_close_pipes(t_exec *exec);
 void	execute_node(t_ast *ast, t_exec *exec, int flag);
 void	execute_ast(t_ast *ast, t_exec *exec, int flag);
 char	*ft_find_cmd(char **paths, char *cmd);

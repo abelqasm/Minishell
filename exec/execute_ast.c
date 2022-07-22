@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/22 00:06:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/22 12:18:50 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 	if (exec->pid[exec->pid_i] == 0)
 	{
 		if (!check_bultins(ast))
-			execute(ast->data.command, g_env.env);
+			execute(ast->data.command, g_env.env, exec);
 	}
 	if (ast->data.command->out != 1)
 		close(ast->data.command->out);
