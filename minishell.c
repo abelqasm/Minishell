@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 10:39:29 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/27 11:12:21 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,8 @@ void	ctrl_c(int sig)
 	ft_putchar_fd('\n', 1);
 	rl_on_new_line();
 	rl_redisplay();
+	g_env.exit_status = 1;
 	return ;
-}
-
-void	catch_signal(void)
-{
-	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
 }
 
 char	**env_exp(char **env)
@@ -48,6 +43,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	g_env.env = env_exp(env);
+	g_env.exit_status = 0;
 	while (1)
 	{
 		g_env.error = 0;
@@ -63,5 +59,3 @@ int	main(int argc, char **argv, char **env)
 		execute_shell(str);
 	}
 }
-
-// ls -la | wc -l || cat Makefile

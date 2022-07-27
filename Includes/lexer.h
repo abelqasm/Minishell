@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 19:07:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/19 15:25:34 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/25 11:26:17 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_lexer	*init_lexer(char *str);
 void	lexer_advance(t_lexer *lexer);
 void	lexer_advance_quotes(t_lexer *lexer, int type);
 void	lexer_skip_whitespace(t_lexer *lexer);
+void	set_expand_value(t_lexer *lexer, char **str);
 int		lexer_args_char(int c);
 int		lexer_args_quotes(int c);
 

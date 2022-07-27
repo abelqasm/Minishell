@@ -6,20 +6,43 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 18:24:35 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/25 20:50:22 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	lexer_add_value(t_lexer *lexer, char **str)
+{
+	t_token	*quote;
+
+	if (lexer->c == '"')
+		quote = lexer_parse_double_quote(lexer, TOKEN_DQUOTE);
+	if (lexer->c == '\'')
+		quote = lexer_parse_single_quote(lexer, TOKEN_SQUOTE);
+	*str = ft_realloc(*str, (ft_strlen(*str)
+				+ ft_strlen(quote->value) + 1) * sizeof(char));
+	ft_strlcat(*str, quote->value, ft_strlen(*str)
+		+ ft_strlen(quote->value) + 1);
+	free(quote->value);
+	free(quote);
+}
+
 char	*parse_return_value(char *str, char **tmp)
 {
 	char	*value;
 	int		i;
+	int		exit_status;
 
-	i = -1;
-	value = ft_itoa(g_env.exit_status);
-	while (str[++i] && str[i] != '?')
+	i = 0;
+	exit_status = g_env.exit_status;
+	if (g_env.exit_status == 2 || g_env.exit_status == 3)
+		exit_status = g_env.exit_status + 128;
+	if (str[0] == '?')
+		value = ft_itoa(exit_status);
+	else
+		value = ft_strdup("?");
+	while (str[i] && str[i] != '?')
 		i++;
 	while (str[++i])
 	{
@@ -53,7 +76,7 @@ t_token	*lexer_parse_dollard(t_lexer *lexer)
 		tmp = parse_return_value(str, &tmp);
 	free(str);
 	if (!tmp)
-		tmp = ft_strdup("\n");
+		tmp = ft_strdup("");
 	return (init_token(tmp, TOKEN_DOLLAR));
 }
 
@@ -66,8 +89,10 @@ t_token	*lexer_parse_token(t_lexer *lexer, int type)
 	{
 		if (lexer->c == '*')
 			type = TOKEN_WILDCARDS;
+		while (lexer->c == '$')
+			set_expand_value(lexer, &str);
 		if (lexer->c == '"' || lexer->c == '\'')
-			lexer_advance(lexer);
+			lexer_add_value(lexer, &str);
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
 		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
 		lexer_advance(lexer);

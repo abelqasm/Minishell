@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 22:22:11 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/20 11:38:14 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/25 17:16:15 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_token	*lexer_tokenize(t_lexer *lexer)
 	if (lexer->c == '|' || lexer->c == '>' || lexer->c == '<')
 		return (lexer_help_set_token(lexer));
 	if (lexer->c == '$')
-		return (lexer_parse_dollard(lexer));
+		return (lexer_parse_token(lexer, TOKEN_ID));
 	if (lexer_args_char(lexer->c) && lexer->c != '\'' && lexer->c != '"')
 		return (lexer_parse_token(lexer, TOKEN_ID));
 	if (lexer->c == '\'')

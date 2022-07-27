@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:59:14 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:55:54 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	fill_delim(t_parser **start, t_cmd_data **cmd)
 	t_parser	*parser;
 	int			fd[2];
 	pid_t		pid;
-	int			exit_status;
 
 	parser = *start;
 	parser->token = lexer_next_token(&parser);
@@ -92,10 +91,12 @@ void	fill_delim(t_parser **start, t_cmd_data **cmd)
 	}
 	pipe(fd);
 	pid = fork();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (pid == 0)
 		fill_heredoc(parser, fd);
-	wait(&exit_status);
-	g_env.exit_status = WEXITSTATUS(exit_status);
+	wait(&g_env.exit_status);
+	set_exit_value(g_env.exit_status);
 	free(parser->token->value);
 	close(fd[1]);
 	(*cmd)->delim = fd[0];

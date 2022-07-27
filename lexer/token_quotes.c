@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:10:37 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 19:43:19 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:46:58 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,15 @@ void	set_expand_value(t_lexer *lexer, char **str)
 		ft_strlcat(*str, env->value, ft_strlen(*str)
 			+ ft_strlen(env->value) + 1);
 	}
-	if (lexer->c == '"')
-		lexer_advance(lexer);
 	free(env->value);
 	free(env);
 }
 
 char	*more_value(t_lexer *lexer, char **str)
 {
-	while (lexer_args_quotes(lexer->c))
+	while (lexer_args_quotes(lexer->c) && lexer->c != '\'' && lexer->c != '"')
 	{
-		if (lexer->c == '$')
+		while (lexer->c == '$')
 			set_expand_value(lexer, str);
 		*str = ft_realloc(*str, (ft_strlen(*str) + 2) * sizeof(char));
 		ft_strlcat(*str, (char []){lexer->c, 0}, ft_strlen(*str) + 2);
@@ -61,8 +59,10 @@ t_token	*lexer_parse_double_quote(t_lexer *lexer, int type)
 		g_env.error++;
 	while (lexer_args_quotes(lexer->c) && lexer->c != '"')
 	{
-		if (lexer->c == '$')
+		while (lexer->c == '$')
 			set_expand_value(lexer, &str);
+		if (lexer->c == '"')
+			break ;
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
 		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);
 		lexer_advance(lexer);

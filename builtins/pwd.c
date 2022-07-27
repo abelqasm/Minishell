@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:36:03 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/21 23:37:28 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:08:36 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,6 @@ int	args_error(char *c, int false, char *name)
 		return (1);
 	}
 	return (0);
-}
-
-/*************** --  exit -- ******************/
-void	exitm(char **c)
-{
-	int	error;
-	int	arg_num;
-
-	error = 0;
-	arg_num = 0;
-	printf("exit\n");
-	if (c[1])
-	{
-		arg_num = lop_onarg(c[1]);
-		error = args_error(c[1], 1, "exit");
-	}
-	if (error == 0)
-	{
-		if (arg_num == 0)
-			exit(g_env.exit_status);
-	}
-	else
-	{
-		g_env.exit_status = 1;
-		if (arg_num == 0)
-			exit(g_env.exit_status);
-	}
 }
 
 /*************** --  pwd -- ******************/

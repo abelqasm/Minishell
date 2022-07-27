@@ -6,29 +6,19 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/22 12:19:01 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/27 11:12:51 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_close_pipes(t_exec *exec)
-{
-	int	i;
-
-	i = -1;
-	while (++i < exec->n_pipe)
-	{
-		close(exec->pipe[i][0]);
-		close(exec->pipe[i][1]);
-	}
-}
 
 char	*ft_find_cmd(char **paths, char *cmd)
 {
 	char	*cmd_path;
 	char	*tmp;
 
+	if (!cmd)
+		return (NULL);
 	if (cmd[0] != '/')
 	{
 		while (paths && *paths)
@@ -45,6 +35,48 @@ char	*ft_find_cmd(char **paths, char *cmd)
 	return (cmd);
 }
 
+void	open_io(t_cmd_data *data)
+{
+	t_args	*args;
+
+	args = data->intput;
+	while (args)
+	{
+		data->in = open(args->str, O_RDWR, 0644);
+		if (data->in < 0)
+		{
+			printf("no such file or directory: %s\n", args->str);
+			exit(1);
+		}
+		args = args->next;
+	}
+	args = data->output;
+	while (args)
+	{
+		if (data->append)
+			data->out = open(args->str, O_RDWR | O_CREAT | O_APPEND, 0644);
+		else
+			data->out = open(args->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		args = args->next;
+	}
+	if (data->delim)
+		data->in = data->delim;
+}
+
+void	errno_exit(char *cmd_path)
+{
+	if (errno == ENOENT)
+	{
+		printf("command not found: %s\n", cmd_path);
+		exit(127);
+	}
+	else if (errno == EACCES)
+	{
+		perror(cmd_path);
+		exit(126);
+	}
+}
+
 void	execute(t_cmd_data *data, char **env, t_exec *exec)
 {
 	char	**path;
@@ -54,16 +86,20 @@ void	execute(t_cmd_data *data, char **env, t_exec *exec)
 
 	envp = ft_getenv("PATH");
 	path = ft_split(envp, ':');
-	cmd_path = ft_find_cmd(path, data->args->str);
-	args = ft_split(join_args(data->args), ' ');
+	args = join_args(data->args);
+	args = split_args(args);
+	cmd_path = ft_find_cmd(path, args[0]);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	open_io(data);
+	if (!args)
+		exit(0);
 	if (data->in != 0)
 		dup2(data->in, STDIN_FILENO);
 	if (data->out != 1)
 		dup2(data->out, STDOUT_FILENO);
 	ft_close_pipes(exec);
 	execve(cmd_path, args, env);
-	printf("command not found: %s\n", cmd_path);
-	exit(127);
+	errno_exit(cmd_path);
+	exit(1);
 }

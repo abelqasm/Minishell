@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:39:11 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/21 23:40:24 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:39:36 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	just_export(int pipe_exist, int out)
 {
-	int	i;
+	int		i;
+	char	**export;
 
 	i = 0;
+	export = sort_export();
 	if (pipe_exist == 1 && out != 0)
 	{
 		dup2(out, 1);
@@ -26,11 +28,12 @@ void	just_export(int pipe_exist, int out)
 		out = 1;
 	else if (pipe_exist == 1)
 		dup2(out, 1);
-	while (g_env.env[i])
+	while (export[i])
 	{
-		print_export(g_env.env[i], out);
+		print_export(export[i], out);
 		i++;
 	}
+	free_table(export);
 }
 
 int	serch_on_env(char *c, int *error)

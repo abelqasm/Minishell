@@ -13,13 +13,15 @@ SRCS =execute_shell.c \
 	./exec/init_exec.c \
 	./exec/execute.c \
 	./exec/execute_ast.c \
+	./exec/execute_utils.c \
 	./builtins/execute_builtin.c \
 	./builtins/export01.c \
 	./builtins/export.c \
+	./builtins/open_io_builtins.c \
 	./builtins/unset.c \
 	./builtins/cd.c \
 	./builtins/exit01.c \
-	./builtins/exit_pwd.c \
+	./builtins/pwd.c \
 	./builtins/echo.c \
 	./builtins/env.c \
 	./builtins/ft_getenv.c
@@ -27,7 +29,7 @@ OBJS = $(SRCS:.c=.o)
 CONTROL = @stty -echoctl
 LFLAGS = -lreadline -L/Users/abelqasm/.brew/opt/readline/lib -I/Users/abelqasm/.brew/opt/readline/include
 CC = cc
-CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
+CFLAGS = -Werror -Wextra -Wall
 NAME = minishell
 LIBFT = ./libft/libft.a
 

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/22 16:23:54 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/27 11:10:28 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,6 @@ void	fd_management(t_ast *ast, t_exec *exec, int flag)
 	}
 }
 
-void	open_io(t_cmd_data *data)
-{
-	t_args	*args;
-
-	args = data->intput;
-	while (args)
-	{
-		data->in = open(args->str, O_RDWR, 0644);
-		if (data->in < 0)
-		{
-			printf("no such file or directory: %s\n", args->str);
-			exit(1);
-		}
-		args = args->next;
-	}
-	args = data->output;
-	while (args)
-	{
-		if (data->append)
-			data->out = open(args->str, O_RDWR | O_CREAT | O_APPEND, 0644);
-		else
-			data->out = open(args->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		args = args->next;
-	}
-	if (data->delim)
-		data->in = data->delim;
-}
-
 void	execute_node(t_ast *ast, t_exec *exec, int flag)
 {
 	exec->i++;
@@ -71,24 +43,21 @@ void	execute_node(t_ast *ast, t_exec *exec, int flag)
 
 void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 {
-	if (!ast->data.command->args)
-		return ;
 	if (ast->e_type == AST_PIPE)
 	{
 		execute_node(ast, exec, flag);
 		return ;
 	}
 	fd_management(ast, exec, flag);
-	open_io(ast->data.command);
 	exec->pid_i++;
-	if (g_env.npipe == 0 && check_bultins(ast))
+	if (ast->data.command->args && g_env.npipe == 0 && check_bultins(ast))
 		return ;
 	exec->pid[exec->pid_i] = fork();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (exec->pid[exec->pid_i] == 0)
 	{
-		if (!check_bultins(ast))
+		if (!ast->data.command->args || !check_bultins(ast))
 			execute(ast->data.command, g_env.env, exec);
 	}
 	if (ast->data.command->out != 1)

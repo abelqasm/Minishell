@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/02 16:42:12 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:34:20 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
@@ -35,6 +36,7 @@ void	print_ast(t_ast *ast, int n);
 int		check_parenth(char *str);
 int		check_double(char *str, int c);
 int		advance_quotes(t_lexer *lexer);
+char	**env_exp(char **env);
 void	rl_replace_line(const char *text, int clear_undo);
 
 t_global	g_env;

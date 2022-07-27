@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:05:32 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/21 23:39:03 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/24 23:05:00 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ char	**error_handel(char *c, char **old)
 	if (dir == NULL)
 	{
 		write(2, "minishell: cd: ", 15);
-		write(2, c, ft_strlen(c));
+		if (c)
+			write(2, c, ft_strlen(c));
+		else
+			write(2, "HOME", 4);
 		write(2, ": No such file or directory\n", 28);
 		g_env.exit_status = 1;
 		return (NULL);
@@ -64,13 +67,18 @@ int	move_to_dir(char *c, int out)
 
 void	cd(char **c, int false, int out)
 {
-	int				error;
+	int		error;
+	char	*home;
 
 	error = 0;
 	if (c[1] != NULL)
 		error = move_to_dir(c[1], out);
 	else if (c[1] == NULL)
-		error = move_to_dir(getenv("HOME"), out);
+	{
+		home = ft_getenv("HOME");
+		error = move_to_dir(home, out);
+		free(home);
+	}
 	if (false == 1)
 	{
 		if (error == 0)

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/22 12:43:55 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/25 23:53:47 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,19 @@ void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe)
 	free((*exec));
 }
 
+void	set_exit_value(int exit_status)
+{
+	g_env.exit_status = WEXITSTATUS(exit_status);
+	if (WIFSIGNALED(exit_status))
+		g_env.exit_status = WTERMSIG(exit_status) + 128;
+}
+
 void	execute_shell(char *str)
 {
 	t_parser	*parser;
 	t_lexer		*lexer;
 	t_exec		*exec;
 	t_ast		*ast;
-	int			exit_value;
 
 	lexer = init_lexer(str);
 	parser = init_parser(lexer);
@@ -43,8 +49,8 @@ void	execute_shell(char *str)
 	{
 		execute_ast(ast, exec, 0);
 		ft_close_pipes(exec);
-		while (waitpid(-1, &exit_value, 0) > 0)
-			g_env.exit_status = WEXITSTATUS(exit_value);
+		while (waitpid(-1, &g_env.exit_status, 0) > 0)
+			set_exit_value(g_env.exit_status);
 	}
 	else
 	{

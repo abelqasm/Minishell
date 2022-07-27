@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:54:06 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/21 23:40:06 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:52:40 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ int	all_builtins(char **c, int pipe_exist, int out)
 int	check_bultins(t_ast *ast)
 {
 	char	**args;
-	char	*str;
 	int		value;
 	int		i;
 
 	i = -1;
-	str = join_args(ast->data.command->args);
-	args = ft_split(str, ' ');
+	open_built_io(ast->data.command);
+	args = join_args(ast->data.command->args);
 	value = all_builtins(args, g_env.npipe, ast->data.command->out);
-	free(str);
 	while (args[++i])
 		free(args[i]);
 	free(args);
