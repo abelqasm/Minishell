@@ -6,19 +6,11 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:10:37 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/26 13:46:58 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/28 13:43:36 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	lexer_args_quotes(int c)
-{
-	if (ft_isprint(c) || c == ' ' || c == '\f' || c == '\v'
-		|| c == '\t' || c == '\r')
-		return (1);
-	return (0);
-}
 
 void	set_expand_value(t_lexer *lexer, char **str)
 {
@@ -38,7 +30,7 @@ void	set_expand_value(t_lexer *lexer, char **str)
 
 char	*more_value(t_lexer *lexer, char **str)
 {
-	while (lexer_args_quotes(lexer->c) && lexer->c != '\'' && lexer->c != '"')
+	while (lexer_args_char(lexer->c) && lexer->c != '\'' && lexer->c != '"')
 	{
 		while (lexer->c == '$')
 			set_expand_value(lexer, str);
@@ -57,7 +49,7 @@ t_token	*lexer_parse_double_quote(t_lexer *lexer, int type)
 	lexer_advance(lexer);
 	if (!check_double(lexer->str + lexer->i, '"'))
 		g_env.error++;
-	while (lexer_args_quotes(lexer->c) && lexer->c != '"')
+	while (ft_isprint(lexer->c) && lexer->c != '"')
 	{
 		while (lexer->c == '$')
 			set_expand_value(lexer, &str);
@@ -81,7 +73,7 @@ t_token	*lexer_parse_single_quote(t_lexer *lexer, int type)
 	lexer_advance(lexer);
 	if (!check_double(lexer->str + lexer->i, '\''))
 		g_env.error++;
-	while (lexer_args_quotes(lexer->c) && lexer->c != '\'')
+	while (ft_isprint(lexer->c) && lexer->c != '\'')
 	{
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));
 		ft_strlcat(str, (char []){lexer->c, 0}, ft_strlen(str) + 2);

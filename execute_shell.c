@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/25 23:53:47 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:33:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,19 @@ void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe)
 	free((*exec));
 }
 
-void	set_exit_value(int exit_status)
+void	set_exit_value(int exit_status, int type)
 {
 	g_env.exit_status = WEXITSTATUS(exit_status);
 	if (WIFSIGNALED(exit_status))
-		g_env.exit_status = WTERMSIG(exit_status) + 128;
+	{
+		if (type)
+		{
+			g_env.exit_status = 1;
+			g_env.heredoc = 1;
+		}
+		else
+			g_env.exit_status = WTERMSIG(exit_status) + 128;
+	}
 }
 
 void	execute_shell(char *str)
@@ -45,14 +53,14 @@ void	execute_shell(char *str)
 	ast = parser_parse(&parser, &lexer->pipe);
 	exec = init_exec(lexer->pipe);
 	g_env.npipe = lexer->pipe;
-	if (!g_env.error)
+	if (!g_env.error && !g_env.heredoc)
 	{
 		execute_ast(ast, exec, 0);
 		ft_close_pipes(exec);
 		while (waitpid(-1, &g_env.exit_status, 0) > 0)
-			set_exit_value(g_env.exit_status);
+			set_exit_value(g_env.exit_status, 0);
 	}
-	else
+	else if (g_env.error && !g_env.heredoc)
 	{
 		ft_close_pipes(exec);
 		printf("syntax error\n");

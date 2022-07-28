@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/27 11:12:21 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:13:17 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **env)
 	g_env.exit_status = 0;
 	while (1)
 	{
+		g_env.heredoc = 0;
 		g_env.error = 0;
 		signal(SIGINT, ctrl_c);
 		signal(SIGQUIT, SIG_IGN);

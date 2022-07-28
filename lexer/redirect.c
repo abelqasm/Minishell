@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/25 23:55:54 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:50:26 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	fill_heredoc(t_parser *parser, int *fd)
 	else
 		delim = parser->lexer->delim;
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		str = readline("> ");
@@ -96,7 +96,7 @@ void	fill_delim(t_parser **start, t_cmd_data **cmd)
 	if (pid == 0)
 		fill_heredoc(parser, fd);
 	wait(&g_env.exit_status);
-	set_exit_value(g_env.exit_status);
+	set_exit_value(g_env.exit_status, 1);
 	free(parser->token->value);
 	close(fd[1]);
 	(*cmd)->delim = fd[0];
