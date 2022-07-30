@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/30 10:19:26 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 16:51:45 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void	errno_exit(char *cmd_path)
 {
 	if (errno == ENOENT)
 	{
-		printf("command not found: %s\n", cmd_path);
+		write(2, "command not found: ", 19);
+		write(2, cmd_path, ft_strlen(cmd_path));
+		write(2, "\n", 1);
 		exit(127);
 	}
 	else if (errno == EACCES)

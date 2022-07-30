@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 15:25:05 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/28 12:33:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 17:02:41 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	execute_shell(char *str)
 	parser = init_parser(lexer);
 	ast = parser_parse(&parser, &lexer->pipe);
 	exec = init_exec(lexer->pipe);
-	g_env.npipe = lexer->pipe;
+	if (lexer->pipe)
+		g_env.npipe = 1;
 	if (!g_env.error && !g_env.heredoc)
 	{
 		execute_ast(ast, exec, 0);

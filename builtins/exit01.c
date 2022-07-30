@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 23:56:46 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 10:11:42 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 16:48:20 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ int	ft_isd(char *str)
 	return (0);
 }
 
-void	exit_with_status(int check, int nbr, int res)
+void	exit_with_status(int check, int nbr, int res, int out)
 {
 	if (check == 0 && res == 1)
 	{
-		printf("exit\n");
+		write(out, "exit\n", 5);
 		exit(nbr);
 	}
 	else if (check == 0 && res >= 2)
 	{
-		printf("exit: too many arguments\n");
+		write(2, "exit: too many arguments\n", 25);
 		g_env.exit_status = 1;
 	}
 	else if (check == 1 && res >= 1)
 	{
-		printf("exit: numeric argument required\n");
+		write(2, "exit: numeric argument required\n", 32);
 		exit(255);
 	}
 }
@@ -72,7 +72,7 @@ void	exitm(char **data, t_cmd_data *cmd)
 		return ;
 	if (res == 0)
 	{
-		printf("exit\n");
+		write(cmd->out, "exit\n", 5);
 		exit(g_env.exit_status);
 	}
 	if (data[1])
@@ -80,5 +80,5 @@ void	exitm(char **data, t_cmd_data *cmd)
 		nbr = ft_atoi(data[1]);
 		check = ft_isd(data[1]);
 	}
-	exit_with_status(check, nbr, res);
+	exit_with_status(check, nbr, res, cmd->out);
 }

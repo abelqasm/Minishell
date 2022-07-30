@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:47:35 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 10:10:30 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 14:39:27 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	input_error(char *c)
 		return (1);
 	}
 	if ((ft_stralnum(c) == 1 && ft_strdigit(c) == 0)
-		|| (c[0] >= '0' && c[0] <= '9'))
+		|| (c[0] >= '0' && c[0] <= '9') || c[0] == '+' || !ft_is_space(c))
 	{
 		write(2, "minishell: export: `", 20);
 		write(2, ": `", 3);
