@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 17:42:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/20 22:31:09 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/28 17:22:21 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,31 @@ void	fill_redirect(t_parser **start, t_cmd_data **cmd)
 		fill_delim(start, cmd);
 }
 
+void	fill_args(t_parser **start, t_cmd_data **cmd, int type)
+{
+	t_parser	*parser;
+	char		**split;
+	int			i;
+	char		*str;
+
+	parser = *start;
+	split = NULL;
+	i = -1;
+	if (type == TOKEN_ID)
+		args_push(&(*cmd)->args, parser->token->value);
+	else
+	{
+		split = ft_split(parser->token->value, ' ');
+		while (split[++i])
+		{
+			str = ft_strdup(split[i]);
+			args_push(&(*cmd)->args, str);
+		}
+		free_table(split);
+		free(parser->token->value);
+	}
+}
+
 t_data_type	fill_struct(t_parser **start)
 {
 	t_parser	*parser;
@@ -60,7 +85,7 @@ t_data_type	fill_struct(t_parser **start)
 	{
 		if (parser->token->e_type == TOKEN_ID
 			|| parser->token->e_type == TOKEN_DOLLAR)
-			args_push(&command->args, parser->token->value);
+			fill_args(&parser, &command, parser->token->e_type);
 		if (parser->token->e_type == TOKEN_RDIN
 			|| parser->token->e_type == TOKEN_RDOUT
 			|| parser->token->e_type == TOKEN_DELIM

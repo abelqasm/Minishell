@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:22:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/27 12:34:20 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 12:48:18 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "./Includes/list.h"
 # include "./Includes/exec.h"
 # include "./Includes/builtins.h"
+# include "./get_next_line/get_next_line.h"
 
 void	execute_shell(char *str);
 void	free_shell(t_ast **ast, t_parser **parser, t_exec **exec, int n_pipe);

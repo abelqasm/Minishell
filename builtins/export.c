@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:39:11 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/27 12:39:36 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 10:11:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,15 @@ void	add_in_export(char **c, int *error_out)
 	}
 }
 
-void	export(char **c, int pipe_exist, int out)
+void	export(char **c, int pipe_exist, t_cmd_data *cmd)
 {
 	int	error;
 
 	error = 0;
+	if (!open_built_io(cmd))
+		return ;
 	if (c[1] == '\0')
-		just_export(pipe_exist, out);
+		just_export(pipe_exist, cmd->out);
 	else
 		add_in_export(c, &error);
 	if (pipe_exist == 1)

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/28 12:13:17 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 13:05:13 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,36 @@ char	**env_exp(char **env)
 	return (str);
 }
 
+void	add_to_history(char *str)
+{
+	int	out;
+
+	out = open("history", O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (ft_isprint(str[0]))
+	{
+		add_history(str);
+		write(out, str, ft_strlen(str));
+		write(out, "\n", 1);
+	}
+}
+
+void	read_from_history(void)
+{
+	char	*str;
+	int		fd;
+
+	fd = open("history", O_RDONLY);
+	if (fd < 0)
+		return ;
+	str = get_next_line(fd);
+	while (str)
+	{
+		add_history(str);
+		free(str);
+		str = get_next_line(fd);
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*str;
@@ -44,6 +74,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	g_env.env = env_exp(env);
 	g_env.exit_status = 0;
+	read_from_history();
 	while (1)
 	{
 		g_env.heredoc = 0;
@@ -54,9 +85,11 @@ int	main(int argc, char **argv, char **env)
 		if (!str)
 		{
 			printf("exit");
-			exit(0);
+			exit(g_env.exit_status);
 		}
-		add_history(str);
+		if (ft_isprint(str[0]))
+			add_history(str);
+		add_to_history(str);
 		execute_shell(str);
 	}
 }

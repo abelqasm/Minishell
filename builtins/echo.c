@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:30:46 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/21 23:39:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 10:12:43 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	nl_not_exist(int *nl_exist, char *c, int *i)
 {
 	int	y;
 
-	if (c[0] == '-')
+	if (c[0] == '-' && c[1] && c[1] == 'n')
 	{
 		y = 1;
 		while (c[y] && c[y] == 'n')
@@ -53,30 +53,29 @@ void	while_on_newlin(char **c, int *nl_exist, int *i)
 	}
 }
 
-void	echo(char **c, int pipe_exist, int out)
+void	echo(char **c, int pipe_exist, t_cmd_data *cmd)
 {
 	int	i;
 	int	nl_exist;
 
 	i = 0;
 	nl_exist = 1;
-	redir_or_pipe(pipe_exist, out);
+	if (!open_built_io(cmd))
+		return ;
+	redir_or_pipe(pipe_exist, cmd->out);
 	while_on_newlin(c, &nl_exist, &i);
 	while (c[i + 1])
 	{
 		if (c[i + 1] != NULL)
-			write(out, c[i + 1], ft_strlen(c[i + 1]));
+			write(cmd->out, c[i + 1], ft_strlen(c[i + 1]));
 		i++;
 		if (c[i + 1])
-			write(out, " ", 1);
+			write(cmd->out, " ", 1);
 	}
 	if (nl_exist == 1)
-		write(out, "\n", 1);
+		write(cmd->out, "\n", 1);
 	if (pipe_exist == 1)
-	{
-		g_env.exit_status = 0;
 		exit(0);
-	}
 	else
 		g_env.exit_status = 0;
 }

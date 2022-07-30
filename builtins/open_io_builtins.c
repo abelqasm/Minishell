@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 00:37:46 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/27 12:38:53 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 10:19:05 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**sort_export(void)
 	return (export);
 }
 
-void	open_input(t_cmd_data *data, char **input)
+int	open_input(t_cmd_data *data, char **input)
 {
 	int	i;
 
@@ -48,10 +48,14 @@ void	open_input(t_cmd_data *data, char **input)
 		data->in = open(input[i], O_RDWR, 0644);
 		if (data->in < 0)
 		{
-			printf("no such file or directory: %s\n", input[i]);
+			write(2, input[i], ft_strlen(input[i]));
+			write(2, ": No such file or directory", 27);
+			write(2, "\n", 1);
 			g_env.exit_status = 1;
+			return (0);
 		}
 	}
+	return (1);
 }
 
 void	open_output(t_cmd_data *data, char **output)
@@ -68,17 +72,19 @@ void	open_output(t_cmd_data *data, char **output)
 	}
 }
 
-void	open_built_io(t_cmd_data *data)
+int	open_built_io(t_cmd_data *data)
 {
 	char	**input;
 	char	**output;
+	int		value;
 
 	input = join_args(data->intput);
 	output = join_args(data->output);
-	open_input(data, input);
+	value = open_input(data, input);
 	open_output(data, output);
 	if (input)
 		free_table(input);
 	if (output)
 		free_table(output);
+	return (value);
 }

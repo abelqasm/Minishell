@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:47:35 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/24 22:57:59 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 10:10:30 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	delete(int *error, int *error_out, char *c)
 }
 
 /*error if input take 1 all the comm in the next dont export*/
-void	unset(char **c, int false)
+void	unset(char **c, int false, t_cmd_data *cmd)
 {
 	int	i;
 	int	error;
@@ -115,6 +115,8 @@ void	unset(char **c, int false)
 
 	i = 0;
 	error_out = 0;
+	if (!open_built_io(cmd))
+		return ;
 	while (c[i + 1] != NULL)
 	{
 		error = input_error(c[i + 1]);

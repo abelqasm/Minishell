@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 23:56:46 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/25 17:36:49 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 10:11:42 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	exit_with_status(int check, int nbr, int res)
 	}
 }
 
-void	exitm(char **data)
+void	exitm(char **data, t_cmd_data *cmd)
 {
 	int	nbr;
 	int	res;
@@ -68,10 +68,12 @@ void	exitm(char **data)
 	res = count_args(data);
 	nbr = 0;
 	check = 0;
+	if (!open_built_io(cmd))
+		return ;
 	if (res == 0)
 	{
 		printf("exit\n");
-		exit(0);
+		exit(g_env.exit_status);
 	}
 	if (data[1])
 	{

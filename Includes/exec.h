@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/28 12:13:38 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/28 16:52:35 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,5 @@ void	execute_node(t_ast *ast, t_exec *exec, int flag);
 void	execute_ast(t_ast *ast, t_exec *exec, int flag);
 char	*ft_find_cmd(char **paths, char *cmd);
 char	**join_args(t_args *args);
-char	**split_args(char	**args);
 char	*ft_getenv(char *env);
 #endif

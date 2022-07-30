@@ -24,12 +24,14 @@ SRCS =execute_shell.c \
 	./builtins/pwd.c \
 	./builtins/echo.c \
 	./builtins/env.c \
-	./builtins/ft_getenv.c
+	./builtins/ft_getenv.c \
+	./get_next_line/get_next_line_utils.c \
+	./get_next_line/get_next_line.c
 OBJS = $(SRCS:.c=.o)
 CONTROL = @stty -echoctl
 LFLAGS = -lreadline -L/Users/abelqasm/.brew/opt/readline/lib -I/Users/abelqasm/.brew/opt/readline/include
 CC = cc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
 NAME = minishell
 LIBFT = ./libft/libft.a
 
@@ -45,6 +47,7 @@ $(LIBFT) :
 clean :
 	rm -rf $(OBJS)
 	cd ./libft && make clean
+	cd get_next_line && rm -rf *.o
 
 fclean : clean
 	rm -rf $(NAME)

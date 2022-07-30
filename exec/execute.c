@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/28 12:23:07 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 10:19:26 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ char	*ft_find_cmd(char **paths, char *cmd)
 	return (cmd);
 }
 
+void	exit_error(char *str)
+{
+	write(2, str, ft_strlen(str));
+	write(2, ": No such file or directory", 27);
+	write(2, "\n", 1);
+	exit(1);
+}
+
 void	open_io(t_cmd_data *data)
 {
 	t_args	*args;
@@ -44,10 +52,7 @@ void	open_io(t_cmd_data *data)
 	{
 		data->in = open(args->str, O_RDWR, 0644);
 		if (data->in < 0)
-		{
-			printf("no such file or directory: %s\n", args->str);
-			exit(1);
-		}
+			exit_error(args->str);
 		args = args->next;
 	}
 	args = data->output;
@@ -88,7 +93,6 @@ void	execute(t_cmd_data *data, char **env, t_exec *exec)
 	envp = ft_getenv("PATH");
 	path = ft_split(envp, ':');
 	args = join_args(data->args);
-	args = split_args(args);
 	cmd_path = ft_find_cmd(path, args[0]);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
