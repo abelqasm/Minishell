@@ -6,19 +6,19 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:51:27 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/30 17:33:21 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 19:06:48 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	lexer_add_value(t_lexer *lexer, char **str)
+void	lexer_add_value(t_lexer *lexer, char **str, int type)
 {
 	t_token	*quote;
 
-	if (lexer->c == '"')
+	if (type == '"')
 		quote = lexer_parse_double_quote(lexer, TOKEN_DQUOTE);
-	if (lexer->c == '\'')
+	if (type == '\'')
 		quote = lexer_parse_single_quote(lexer, TOKEN_SQUOTE);
 	*str = ft_realloc(*str, (ft_strlen(*str)
 				+ ft_strlen(quote->value) + 1) * sizeof(char));
@@ -92,7 +92,7 @@ t_token	*lexer_parse_token(t_lexer *lexer, int type)
 		while (lexer->c == '$')
 			set_expand_value(lexer, &str);
 		while (lexer->c == '"' || lexer->c == '\'')
-			lexer_add_value(lexer, &str);
+			lexer_add_value(lexer, &str, lexer->c);
 		if (!(lexer_args_char(lexer->c)))
 			break ;
 		str = ft_realloc(str, (ft_strlen(str) + 2) * sizeof(char));

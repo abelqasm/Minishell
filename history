@@ -1,0 +1,37 @@
+make clean
+builtins
+exec
+execute_shell.c
+get_next_line
+Includes
+lexer
+libft
+Makefile
+minishell.c
+minishell
+export gg=h
+echo e"c"$gg'o' hi
+echo e"c"$gg'o'
+echo e"c"$gg"o"
+echo e"c"$gg'o'
+export gg=h
+echo e"c"$gg'o' hi
+ls>out
+cat out
+e"c"$gg'o' hi
+echo sdfsdfsdf"sdfsfd"
+echo sdfsdfsdf"sdfsfd"dsf
+echo test"between"
+echo test"between"this'andthis'
+echo test"between"this'andthis'
+echo test"between"this'andthis'
+echo test"between"this'andthis'
+
+echo test"between"this'andthis'
+
+echo test"between"this'andthis'
+
+echo test"between"this'andthis'
+
+echo test"between"this'andthis'
+

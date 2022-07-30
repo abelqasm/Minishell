@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 11:10:37 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/30 17:35:52 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 19:03:45 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*more_value(t_lexer *lexer, char **str)
 	{
 		while (lexer->c == '$')
 			set_expand_value(lexer, str);
-		if (!(lexer_args_char(lexer->c) && lexer->c != '\'' && lexer->c != '"'))
+		if (!lexer_args_char(lexer->c) || lexer->c == '\'' || lexer->c == '"')
 			break ;
 		*str = ft_realloc(*str, (ft_strlen(*str) + 2) * sizeof(char));
 		ft_strlcat(*str, (char []){lexer->c, 0}, ft_strlen(*str) + 2);

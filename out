@@ -1,0 +1,15 @@
+Includes
+Makefile
+README
+builtins
+exec
+execute_shell.c
+execute_shell.o
+get_next_line
+history
+lexer
+libft
+minishell
+minishell.c
+minishell.h
+out

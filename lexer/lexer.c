@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 22:49:55 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/19 15:25:10 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/30 18:52:53 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	lexer_skip_whitespace(t_lexer *lexer)
 
 int	lexer_args_char(int c)
 {
-	if (ft_isprint(c) && c != '|' && c != '&'
+	if (ft_isprint(c) && c != '<' && c != '>' && c != '|' && c != '&'
 		&& !(c == ' ' || c == '\f' || c == '\v'
 			|| c == '\t' || c == '\r' || c == '\n'))
 		return (1);
