@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:40:51 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/28 16:52:35 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/31 12:30:08 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_global
 	int		error;
 	int		npipe;
 	int		heredoc;
+	int		pipe;
 	int		exit_status;
 }	t_global;
 

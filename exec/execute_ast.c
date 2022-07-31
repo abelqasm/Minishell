@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:27:23 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/30 19:16:30 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/31 23:15:46 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	execute_ast(t_ast *ast, t_exec *exec, int flag)
 	}
 	fd_management(ast, exec, flag);
 	exec->pid_i++;
-	if (ast->data.command->args && g_env.npipe == 0 && check_bultins(ast))
+	if (ast->data.command->args && g_env.pipe == 0 && check_bultins(ast))
 		return ;
 	exec->pid[exec->pid_i] = fork();
 	signal(SIGINT, SIG_IGN);

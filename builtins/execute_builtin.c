@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:54:06 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/30 16:53:04 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/31 23:12:04 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ int	check_bultins(t_ast *ast)
 	while (args[++i])
 		free(args[i]);
 	free(args);
+	if (value && g_env.pipe)
+		exit(g_env.exit_status);
 	return (value);
 }

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 23:56:46 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 16:48:20 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/07/31 23:18:04 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	exit_with_status(int check, int nbr, int res, int out)
 {
 	if (check == 0 && res == 1)
 	{
-		write(out, "exit\n", 5);
+		if (!g_env.pipe)
+			write(out, "exit\n", 5);
 		exit(nbr);
 	}
 	else if (check == 0 && res >= 2)
@@ -72,7 +73,8 @@ void	exitm(char **data, t_cmd_data *cmd)
 		return ;
 	if (res == 0)
 	{
-		write(cmd->out, "exit\n", 5);
+		if (!g_env.pipe)
+			write(cmd->out, "exit\n", 5);
 		exit(g_env.exit_status);
 	}
 	if (data[1])
