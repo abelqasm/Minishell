@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:06:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/22 16:21:55 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 11:51:32 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ void	free_ast(t_ast **ast)
 		return ;
 	}
 	free_args(&(*ast)->data.command->args);
-	free_args(&(*ast)->data.command->intput);
-	free_args(&(*ast)->data.command->output);
+	free_args(&(*ast)->data.command->redir);
 	free((*ast)->data.command);
 }
 

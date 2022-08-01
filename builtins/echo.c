@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:30:46 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 10:12:43 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:16:09 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	echo(char **c, int pipe_exist, t_cmd_data *cmd)
 
 	i = 0;
 	nl_exist = 1;
-	if (!open_built_io(cmd))
+	if (open_built_io(cmd))
 		return ;
 	redir_or_pipe(pipe_exist, cmd->out);
 	while_on_newlin(c, &nl_exist, &i);

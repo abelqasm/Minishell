@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:59:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/06/30 12:14:31 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:57:19 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@
 typedef struct s_args
 {
 	char			*str;
+	enum
+	{
+		INPUT,
+		OUTPUT,
+	} e_type;
 	struct s_args	*next;
 }	t_args;
 
 typedef struct s_cmd_data
 {
 	t_args	*args;
-	t_args	*intput;
-	t_args	*output;
+	t_args	*redir;
 	int		in;
 	int		out;
 	int		delim;
@@ -31,8 +35,8 @@ typedef struct s_cmd_data
 }	t_cmd_data;
 
 t_cmd_data	*init_command(void);
-t_args		*init_args(char *item);
-void		args_push(t_args **list, char *item);
+t_args		*init_args(char *item, int type);
+void		args_push(t_args **args, char *item, int type);
 void		fill_wildcards(char *str, t_cmd_data **cmd);
 
 #endif

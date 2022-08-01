@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 17:42:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/28 17:22:21 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 13:35:12 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ t_cmd_data	*init_command(void)
 
 	command = malloc(sizeof(t_cmd_data));
 	command->args = NULL;
-	command->intput = NULL;
-	command->output = NULL;
+	command->redir = NULL;
 	command->in = 0;
 	command->out = 1;
 	command->delim = 0;
@@ -39,12 +38,13 @@ void	fill_redirect(t_parser **start, t_cmd_data **cmd)
 	t_parser	*parser;
 
 	parser = *start;
+	
 	if (parser->token->e_type == TOKEN_RDIN)
 		fill_rdin(start, cmd);
 	if (parser->token->e_type == TOKEN_RDOUT
 		|| parser->token->e_type == TOKEN_APPEND)
 		fill_rdout(start, cmd);
-	if (parser->token->e_type == TOKEN_DELIM)
+	if (parser->token->e_type == TOKEN_DELIM && !g_env.error)
 		fill_delim(start, cmd);
 }
 
@@ -59,14 +59,14 @@ void	fill_args(t_parser **start, t_cmd_data **cmd, int type)
 	split = NULL;
 	i = -1;
 	if (type == TOKEN_ID)
-		args_push(&(*cmd)->args, parser->token->value);
+		args_push(&(*cmd)->args, parser->token->value, 3);
 	else
 	{
 		split = ft_split(parser->token->value, ' ');
 		while (split[++i])
 		{
 			str = ft_strdup(split[i]);
-			args_push(&(*cmd)->args, str);
+			args_push(&(*cmd)->args, str, 3);
 		}
 		free_table(split);
 		free(parser->token->value);

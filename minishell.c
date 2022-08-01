@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 23:21:18 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/30 13:05:13 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 10:57:49 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	add_to_history(char *str)
 {
 	int	out;
 
-	out = open("history", O_RDWR | O_CREAT | O_APPEND, 0644);
+	out = open("/Users/abelqasm/history", O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (ft_isprint(str[0]))
 	{
 		add_history(str);
@@ -54,7 +54,7 @@ void	read_from_history(void)
 	char	*str;
 	int		fd;
 
-	fd = open("history", O_RDONLY);
+	fd = open("/Users/abelqasm/history", O_RDONLY);
 	if (fd < 0)
 		return ;
 	str = get_next_line(fd);

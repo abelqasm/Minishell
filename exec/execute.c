@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/30 16:51:45 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:58:24 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,22 @@ void	open_io(t_cmd_data *data)
 {
 	t_args	*args;
 
-	args = data->intput;
+	args = data->redir;
 	while (args)
 	{
-		data->in = open(args->str, O_RDWR, 0644);
-		if (data->in < 0)
-			exit_error(args->str);
-		args = args->next;
-	}
-	args = data->output;
-	while (args)
-	{
-		if (data->append)
-			data->out = open(args->str, O_RDWR | O_CREAT | O_APPEND, 0644);
-		else
-			data->out = open(args->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (args->e_type == INPUT)
+		{
+			data->in = open(args->str, O_RDWR, 0644);
+			if (data->in < 0)
+				exit_error(args->str);
+		}
+		else if (args->e_type == OUTPUT)
+		{
+			if (data->append)
+				data->out = open(args->str, O_RDWR | O_CREAT | O_APPEND, 0644);
+			else
+				data->out = open(args->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		}
 		args = args->next;
 	}
 	if (data->delim)
@@ -95,11 +96,11 @@ void	execute(t_cmd_data *data, char **env, t_exec *exec)
 	envp = ft_getenv("PATH");
 	path = ft_split(envp, ':');
 	args = join_args(data->args);
+	if (!args)
+		exit(0);
 	cmd_path = ft_find_cmd(path, args[0]);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (!args)
-		exit(0);
 	if (data->in != 0)
 		dup2(data->in, STDIN_FILENO);
 	if (data->out != 1)

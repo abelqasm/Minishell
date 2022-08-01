@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:47:09 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/28 14:09:23 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 11:59:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	fill_wildcards(char *str, t_cmd_data **cmd)
 			&& dirent->d_name[0] != '.')
 		{
 			dir_name = ft_strdup(dirent->d_name);
-			args_push(&(*cmd)->args, dir_name);
+			args_push(&(*cmd)->args, dir_name, 3);
 		}
 		dirent = readdir(dir);
 	}

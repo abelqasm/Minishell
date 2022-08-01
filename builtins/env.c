@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:31:14 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 10:11:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:16:12 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	envm(char **c, int pipe_exist, t_cmd_data *cmd)
 	int	error;
 
 	error = 0;
-	if (!open_built_io(cmd))
+	if (open_built_io(cmd))
 		return ;
 	if (c[1])
 		error = args_error(c[1], 1, "env");

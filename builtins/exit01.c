@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 23:56:46 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/31 23:18:04 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:16:14 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	exitm(char **data, t_cmd_data *cmd)
 	res = count_args(data);
 	nbr = 0;
 	check = 0;
-	if (!open_built_io(cmd))
+	if (open_built_io(cmd))
 		return ;
 	if (res == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:47:35 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 14:39:27 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:15:38 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	unset(char **c, int false, t_cmd_data *cmd)
 
 	i = 0;
 	error_out = 0;
-	if (!open_built_io(cmd))
+	if (open_built_io(cmd))
 		return ;
 	while (c[i + 1] != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:05:32 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 16:58:47 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 12:16:05 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	move_to_dir(char *c, t_cmd_data *cmd)
 
 	temp = error_handel(c, &old);
 	if (temp == NULL)
-		return (0);
+		return (1);
 	getcwd(cwd, sizeof(cwd));
 	old = ft_ftjoin(old, cwd);
 	temp[1] = ft_strdup(old);
@@ -71,7 +71,7 @@ void	cd(char **c, int false, t_cmd_data *cmd)
 	char	*home;
 
 	error = 0;
-	if (!open_built_io(cmd))
+	if (open_built_io(cmd))
 		return ;
 	if (c[1] != NULL)
 		error = move_to_dir(c[1], cmd);
