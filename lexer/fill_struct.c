@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 17:42:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/08/01 13:35:12 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:21:13 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	fill_redirect(t_parser **start, t_cmd_data **cmd)
 	t_parser	*parser;
 
 	parser = *start;
-	
 	if (parser->token->e_type == TOKEN_RDIN)
 		fill_rdin(start, cmd);
 	if (parser->token->e_type == TOKEN_RDOUT

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/08/01 12:58:24 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 15:36:30 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_find_cmd(char **paths, char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	if (cmd[0] != '/')
+	if (cmd[0] != '/' && cmd[0] != '.')
 	{
 		while (paths && *paths)
 		{
@@ -32,7 +32,12 @@ char	*ft_find_cmd(char **paths, char *cmd)
 			paths++;
 		}
 	}
-	return (cmd);
+	else if (cmd[0] == '/')
+		return (cmd);
+	write(2, "command not found: ", 19);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, "\n", 1);
+	exit(127);
 }
 
 void	exit_error(char *str)
@@ -83,6 +88,7 @@ void	errno_exit(char *cmd_path)
 		perror(cmd_path);
 		exit(126);
 	}
+	exit(1);
 }
 
 void	execute(t_cmd_data *data, char **env, t_exec *exec)
@@ -108,5 +114,4 @@ void	execute(t_cmd_data *data, char **env, t_exec *exec)
 	ft_close_pipes(exec);
 	execve(cmd_path, args, env);
 	errno_exit(cmd_path);
-	exit(1);
 }

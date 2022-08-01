@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 19:01:50 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/08/01 13:34:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 16:24:33 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	fill_rdin(t_parser **start, t_cmd_data **cmd)
 	parser = *start;
 	command = *cmd;
 	parser->token = lexer_next_token(&parser);
-	if (parser->token->e_type != TOKEN_ID)
+	if (parser->token->e_type != TOKEN_ID
+		&& parser->token->e_type != TOKEN_DOLLAR)
 	{
 		g_env.error++;
 		return ;
@@ -39,7 +40,8 @@ void	fill_rdout(t_parser **start, t_cmd_data **cmd)
 	if (parser->token->e_type == TOKEN_APPEND)
 		command->append = 1;
 	parser->token = lexer_next_token(&parser);
-	if (parser->token->e_type != TOKEN_ID)
+	if (parser->token->e_type != TOKEN_ID
+		&& parser->token->e_type != TOKEN_DOLLAR)
 	{
 		g_env.error++;
 		return ;
