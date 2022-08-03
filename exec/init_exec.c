@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 19:46:36 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/07/31 12:32:51 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/01 19:27:15 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	count_args_alloc(t_args *args)
 char	**join_args(t_args *args)
 {
 	char	**str;
+	char	cwd[256];
 	int		i;
 
 	i = 0;
@@ -66,5 +67,11 @@ char	**join_args(t_args *args)
 		i++;
 	}
 	str[i] = 0;
+	if (!ft_strcmp(str[0], "./minishell"))
+	{
+		free(str[0]);
+		getcwd(cwd, sizeof(cwd));
+		str[0] = ft_strjoin(cwd, "/minishell");
+	}
 	return (str);
 }

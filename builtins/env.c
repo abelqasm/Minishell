@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:31:14 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/08/01 12:16:12 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:05:23 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	if_equal_exist(int equal_exist, int out, int i)
 {
 	if (equal_exist == 1)
 	{
-		write(out, g_env.env[i],
-			ft_strlen(g_env.env[i]));
+		write(out, g_env.env[i], ft_strlen(g_env.env[i]));
 		write(out, "\n", 1);
 	}
 }

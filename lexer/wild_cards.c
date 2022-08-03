@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:47:09 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/08/01 11:59:33 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/02 14:26:42 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ void	fill_wildcards(char *str, t_cmd_data **cmd)
 	struct dirent	*dirent;
 	DIR				*dir;
 	char			*dir_name;
+	int				count;
 
 	dir = opendir("./");
+	count = 0;
 	dirent = readdir(dir);
 	while (dirent)
 	{
@@ -88,10 +90,13 @@ void	fill_wildcards(char *str, t_cmd_data **cmd)
 				ft_strlen(dirent->d_name), ft_strlen(str))
 			&& dirent->d_name[0] != '.')
 		{
+			count++;
 			dir_name = ft_strdup(dirent->d_name);
 			args_push(&(*cmd)->args, dir_name, 3);
 		}
 		dirent = readdir(dir);
 	}
+	if (!count)
+		args_push(&(*cmd)->args, ft_strdup(str), 3);
 	closedir(dir);
 }

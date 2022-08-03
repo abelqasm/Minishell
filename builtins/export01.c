@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:44:39 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/27 12:38:39 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/02 10:28:13 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	copie_table(char **cp)
 	i = 0;
 	while (cp[i])
 		i++;
-	g_env.env = (char **)malloc(sizeof(char *) * i + 1);
+	g_env.env = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (cp[i])
 	{
@@ -50,7 +50,7 @@ int	errorin_args(char *c, int error, int i)
 	if (c)
 	{
 		j = 0;
-		befor_equal = malloc(i);
+		befor_equal = malloc(i + 1);
 		if (!befor_equal)
 			return (0);
 		befor_equal[i] = '\0';

@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 02:47:35 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/08/01 12:15:38 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/02 10:22:30 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	input_error(char *c)
 		write(2, "minishell: export: `", 20);
 		write(2, ": `", 3);
 		write(2, c, ft_strlen(c));
-		write(2, "': not a valid identifier\n", 28);
+		write(2, "': not a valid identifier\n", 26);
 		g_env.exit_status = 1;
 		return (1);
 	}

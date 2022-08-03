@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 12:05:27 by brmohamm          #+#    #+#             */
-/*   Updated: 2022/07/30 14:38:07 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/02 10:28:53 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_is_space(char *c)
 	int	i;
 
 	i = -1;
+	if (!c[0])
+		return (0);
 	while (c[++i])
 	{
 		if (c[i] == ' ' || c[i] == '\f' || c[i] == '\v'

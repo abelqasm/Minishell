@@ -6,7 +6,7 @@
 /*   By: abelqasm <abelqasm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:55:03 by abelqasm          #+#    #+#             */
-/*   Updated: 2022/08/01 15:36:30 by abelqasm         ###   ########.fr       */
+/*   Updated: 2022/08/02 12:55:25 by abelqasm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_find_cmd(char **paths, char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	if (cmd[0] != '/' && cmd[0] != '.')
+	if (cmd[0] && cmd[0] != '/' && cmd[0] != '.')
 	{
 		while (paths && *paths)
 		{
@@ -42,6 +42,11 @@ char	*ft_find_cmd(char **paths, char *cmd)
 
 void	exit_error(char *str)
 {
+	if (errno == EACCES)
+	{
+		perror(str);
+		exit(1);
+	}
 	write(2, str, ft_strlen(str));
 	write(2, ": No such file or directory", 27);
 	write(2, "\n", 1);
@@ -67,6 +72,8 @@ void	open_io(t_cmd_data *data)
 				data->out = open(args->str, O_RDWR | O_CREAT | O_APPEND, 0644);
 			else
 				data->out = open(args->str, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			if (data->out < 0)
+				exit_error(args->str);
 		}
 		args = args->next;
 	}

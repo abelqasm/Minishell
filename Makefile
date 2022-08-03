@@ -9,6 +9,7 @@ SRCS =execute_shell.c \
 	./lexer/utils.c \
 	./lexer/list.c \
 	./lexer/redirect.c \
+	./lexer/fill_heredoc.c \
 	./lexer/wild_cards.c \
 	./exec/init_exec.c \
 	./exec/execute.c \
